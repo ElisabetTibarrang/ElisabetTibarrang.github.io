@@ -4,8 +4,8 @@
 // cards and a note, and the API route answers 404.
 //
 // To turn it on:
-//   1. Get an email handler: register as described in docs/features/contact-form.md.
-//      You receive a handler URL, a tenant ID and a token.
+//   1. Get an email handler as described in docs/features/contact-form.md.
+//      You need its URL, a tenant ID and a token.
 //   2. Set `enabled: true` and paste the URL into `handlerUrl` below.
 //   3. Keep the tenant ID and token OUT of this file:
 //        local:   TENANT_ID and TENANT_API_TOKEN in .dev.vars

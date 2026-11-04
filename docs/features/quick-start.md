@@ -80,4 +80,4 @@ Open `/`, `/blog/`, `/contact-us/`, `/sitemap.xml`, `/rss.xml`, `/llms.txt`, `/r
 - [theme-and-styling](theme-and-styling.md) — colour tokens and the icon filters
 - [home-page](home-page.md) — the starter home page and its help band
 - [legal-and-about-pages](legal-and-about-pages.md) — About, Privacy, Cookie and Terms
-- [contact-form](contact-form.md) — handler registration and secrets
+- [contact-form](contact-form.md) — email handler setup and secrets

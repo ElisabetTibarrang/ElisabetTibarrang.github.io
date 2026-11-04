@@ -26,9 +26,9 @@ verified: 2026-11-04 @ 355e3e9
 - The browser never sees the handler URL, tenant ID or token, so the CSP needs no extra origin.
 - Contact cards (email, phone, WhatsApp) and the address come from `brand.mjs`; empty values are hidden.
 
-## Turn it on (free plan: 100 submissions per month)
+## Turn it on
 
-1. Register with NViewsWEB (the email handler). Send your **domain name, name and email address** by WhatsApp to +91 87781 90183 or by email to hello@nviewsweb.com. You receive a handler URL, a tenant ID and a token.
+1. Get an email handler: an HTTPS service that accepts the request described above and sends the email. Note its URL, your tenant ID and your token. The route is written for that request shape, so a handler with a different one needs a small change in `src/pages/api/contact.ts`.
 2. In `src/config/contact.mjs` set `enabled: true` and put the URL in `handlerUrl`.
 3. Local: put `TENANT_ID` and `TENANT_API_TOKEN` in `.dev.vars` (`pnpm wrangler_json` creates placeholder lines and never overwrites existing values).
 4. Deployed: `pnpm exec wrangler secret put TENANT_ID` and `pnpm exec wrangler secret put TENANT_API_TOKEN`.
@@ -75,5 +75,5 @@ Expect `{"ok":false,"error":"not_configured"}` with placeholder secrets and `{"o
 - [config-and-generators](config-and-generators.md) — `pnpm wrangler_json` and `.dev.vars`
 - [seo-and-schema](seo-and-schema.md) — `ContactPage` schema type
 - [cloudflare-and-pwa](cloudflare-and-pwa.md) — Worker secrets and deployment
-- [quick-start](quick-start.md) — registering for the handler during setup
+- [quick-start](quick-start.md) — setting up the handler during setup
 - [home-page](home-page.md) — the note that points here

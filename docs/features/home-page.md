@@ -50,7 +50,7 @@ The starter home page is a "how to start" guide: an animated hero, five numbered
 ## Related
 
 - [quick-start](quick-start.md) — the rebrand checklist
-- [contact-form](contact-form.md) — registration for the email handler
+- [contact-form](contact-form.md) — setting up the email handler
 - [theme-and-styling](theme-and-styling.md) — colour tokens used by the sections
 - [layouts-and-navigation](layouts-and-navigation.md) — `PageLayout`, the header and the footer credit
 - [legal-and-about-pages](legal-and-about-pages.md) — the other starter pages

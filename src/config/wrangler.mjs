@@ -91,7 +91,7 @@ export const wranglerConfig = {
   //   wrangler secret put TENANT_API_TOKEN
   localSecrets: {
     // Only needed when the contact form is on (src/config/contact.mjs).
-    // EDIT: contact form credentials from your email handler registration.
+    // EDIT: contact form credentials from your email handler.
     // See docs/features/contact-form.md.
     TENANT_ID: "REPLACE_WITH_TENANT_ID",
     TENANT_API_TOKEN: "REPLACE_WITH_TOKEN",
