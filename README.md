@@ -107,7 +107,8 @@ To let someone write posts, add them as a collaborator on your GitHub repository
 
 - Read the page for your feature in [docs/features](docs/features/README.md).
 - Known problems are listed in [docs/known-gaps.md](docs/known-gaps.md).
-- Search the [issues](https://github.com/nviewsweb/astrowebtheme-free/issues), then open a new one with the form that fits. [CONTRIBUTING.md](CONTRIBUTING.md) explains how issues are handled.
+- Ask a question or share an idea in [Discussions](https://github.com/nviewsweb/astrowebtheme-free/discussions).
+- Found a bug or want a feature? Search the [issues](https://github.com/nviewsweb/astrowebtheme-free/issues), then open a new one with the form that fits. [CONTRIBUTING.md](CONTRIBUTING.md) explains how issues and discussions are handled.
 - Security problems: see [SECURITY.md](SECURITY.md).
 
 ## Contributing

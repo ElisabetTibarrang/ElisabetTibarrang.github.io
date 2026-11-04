@@ -25,6 +25,7 @@ const repoDir = repoUrl.split("/").pop()?.replace(/\.git$/, "") || "my-site";
 const repoWeb = repoUrl.replace(/\.git$/, "");
 const issuesUrl = String(pkg.bugs?.url || (repoWeb ? `${repoWeb}/issues` : ""));
 const docsUrl = repoWeb ? `${repoWeb}/tree/main/docs/features` : "";
+const discussionsUrl = repoWeb ? `${repoWeb}/discussions` : "";
 
 const headProps: HeadProps = {
   title: `Launch your website in 5 minutes | ${siteName}`,
@@ -47,6 +48,8 @@ const iconNames = [
   "privacy-shield",
   "email",
   "book",
+  "info",
+  "alert-circle",
   "arrow-right",
 ];
 
@@ -95,16 +98,16 @@ const helpCards = [
     label: "Open the docs",
   },
   {
-    icon: "search",
-    title: "Search the issues",
-    text: "Someone may have hit the same problem. Known gaps are listed in docs/known-gaps.md.",
-    href: issuesUrl,
-    label: "Browse issues",
+    icon: "info",
+    title: "Ask a question",
+    text: "Not sure how to do something? Search Discussions, or ask there. Ideas and sites you built are welcome too.",
+    href: discussionsUrl,
+    label: "Open Discussions",
   },
   {
-    icon: "email",
-    title: "Open an issue",
-    text: "Describe what you expected, what happened and your Node and pnpm versions.",
+    icon: "alert-circle",
+    title: "Report a bug",
+    text: "Search the open issues first. If it is new, say what you expected, what happened and your Node and pnpm versions. Known gaps are in docs/known-gaps.md.",
     href: issuesUrl ? `${issuesUrl}/new/choose` : "",
     label: "New issue",
   },
@@ -131,7 +134,7 @@ const faq = [
   {
     question: "What if I get stuck?",
     answer:
-      "Read the docs in the repository, search the open issues and, if yours is not there, open a new issue with the details. The Need help section below has the links.",
+      "Read the docs in the repository, then ask in its Discussions. If something is broken, open an issue with the details. The Need help section below has the links.",
   },
 ];
 ---
@@ -285,7 +288,7 @@ const faq = [
       <div class="start-wrap">
         <div class="start-heading">
           <h2 id="help-heading">Need help?</h2>
-          <p>Most questions are answered in the docs. If yours is not, open an issue.</p>
+          <p>Most questions are answered in the docs. If yours is not, ask in Discussions. Found a bug? Open an issue.</p>
         </div>
 
         <div class="start-grid">
