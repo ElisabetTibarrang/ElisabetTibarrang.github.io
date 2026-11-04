@@ -50,10 +50,10 @@
     "sharp": "^0.35.5"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260621.1",
-    "@types/node": "^26.0.0",
+    "@cloudflare/workers-types": "^5.20261101.1",
+    "@types/node": "^26.6.6",
     "fast-glob": "^3.3.3",
-    "lightningcss": "^1.32.0",
+    "lightningcss": "^1.33.0",
     "sharp": "^0.35.2",
     "sharp-ico": "^0.1.5",
     "svgo": "^4.1.0",
