@@ -1,0 +1,75 @@
+---
+// src/components/BlogCard.astro
+import { Image } from "astro:assets";
+import { getEntryUrl } from "@/utils/collections.mjs";
+
+interface Props {
+  entry: any;
+  collectionKey?: string;
+  class?: string;
+  className?: string;
+}
+
+const {
+  entry,
+  collectionKey = "blog",
+  class: classAttr = "",
+  className = "",
+} = Astro.props as Props;
+
+const url = getEntryUrl(collectionKey, entry);
+const data = entry.data || {};
+
+const title = data.title || "Untitled";
+const description = data.description || data.summary || "";
+const img = data.heroImage;
+
+const cardClass = `blog-card br-r bg-base-00 p-1 ${classAttr} ${className}`.trim();
+
+const publishedDate =
+  data.publishedAtISO ||
+  (data.publishedDate ? new Date(data.publishedDate).toISOString() : undefined);
+
+const modifiedDate =
+  data.updatedAtISO ||
+  (data.lastModified ? new Date(data.lastModified).toISOString() : publishedDate);
+---
+
+<article
+  class={cardClass}
+  itemscope
+  itemtype="https://schema.org/Article"
+>
+  {img && (
+    <a href={url} class="block" itemprop="url" aria-label={title}>
+      <Image
+        src={img}
+        alt={data.heroImageAlt || title}
+        width={720}
+        height={405}
+        loading="lazy"
+        decoding="async"
+        class="w-full ar-16-9 obj-cover br-r"
+        itemprop="image"
+      />
+    </a>
+  )}
+
+  <h2 class="my-05" itemprop="headline">
+    <a href={url} itemprop="url">
+      {title}
+    </a>
+  </h2>
+
+  {description && (
+    <p itemprop="description">{description}</p>
+  )}
+
+  {publishedDate && (
+    <meta itemprop="datePublished" content={publishedDate} />
+  )}
+
+  {modifiedDate && (
+    <meta itemprop="dateModified" content={modifiedDate} />
+  )}
+</article>

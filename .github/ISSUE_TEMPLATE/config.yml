@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read the docs
+    url: https://github.com/nviewsweb/astrowebtheme-free/tree/main/docs/features
+    about: Every feature has a page with the file to edit and how to check it.
+  - name: Report a security problem
+    url: https://github.com/nviewsweb/astrowebtheme-free/security/advisories/new
+    about: Please report vulnerabilities privately, not as a public issue.

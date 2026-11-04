@@ -1,0 +1,72 @@
+---
+// src/components/Pagination.astro
+interface PaginationUrl {
+  prev?: string;
+  next?: string;
+  current?: string;
+}
+
+interface PageData {
+  currentPage: number;
+  lastPage: number;
+  url: PaginationUrl;
+}
+
+interface Props {
+  page?: PageData;
+  class?: string;
+  className?: string;
+}
+
+const {
+  page,
+  class: classAttr = "",
+  className = "",
+} = Astro.props as Props;
+
+const canRender = Boolean(page && page.lastPage > 1);
+const navClass = `pagination max-w-content mi-auto ta-center my-2 ${classAttr} ${className}`.trim();
+---
+
+{canRender && (
+  <nav
+    class={navClass}
+    aria-label="Pagination"
+    itemscope
+    itemtype="https://schema.org/SiteNavigationElement"
+  >
+    <ul class="flex wrap gap no-bullets jc-center my-05">
+      {page?.url.prev && (
+        <li>
+          <a
+            class="pagination-link"
+            href={page.url.prev}
+            rel="prev"
+            itemprop="url"
+          >
+            <span itemprop="name">Previous</span>
+          </a>
+        </li>
+      )}
+
+      <li>
+        <span class="pagination-link active" aria-current="page">
+          <span itemprop="name">Page {page?.currentPage} of {page?.lastPage}</span>
+        </span>
+      </li>
+
+      {page?.url.next && (
+        <li>
+          <a
+            class="pagination-link"
+            href={page.url.next}
+            rel="next"
+            itemprop="url"
+          >
+            <span itemprop="name">Next</span>
+          </a>
+        </li>
+      )}
+    </ul>
+  </nav>
+)}

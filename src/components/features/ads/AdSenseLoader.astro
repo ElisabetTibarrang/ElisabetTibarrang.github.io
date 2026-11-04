@@ -1,0 +1,28 @@
+---
+// src/components/features/ads/AdSenseLoader.astro
+import adsConfig from "@/config/ads.mjs";
+
+const enabled =
+  adsConfig.enabled === true &&
+  String(adsConfig.adsenseClientId || "").trim().length > 0;
+
+const config = {
+  enabled,
+  clientId: String(adsConfig.adsenseClientId || "").trim(),
+  consentRequired: adsConfig.consentRequired !== false,
+};
+
+const configData = encodeURIComponent(JSON.stringify(config));
+---
+
+{enabled && (
+  <>
+    <div
+      id="adsense-root"
+      data-config={configData}
+      hidden
+    ></div>
+
+    <script src="../../../scripts/features/ads/index.js"></script>
+  </>
+)}

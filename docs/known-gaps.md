@@ -1,0 +1,24 @@
+# Known gaps
+
+The single list of unfinished wiring and problems. Reference gaps by ID from other docs; do not restate them.
+Found at commit `355e3e9` (2026-11-04). When you fix one, delete its entry and update the feature docs it lists. Fixed and removed during the starter cleanup: the mailto-only contact form, the tracked `.wrangler/` files, the original owner's data and IDs, the `Locals` type errors, the stale web manifest and the generator drift. Gap IDs are not reused.
+
+Priority: **H** breaks a documented feature or leaks data · **M** config/feature exists but is not wired · **L** cleanup.
+
+| ID | P | Gap | Feature docs |
+| --- | --- | --- | --- |
+| G1 | M | The article page renders only title, hero, content and FAQ. `toc`, `related`, `prevNext`, `readingTime` flags and the `ShareLinks` component exist but are not rendered (`src/pages/blog/[...slug].astro`, `src/layouts/ArticleLayout.astro`). | [content-editing](features/content-editing.md), [layouts-and-navigation](features/layouts-and-navigation.md) |
+| G2 | M | Root-level collections (`base: ""`, `rootDetail`, `aggregateBase`) are modelled in `pages.mjs` and `getEntryUrl()`, but no root catch-all route exists and the `post` collection is disabled. | [collections](features/collections.md) |
+| G3 | M | `sitemap.xml` omits tag/category archives and blog pagination pages. `sitemapMinPosts` is never read. `@astrojs/sitemap` is installed but unused. | [sitemap-rss-robots](features/sitemap-rss-robots.md), [field-collections](features/field-collections.md) |
+| G5 | L | Schema components built but unused: `BreadcrumbSchema`, `CollectionSchema`, `PaginationSchema`, `SchemaLocalBusiness`, `SchemaSiteNavigation`. | [seo-and-schema](features/seo-and-schema.md) |
+| G6 | L | `CollectionLayout.astro`, `ServiceLayout.astro`, `CvLayout.astro` and `src/fetech.ts` are empty files. `BlockQuote`, `ShareLinks`, `AdSenseSlot` are not used anywhere. | [layouts-and-navigation](features/layouts-and-navigation.md) |
+| G7 | M | Taxonomy: tag/category archives are not paginated; subjects/topics/fields have no archive routes; `maxPerEntry` is never enforced; archive routes ignore `fieldCollections.*.enabled`; `noOfPostsPerPage` and `postsPerCollectionsPage` in `brand.mjs` are unused (page size comes from `pages.mjs`). | [field-collections](features/field-collections.md) |
+| G8 | L | Stale tooling: `scripts/generate-content-all.mjs` calls a missing `scaffold-pages.mjs`; `scripts/generate-live-config.mjs` reads `src/site/...` paths that do not exist in this layout. Neither is in `package.json`. | [config-and-generators](features/config-and-generators.md), [collections](features/collections.md) |
+| G12 | M | `public/sw.js` is generated but never registered, so service-worker caching and `offline.html` are inactive. | [cloudflare-and-pwa](features/cloudflare-and-pwa.md) |
+| G13 | M | `sitemap.xml`, `rss.xml`, `llms.txt`, `/search/` and the header nav are hard-coded to the `blog` collection. | [collections](features/collections.md), [llms-txt](features/llms-txt.md), [sitemap-rss-robots](features/sitemap-rss-robots.md), [search](features/search.md) |
+| G14 | L | Tag/category values are used verbatim as route params; `Astro` and `astro` would make two archives, and spaces make awkward URLs. | [field-collections](features/field-collections.md) |
+| G15 | L | `llms: "basic"` and `llms: "full"` on a page produce identical `llms.txt` output. | [llms-txt](features/llms-txt.md) |
+| G17 | M | A post with `index: false` gets a `noindex` meta tag but is still listed in `sitemap.xml`, `rss.xml`, `llms.txt` and search, because `getVisibleCollection()` filters only `draft`. | [sitemap-rss-robots](features/sitemap-rss-robots.md), [llms-txt](features/llms-txt.md), [search](features/search.md), [content-editing](features/content-editing.md) |
+| G19 | L | A post's frontmatter `canonicalUrl` is accepted by the schema but overridden by the blog route, which always sets the canonical to the post's own URL. | [content-editing](features/content-editing.md), [seo-and-schema](features/seo-and-schema.md) |
+| G20 | M | When the contact form is switched on, it has no captcha or per-visitor rate limit: only a honeypot, a same-origin check and a size cap protect `/api/contact/`, so bots can use up the monthly submission quota. `Turnstile.astro` exists but is not wired. | [contact-form](features/contact-form.md) |
+| G21 | M | The request sent to the email handler (headers `x-tenant-id`, `x-tenant-domain`, `Authorization`; body `template: "contact-form"`) is copied from the Pro edition's contact route. It has not been tested against the live handler. Registration is manual (WhatsApp or email to NViewsWEB); there is no self-service page. | [contact-form](features/contact-form.md) |

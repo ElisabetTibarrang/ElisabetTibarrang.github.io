@@ -1,0 +1,29 @@
+---
+import Logo from "./Logo.astro";
+import SearchButton from "./SearchButton.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+---
+
+<header
+  id="site-header"
+  class="site-header site-header-minimal"
+  role="banner"
+  itemscope
+  itemtype="https://schema.org/WPHeader"
+>
+  <div
+    class="site-header__inner max-w-site mi-auto flex ai-center jc-space-between gap p-05"
+  >
+    <Logo />
+
+    <div
+      class="header-actions flex ai-center gap-05"
+      aria-label="Header actions"
+    >
+      <SearchButton />
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<script src="../../scripts/features/header/index.js"></script>

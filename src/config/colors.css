@@ -1,0 +1,39 @@
+/* config/colors.css */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-primary: #a55aff;
+  --filter-primary: brightness(0) saturate(100%) invert(36%) sepia(21%) saturate(4861%) hue-rotate(239deg) brightness(113%) contrast(114%);
+  --color-secondary: #0516b9;
+  --filter-secondary: brightness(0) saturate(100%) invert(16%) sepia(100%) saturate(3581%) hue-rotate(237deg) brightness(68%) contrast(126%);
+
+  --color-accent: #f59e0b;
+
+  --color-success: #16a34a;
+  --color-error: #ef4444;
+  --color-alert: #f59e0b;
+  --color-note: #3b82f6;
+
+  --background-color: #ffffff;
+  --text-color: #000000;
+}
+
+[data-theme="dark"],
+.dark {
+  color-scheme: dark;
+
+  --color-primary: #d5b3ff;
+  --filter-primary: brightness(0) saturate(100%) invert(71%) sepia(21%) saturate(1016%) hue-rotate(213deg) brightness(102%) contrast(104%);
+  --color-secondary: #b4bcfd;
+  --filter-secondary: brightness(0) saturate(100%) invert(67%) sepia(44%) saturate(378%) hue-rotate(198deg) brightness(103%) contrast(98%);;
+  --color-accent: #fbbf24;
+
+  --color-success: #22c55e;
+  --color-error: #f87171;
+  --color-alert: #fbbf24;
+  --color-note: #60a5fa;
+
+  --background-color: #111111;
+  --text-color: #ffffff;
+}

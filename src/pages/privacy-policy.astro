@@ -1,0 +1,177 @@
+---
+// src/pages/privacy-policy.astro
+// Example privacy policy. It reads names and contact details from
+// src/config/brand.mjs. Have it reviewed for your own data practices and local
+// law (GDPR, UK GDPR, CCPA and others) before you publish it.
+import PageLayout from "@/layouts/PageLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import brandConfig from "@/config/brand.mjs";
+import { allPagesNormalized } from "@/config/pages.mjs";
+import { consentNeeded } from "@/utils/consent-needed.mjs";
+
+import "@/styles/pages/legal.css";
+
+const cfg = allPagesNormalized.privacyPolicy;
+
+const headProps = {
+  title: cfg.title,
+  description: cfg.description,
+  canonicalUrl: cfg.path,
+  type: "privacy",
+  index: cfg.index,
+};
+
+const org = brandConfig.organization || {};
+const company = org.legalName || org.name || brandConfig.siteName;
+const email = org.email || brandConfig.contact?.email || "";
+const address = [
+  org.address?.streetAddress,
+  org.address?.addressLocality,
+  org.address?.addressRegion,
+  org.address?.postalCode,
+  org.address?.addressCountry,
+]
+  .filter(Boolean)
+  .join(", ");
+
+const tracking = consentNeeded();
+const lastUpdated = brandConfig.legal?.updated || "";
+---
+
+<PageLayout headProps={headProps} pageType="WebPage" mainVariant="default">
+  <section class="legal-page max-w-content mi-auto p-1">
+    <Breadcrumb items={[{ label: cfg.title, href: cfg.path }]} />
+
+    <header class="my-1">
+      <h1>{cfg.title}</h1>
+      {lastUpdated && <p class="text-sm opacity-80">Last updated: {lastUpdated}</p>}
+    </header>
+
+    <div class="legal-note">
+      <p>
+        This is example text and not legal advice. Edit it in
+        <code>src/pages/privacy-policy.astro</code> so it describes what your site really does.
+      </p>
+    </div>
+
+    <div class="legal-content">
+      <p>
+        This policy explains what personal information {company} ("we", "us") collects when you
+        use {brandConfig.siteName}, why we collect it and what your choices are. We keep the
+        amount of information we collect as small as we can.
+      </p>
+
+      <h2>1. Who we are</h2>
+      <p>
+        {company} runs this website{brandConfig.siteUrl ? ` (${brandConfig.siteUrl})` : ""}.
+        {address && <>Our address is {address}. </>}
+        You can reach us at {email ? <a href={`mailto:${email}`}>{email}</a> : <a href="/contact-us/">our contact page</a>}.
+      </p>
+
+      <h2>2. Information we collect</h2>
+      <h3>Information you give us</h3>
+      <ul>
+        <li>
+          <strong>Contact form and email.</strong> Your name, email address, the subject and your
+          message, plus anything else you choose to tell us.
+        </li>
+      </ul>
+      <h3>Information collected automatically</h3>
+      <ul>
+        <li>
+          <strong>Technical data.</strong> Our hosting provider records your IP address, browser
+          type, the page you asked for and the time of the request. This is needed to deliver
+          the site and keep it secure.
+        </li>
+        <li>
+          <strong>Your choices.</strong> We store your cookie choice and your light or dark theme
+          in your browser. See our <a href="/cookie-policy/">Cookie Policy</a>.
+        </li>
+        {tracking.analytics && (
+          <li>
+            <strong>Analytics.</strong> With your consent, we collect anonymous statistics about
+            how the site is used, such as pages visited and the type of device.
+          </li>
+        )}
+        {tracking.ads && (
+          <li>
+            <strong>Advertising.</strong> With your consent, advertising partners may collect
+            information to show ads.
+          </li>
+        )}
+      </ul>
+
+      <h2>3. How we use information</h2>
+      <ul>
+        <li>To answer your messages and requests.</li>
+        <li>To run, protect and improve the website.</li>
+        <li>To meet legal obligations and to handle disputes.</li>
+      </ul>
+
+      <h2>4. Our legal basis (UK and EEA visitors)</h2>
+      <p>
+        We use your information because you asked us to (for example, when you send a message),
+        because we have a legitimate interest in running a secure website, because the law
+        requires it, or because you gave your consent. You can withdraw consent at any time.
+      </p>
+
+      <h2>5. Contact form and email</h2>
+      <p>
+        Messages sent through the contact form are delivered to us by an email handling service
+        that passes them to our inbox. We use the details only to reply to you. We do not add you to
+        a mailing list unless you ask us to.
+      </p>
+
+      <h2>6. Who we share information with</h2>
+      <p>We do not sell your personal information. We share it only with:</p>
+      <ul>
+        <li>our hosting provider (Cloudflare), which delivers this website;</li>
+        <li>the email handling service that delivers contact form messages;</li>
+        {tracking.analytics && <li>our analytics provider, if you accepted analytics cookies;</li>}
+        {tracking.ads && <li>advertising partners, if you accepted advertising cookies;</li>}
+        <li>authorities or advisers, when the law requires it or to protect our rights.</li>
+      </ul>
+
+      <h2>7. How long we keep information</h2>
+      <p>
+        We keep messages for as long as needed to deal with your request and for up to two years
+        afterwards. Server logs are kept for a short period set by our hosting provider.
+      </p>
+
+      <h2>8. Security</h2>
+      <p>
+        The site is served over HTTPS with strict security headers. No system is perfectly
+        secure, so please do not send sensitive information through the contact form.
+      </p>
+
+      <h2>9. Your rights</h2>
+      <p>
+        Depending on where you live, you may have the right to ask for a copy of your information,
+        to have it corrected or deleted, to object to or limit how we use it and to withdraw
+        consent. To use these rights, contact us using the details above. You may also complain
+        to your local data protection authority.
+      </p>
+
+      <h2>10. Children</h2>
+      <p>This website is not aimed at children under 13 and we do not knowingly collect their information.</p>
+
+      <h2>11. International transfers</h2>
+      <p>
+        Our providers may process information in countries other than yours. Where this happens we
+        rely on safeguards such as standard contractual clauses.
+      </p>
+
+      <h2>12. Changes to this policy</h2>
+      <p>
+        We may update this policy. The date at the top shows when it last changed. Significant
+        changes will be announced on this website.
+      </p>
+
+      <h2>13. Contact</h2>
+      <p>
+        Questions about this policy? Write to
+        {email ? <a href={`mailto:${email}`}> {email}</a> : <a href="/contact-us/"> our contact page</a>}.
+      </p>
+    </div>
+  </section>
+</PageLayout>

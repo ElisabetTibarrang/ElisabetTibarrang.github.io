@@ -1,0 +1,104 @@
+/* file: core/styles/main/utilities-flex-grid.css
+ * Generic flex and grid utilities used across the theme
+ */
+
+
+/* ───────── flex sizing (grow/shrink/basis) ───────── */
+
+.flex-1 { flex: 1 1 0%; }
+.flex-2 { flex: 2 1 0%; }
+.flex-auto { flex: 1 1 auto; }
+.flex-none { flex: 0 0 auto; }
+
+
+
+
+/* ───────── direction ───────── */
+
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+/* add to core/styles/main/utilities-flex-grid.css */
+.flex-row-reverse { flex-direction: row-reverse; }
+.flex-col-reverse { flex-direction: column-reverse; }
+
+
+/* ───────── wrap ───────── */
+
+.wrap { flex-wrap: wrap; }
+.no-wrap { flex-wrap: nowrap; }
+
+/* ───────── gap ───────── */
+/* keep your existing names, plus add a consistent scale */
+
+.gap, .gap-1 { gap: 1rem; }     /* default */
+.gap-0 { gap: 0; }
+.gap-02 { gap: 0.2rem; }
+.gap-03 { gap: 0.3rem; }
+.gap-05 { gap: 0.5rem; }
+.gap-2 { gap: 2rem; }
+
+.gap-row-0 { row-gap: 0; }
+.gap-row-05 { row-gap: 0.5rem; }
+.gap-row-1 { row-gap: 1rem; }
+.gap-row-2 { row-gap: 2rem; }
+
+.gap-col-0 { column-gap: 0; }
+.gap-col-05 { column-gap: 0.5rem; }
+.gap-col-1 { column-gap: 1rem; }
+.gap-col-2 { column-gap: 2rem; }
+
+/* ───────── order ───────── */
+
+.order-1 { order: 1; }
+.order-2 { order: 2; }
+.order-3 { order: 3; }
+
+/* ────────────────────────────────────────────────────────── */
+/* responsive helpers                                         */
+/* breakpoints match your system:                             */
+/* sm: <=768, md: 768–1023, lg: 1024–1279, full: >=1280       */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+	/* sm- [ only small screens ] */
+	.sm-flex-col { flex-direction: column !important; }
+	.sm-flex-row { flex-direction: row !important; }
+	.sm-wrap { flex-wrap: wrap !important; }
+	.sm-no-wrap { flex-wrap: nowrap !important; }
+	.sm-gap-0 { gap: 0 !important; }
+	.sm-gap-05 { gap: 0.5rem !important; }
+	.sm-gap-1 { gap: 1rem !important; }
+}
+
+@media (min-width: 768px) {
+	/* big- [ above small screens ] */
+	.big-flex-1 { flex: 1 1 0% !important; }
+	.big-flex-row { flex-direction: row !important; }
+	.big-flex-col { flex-direction: column !important; }
+	.big-wrap { flex-wrap: wrap !important; }
+	.big-no-wrap { flex-wrap: nowrap !important; }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+	/* md- [ only medium screens - tablets ] */
+	.md-wrap { flex-wrap: wrap !important; }
+	.md-no-wrap { flex-wrap: nowrap !important; }
+	.md-flex-row { flex-direction: row !important; }
+	.md-flex-col { flex-direction: column !important; }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+	/* lg- [ only large screens ] */
+	.lg-flex-row { flex-direction: row !important; }
+	.lg-flex-col { flex-direction: column !important; }
+	.lg-wrap { flex-wrap: wrap !important; }
+	.lg-no-wrap { flex-wrap: nowrap !important; }
+}
+
+@media (min-width: 1280px) {
+	/* full- [ only above 1280px wide screen ] */
+	.full-flex-row { flex-direction: row !important; }
+	.full-flex-col { flex-direction: column !important; }
+	.full-wrap { flex-wrap: wrap !important; }
+	.full-no-wrap { flex-wrap: nowrap !important; }
+}

@@ -1,0 +1,161 @@
+---
+import type { HeadProps } from "@/types/HeadProps";
+import brandConfig from "@/config/brand.mjs";
+
+const headProps = Astro.props as HeadProps;
+
+const {
+  title,
+  description,
+  canonicalUrl,
+  image,
+  imageAlt,
+  imageWidth,
+  imageHeight,
+  publishedAtISO,
+  updatedAtISO,
+  authors = [],
+  keywords = [],
+} = headProps;
+
+const type = headProps.type || "webpage";
+
+const robots = [
+  headProps.index === false || headProps.draft ? "noindex" : "index",
+  headProps.follow === false ? "nofollow" : "follow",
+  headProps.noarchive && "noarchive",
+  headProps.nosnippet && "nosnippet",
+  headProps.noimageindex && "noimageindex",
+  headProps.nocache && "nocache",
+].filter(Boolean);
+
+const isArticle = [
+  "article",
+  "publication",
+  "service",
+  "review",
+].includes(String(type));
+
+const ogType = isArticle ? "article" : "website";
+
+const twitterSite = brandConfig.socialLinks?.x || "";
+
+// Preload the same-site path, not the absolute URL, so local development does
+// not fetch the image from the production domain.
+let siteOrigin = "";
+try {
+  siteOrigin = new URL(brandConfig.siteUrl).origin;
+} catch {}
+const preloadHref =
+  image && siteOrigin && String(image).startsWith(siteOrigin)
+    ? String(image).slice(siteOrigin.length) || "/"
+    : image;
+---
+
+<title>{title}</title>
+<meta name="generator" content={Astro.generator} />
+
+<!-- Favicons -->
+<link rel="icon" href={brandConfig.icons?.favicon || "/favicon.ico"} sizes="any" />
+<link rel="icon" href={brandConfig.icons?.faviconSvg || "/favicon.svg"} type="image/svg+xml" />
+<link rel="apple-touch-icon" href={brandConfig.icons?.appleTouchIcon || "/apple-touch-icon.png"} />
+<link rel="manifest" href={brandConfig.icons?.webManifest || "/manifest.webmanifest"} />
+
+<!-- Browser -->
+<meta name="theme-color" content={brandConfig.themeColor || "#ffffff"} />
+<meta name="color-scheme" content="light dark" />
+<meta name="application-name" content={brandConfig.siteName} />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+
+<!-- Robots -->
+{!import.meta.env.DEV && (
+  <meta name="robots" content={robots.join(", ")} />
+)}
+
+<!-- Canonical -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- SEO -->
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+{keywords.length > 0 && (
+  <meta name="keywords" content={keywords.join(", ")} />
+)}
+
+{authors.map((author) => (
+  <meta name="author" content={author.name} />
+))}
+
+<!-- Open Graph -->
+<meta property="og:type" content={ogType} />
+<meta property="og:locale" content={brandConfig.locale || "en_US"} />
+<meta property="og:site_name" content={brandConfig.siteName} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+
+{image && <meta property="og:image" content={image} />}
+{imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+{imageWidth && (
+  <meta property="og:image:width" content={String(imageWidth)} />
+)}
+{imageHeight && (
+  <meta property="og:image:height" content={String(imageHeight)} />
+)}
+
+{isArticle && publishedAtISO && (
+  <meta property="article:published_time" content={publishedAtISO} />
+)}
+
+{isArticle && updatedAtISO && (
+  <meta property="article:modified_time" content={updatedAtISO} />
+)}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+{twitterSite && (
+  <meta name="twitter:site" content={twitterSite} />
+)}
+
+{image && (
+  <meta name="twitter:image" content={image} />
+)}
+
+{imageAlt && (
+  <meta name="twitter:image:alt" content={imageAlt} />
+)}
+
+<!-- Preload social image -->
+{image && headProps.preloadImage && (
+  <link
+    rel="preload"
+    as="image"
+    href={preloadHref}
+    fetchpriority="high"
+  />
+)}
+
+<!-- RSS -->
+{brandConfig.rss && (
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title={`${brandConfig.siteName} RSS Feed`}
+    href={brandConfig.rssUrl || "/rss.xml"}
+  />
+)}
+
+<!-- Sitemap -->
+{brandConfig.sitemap && (
+  <link
+    rel="sitemap"
+    type="application/xml"
+    href="/sitemap.xml"
+  />
+)}

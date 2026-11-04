@@ -1,0 +1,90 @@
+---
+// src/layouts/PageLayout.astro
+import BaseLayout from "./BaseLayout.astro";
+
+import type { HeadProps } from "@/types/HeadProps";
+import brandConfig from "@/config/brand.mjs";
+import { normalizeHeadProps } from "@/utils/head";
+
+import WebPageSchema from "@/components/schema/WebPageSchema.astro";
+
+type HeaderVariant = "default" | "minimal" | "none";
+type FooterVariant = "default" | "minimal" | "none";
+type MainVariant = "default" | "article" | "wide" | "blank";
+
+type WebPageSchemaType =
+  | "WebPage"
+  | "AboutPage"
+  | "ContactPage"
+  | "CollectionPage"
+  | "SearchResultsPage"
+  | "ProfilePage";
+
+interface Props {
+  headProps: HeadProps;
+
+  pageType?: WebPageSchemaType;
+
+  lang?: string;
+  theme?: "light" | "dark" | "auto";
+
+  headerVariant?: HeaderVariant;
+  footerVariant?: FooterVariant;
+  mainVariant?: MainVariant;
+}
+
+const {
+  headProps,
+  pageType = "WebPage",
+
+  lang = "en",
+  theme = "light",
+
+  headerVariant = "default",
+  footerVariant = "default",
+  mainVariant = "default",
+} = Astro.props as Props;
+
+const normalized = normalizeHeadProps(
+  {
+    ...headProps,
+    type: headProps.type || "webpage",
+  },
+  Astro.url.pathname,
+  brandConfig
+);
+
+const {
+  headProps: resolvedHeadProps,
+  title,
+  description,
+  canonicalUrl,
+  image,
+  publishedAtISO,
+  updatedAtISO,
+} = normalized;
+---
+
+<BaseLayout
+  headProps={resolvedHeadProps}
+  lang={lang}
+  theme={theme}
+  headerVariant={headerVariant}
+  footerVariant={footerVariant}
+  mainVariant={mainVariant}
+>
+  <slot />
+
+  <WebPageSchema
+    slot="body-end"
+    type={pageType}
+    title={title}
+    description={description}
+    url={canonicalUrl}
+    image={image}
+    datePublished={publishedAtISO}
+    dateModified={updatedAtISO}
+  />
+
+  <slot name="body-end" slot="body-end" />
+</BaseLayout>

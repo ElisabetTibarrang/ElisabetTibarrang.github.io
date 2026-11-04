@@ -1,0 +1,155 @@
+/* ==========================================
+   SVG ICONS
+========================================== */
+
+/* Wrapper */
+
+.svg-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+  line-height: 0;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* SVG */
+
+.svg-icon__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* IMG */
+
+.svg-icon__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  image-rendering: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ==========================================
+   Mono SVG coloring
+========================================== */
+
+.svg-icon__svg path:not([fill="none"]),
+.svg-icon__svg circle:not([fill="none"]),
+.svg-icon__svg rect:not([fill="none"]),
+.svg-icon__svg ellipse:not([fill="none"]),
+.svg-icon__svg polygon:not([fill="none"]),
+.svg-icon__svg polyline:not([fill="none"]) {
+  fill: currentColor;
+}
+
+/* Stroke-based icons */
+
+.svg-icon__svg [stroke]:not([stroke="none"]) {
+  stroke: currentColor;
+}
+
+/* Preserve explicit none */
+
+.svg-icon__svg [fill="none"] {
+  fill: none !important;
+}
+
+.svg-icon__svg [stroke="none"] {
+  stroke: none !important;
+}
+
+/* ==========================================
+   Rendering modes
+========================================== */
+
+/* Sprite / Inline SVG inherit text color */
+
+.svg-icon[data-source="sprite"] .svg-icon__svg,
+.svg-icon[data-source="inline"] .svg-icon__svg {
+  color: inherit;
+}
+
+/* Mono URL icons */
+
+.svg-icon[data-kind="mono"][data-source="local"] .svg-icon__img,
+.svg-icon[data-kind="mono"][data-source="external"] .svg-icon__img {
+  transition: filter 0.2s ease;
+}
+
+/* Brand icons always preserve original colors */
+
+.svg-icon[data-kind="brand"] .svg-icon__img {
+  filter: none !important;
+}
+
+/* ==========================================
+   Sprite Container
+========================================== */
+
+.icon-sprite {
+  display: none;
+}
+
+/* ==========================================
+   Filter Utilities
+   Generated filter variables are defined
+   in src/styles/main/colors.css
+========================================== */
+
+.filter-none {
+  filter: none;
+}
+
+.filter-black {
+  filter: var(--filter-black);
+}
+
+.filter-white {
+  filter: var(--filter-white);
+}
+
+.filter-primary {
+  filter: var(--filter-primary);
+}
+
+.filter-primary-dark {
+  filter: var(--filter-primary-dark);
+}
+
+.filter-secondary {
+  filter: var(--filter-secondary);
+}
+
+.filter-accent {
+  filter: var(--filter-accent);
+}
+
+.filter-success {
+  filter: var(--filter-success);
+}
+
+.filter-error {
+  filter: var(--filter-error);
+}
+
+.filter-alert {
+  filter: var(--filter-alert);
+}
+
+.filter-note {
+  filter: var(--filter-note);
+}
+
+.filter-base {
+  filter: var(--filter-base);
+}
+
+.filter-base-invert {
+  filter: var(--filter-base-invert);
+}

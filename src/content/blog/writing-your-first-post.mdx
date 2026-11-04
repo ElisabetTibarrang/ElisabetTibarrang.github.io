@@ -1,0 +1,54 @@
+---
+title: "Writing your first post"
+description: "A dummy post that lists the front matter fields and how images work."
+slug: "writing-your-first-post"
+
+index: true
+draft: false
+featured: false
+
+publishedDate: "2026-11-03"
+lastModified: "2026-11-03"
+
+keywords:
+  - front matter
+  - images
+
+tags:
+  - getting-started
+  - writing
+
+categories:
+  - guides
+
+heroImage: "/images/featured.png"
+heroImageAlt: "Featured image"
+heroImageTitle: "Featured image"
+
+faq:
+  - question: "Do I have to use the shared image?"
+    answer: "No. Point heroImage at any file in public/ or at a full URL."
+
+toc: true
+related: []
+---
+
+## Front matter fields
+
+| Field | What it does |
+| --- | --- |
+| `title`, `description` | Page heading and search-engine snippet |
+| `slug` | The URL: `/blog/<slug>/` |
+| `publishedDate` | Sort order and the date shown on cards |
+| `draft: true` | Hides the post from the site |
+| `index: false` | Adds a `noindex` tag |
+| `tags`, `categories` | Create the archive pages under `/tags/` and `/categories/` |
+| `heroImage` | Image shown on the post and in link previews |
+
+## Images
+
+All dummy posts use `/images/featured.png`. To use your own picture, put it in
+`public/images/` and change `heroImage` to `/images/your-picture.png`. Keep
+`heroImageAlt` meaningful: it is read aloud by screen readers.
+
+> A short quote renders like this. Use it for a pull quote or a citation.

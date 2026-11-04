@@ -1,0 +1,85 @@
+---
+import { absoluteUrl } from "@/utils/head";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items?: BreadcrumbItem[];
+}
+
+const { items = [] } = Astro.props;
+
+if (!items.length) {
+  items.unshift({
+    label: "Home",
+    href: "/",
+  });
+}
+---
+
+{items.length > 1 && (
+<nav
+  class="breadcrumb text-sm my-1"
+  aria-label="Breadcrumb"
+  itemscope
+  itemtype="https://schema.org/BreadcrumbList"
+>
+  <ol class="flex wrap gap-03 no-bullets">
+
+    {items.map((item,index)=>{
+
+      const last=index===items.length-1;
+
+      return (
+
+<li
+itemscope
+itemprop="itemListElement"
+itemtype="https://schema.org/ListItem"
+>
+
+{index>0 &&
+<span aria-hidden="true">/</span>
+}
+
+{last ? (
+
+<span
+itemprop="name"
+aria-current="page"
+>
+{item.label}
+</span>
+
+) : (
+
+<a
+href={item.href}
+itemprop="item"
+>
+
+<span itemprop="name">
+{item.label}
+</span>
+
+</a>
+
+)}
+
+<meta
+itemprop="position"
+content={String(index+1)}
+/>
+
+</li>
+
+);
+
+    })}
+
+  </ol>
+</nav>
+)}

@@ -1,0 +1,51 @@
+name: Bug report
+description: Something does not work as the docs say
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Please read `docs/features/` and `docs/known-gaps.md` and search the open issues first.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect and what did you see instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps, starting from a fresh clone if you can.
+      placeholder: |
+        1. pnpm install
+        2. pnpm build
+        3. Open /search/ and press Enter
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where does it happen?
+      options:
+        - pnpm dev
+        - After pnpm build (pnpm preview)
+        - On my deployed site
+        - Only in one browser
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Output of `node -v`, `pnpm -v` and your browser and OS.
+      placeholder: "node v22.12.0, pnpm 11.9.0, Chrome 130 on Windows 11"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console output or screenshot
+      description: Paste terminal or browser console messages. Remove secrets and tokens first.
+      render: shell

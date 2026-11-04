@@ -1,0 +1,140 @@
+/* ==========================================
+   COOKIE CONSENT BAR
+   A small bar at the bottom of the screen: text, Decline, Accept.
+========================================== */
+
+.consent-bar {
+  position: fixed;
+  z-index: 1000;
+  left: 1rem;
+  right: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 42rem;
+  margin-inline: auto;
+  padding: 0.85rem 1rem;
+  background: var(--base-00);
+  color: var(--text-color);
+  border: 1px solid var(--base-20);
+  border-radius: 0.9rem;
+  box-shadow: 0 12px 34px rgb(0 0 0 / 0.22);
+}
+
+.consent-bar.is-hidden,
+.consent-toggler.is-hidden {
+  display: none;
+}
+
+.consent-bar[data-pos="bottom-left"] {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.consent-bar[data-pos="bottom-right"] {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.consent-text {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.consent-text a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.consent-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+}
+
+.consent-btn {
+  min-height: 2.5rem;
+  padding: 0.4rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 0.6rem;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.consent-btn:focus-visible {
+  outline: 3px solid var(--primary-base);
+  outline-offset: 2px;
+}
+
+.consent-btn--primary {
+  background: var(--primary-base);
+  border-color: var(--primary-base);
+  color: #fff;
+}
+
+.consent-btn--primary:hover {
+  filter: brightness(0.92);
+}
+
+.consent-btn--ghost {
+  background: transparent;
+  border-color: var(--base-30);
+  color: inherit;
+}
+
+.consent-btn--ghost:hover {
+  background: var(--base-05);
+}
+
+/* Small round button that reopens the bar after a choice was made. */
+.consent-toggler {
+  position: fixed;
+  z-index: 999;
+  bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  background: var(--base-00);
+  color: var(--text-color);
+  border: 1px solid var(--base-20);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
+}
+
+.consent-toggler[data-pos="bottom"],
+.consent-toggler[data-pos="bottom-right"] {
+  right: 0.75rem;
+}
+
+.consent-toggler[data-pos="bottom-left"] {
+  left: 0.75rem;
+}
+
+.consent-toggler:focus-visible {
+  outline: 3px solid var(--primary-base);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .consent-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    left: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .consent-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

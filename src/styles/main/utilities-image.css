@@ -1,0 +1,81 @@
+/* ───────── aspect ratio ───────── */
+
+.ar-1-1    { aspect-ratio: 1 / 1; }
+.ar-4-3    { aspect-ratio: 4 / 3; }
+.ar-3-2    { aspect-ratio: 3 / 2; }
+.ar-16-9   { aspect-ratio: 16 / 9; }
+.ar-21-9   { aspect-ratio: 21 / 9; }
+
+.ar-5-1    { aspect-ratio: 5 / 1; }
+.ar-6-1    { aspect-ratio: 6 / 1; }
+
+.ar-auto   { aspect-ratio: auto; }
+.ar-unset  { aspect-ratio: unset !important; }
+
+/* ───────── object-fit / position ───────── */
+
+.obj-cover    { object-fit: cover; }
+.obj-contain  { object-fit: contain; }
+.obj-fill     { object-fit: fill; }
+.obj-scale    { object-fit: scale-down; }
+.obj-none     { object-fit: none; }
+
+.obj-center { object-position:center; }
+
+.obj-top    { object-position:top; }
+.obj-right  { object-position:right; }
+.obj-bottom { object-position:bottom; }
+.obj-left   { object-position:left; }
+
+.obj-top-left     { object-position:left top; }
+.obj-top-right    { object-position:right top; }
+
+.obj-bottom-left  { object-position:left bottom; }
+.obj-bottom-right { object-position:right bottom; }
+
+
+.opacity-0 {
+	opacity: 0;
+}	
+.opacity-02{
+	opacity: 0.2;
+}
+.opacity-05 {
+	opacity: 0.5;
+}
+.opacity-15 {
+	opacity: 0.15;
+}
+.opacity-50{
+	opacity: 0.5;
+}
+.opacity-75{
+	opacity: 0.75;
+}
+.opacity-90{
+	opacity: 0.9;
+}
+@media (max-width: 768px) {
+	/* sm- [ only small screens]*/
+	
+}
+@media (min-width: 1280px) {
+  /* full- [ only above 1280px wide screen] */
+}
+
+
+@media (min-width: 768px) {
+  /* 
+   * above small screens
+   * prefix: big- 
+   */
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* md- [ only medium screens - tablets ] */
+	.md-opacity-50{
+		opacity: 0.5;
+	}
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  	/* lg- [ only large screens - above tablet version desktops ] */
+}

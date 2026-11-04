@@ -1,0 +1,329 @@
+.bg,
+.hover-bg:hover {
+  background-color: var(--background-color);
+}
+
+.bg-transparent,
+.hover-bg-transparent:hover,
+.bg-col-ff,
+.hover-bg-col-ff:hover {
+  background-color: transparent;
+}
+
+/* Background: base */
+.bg-base-00,
+.hover-bg-base-00:hover {
+  background-color: var(--base-00);
+}
+
+.bg-base-05,
+.hover-bg-base-05:hover {
+  background-color: var(--base-05);
+}
+
+.bg-base-10,
+.hover-bg-base-10:hover {
+  background-color: var(--base-10);
+}
+
+.bg-base-20,
+.hover-bg-base-20:hover {
+  background-color: var(--base-20);
+}
+
+.bg-base-40 {
+  background-color: var(--base-40);
+}
+
+.bg-base-50 {
+  background-color: var(--base-50);
+}
+
+.bg-base-80 {
+  background-color: var(--base-80);
+}
+
+.bg-base-90 {
+  background-color: var(--base-90);
+}
+
+.bg-base-100,
+.hover-bg-base-100:hover {
+  background-color: var(--base-100);
+}
+
+.bg-base-100-6 {
+  background-color: rgb(0 0 0 / 60%);
+}
+
+/* Background: primary */
+.bg-primary,
+.focus-bg-primary:focus,
+.focus-vis-bg-primary:focus-visible,
+.hover-bg-primary:hover {
+  background-color: var(--primary-base);
+}
+
+.bg-primary-dark,
+.focus-bg-primary-dark:focus,
+.focus-vis-bg-primary-dark:focus-visible,
+.hover-bg-primary-dark:hover {
+  background-color: var(--primary-dark);
+}
+
+.bg-primary-darker,
+.focus-bg-primary-darker:focus,
+.focus-vis-bg-primary-darker:focus-visible,
+.hover-bg-primary-darker:hover {
+  background-color: var(--primary-darker);
+}
+
+.bg-primary-darker-x,
+.focus-bg-primary-darker-x:focus,
+.focus-vis-bg-primary-darker-x:focus-visible,
+.hover-bg-primary-darker-x:hover {
+  background-color: var(--primary-darker-x);
+}
+
+.bg-primary-light,
+.focus-bg-primary-light:focus,
+.focus-vis-bg-primary-light:focus-visible,
+.hover-bg-primary-light:hover {
+  background-color: var(--primary-light);
+}
+
+.bg-primary-lighter,
+.focus-bg-primary-lighter:focus,
+.focus-vis-bg-primary-lighter:focus-visible,
+.hover-bg-primary-lighter:hover {
+  background-color: var(--primary-lighter);
+}
+
+.bg-primary-lighter-x,
+.focus-bg-primary-lighter-x:focus,
+.focus-vis-bg-primary-lighter-x:focus-visible,
+.hover-bg-primary-lighter-x:hover {
+  background-color: var(--primary-lighter-x);
+}
+
+/* Background: secondary */
+.bg-secondary-base,
+.hover-bg-secondary-base:hover {
+  background-color: var(--secondary-base);
+}
+
+.bg-secondary-dark,
+.hover-bg-secondary-dark:hover {
+  background-color: var(--secondary-dark);
+}
+
+.bg-secondary-darker,
+.hover-bg-secondary-darker:hover {
+  background-color: var(--secondary-darker);
+}
+
+.bg-secondary-darker-x,
+.hover-bg-secondary-darker-x:hover {
+  background-color: var(--secondary-darker-x);
+}
+
+.bg-secondary-light,
+.hover-bg-secondary-light:hover {
+  background-color: var(--secondary-light);
+}
+
+.bg-secondary-lighter,
+.hover-bg-secondary-lighter:hover {
+  background-color: var(--secondary-lighter);
+}
+
+.bg-secondary-lighter-x,
+.hover-bg-secondary-lighter-x:hover {
+  background-color: var(--secondary-lighter-x);
+}
+
+/* Background: status */
+.bg-success,
+.hover-bg-success:hover {
+  background-color: var(--success);
+}
+
+.bg-success-light {
+  background-color: var(--success-light, lightgreen);
+}
+
+.bg-success-dark {
+  background-color: var(--success-dark, green);
+}
+
+.bg-error,
+.hover-bg-error:hover {
+  background-color: var(--error);
+}
+
+.bg-error-light {
+  background-color: var(--error-light, lightcoral);
+}
+
+.bg-alert-light {
+  background-color: var(--alert-light, lightyellow);
+}
+
+.bg-note-light {
+  background-color: var(--note-light, lightblue);
+}
+
+/* Text colors */
+.col-text,
+.text-color,
+.focus-col-text:focus,
+.focus-vis-col-text:focus-visible,
+.hover-col-text:hover {
+  color: var(--text-color);
+}
+
+.col-inherit {
+  color: inherit;
+}
+
+.col-current,
+.hover-col-current:hover {
+  color: currentColor;
+}
+
+/* Text: base */
+.col-base-00,
+.focus-col-base-00:focus,
+.focus-vis-col-base-00:focus-visible,
+.hover-col-base-00:hover {
+  color: var(--base-00);
+}
+
+.col-base-05,
+.focus-col-base-05:focus,
+.focus-vis-col-base-05:focus-visible,
+.hover-col-base-05:hover {
+  color: var(--base-05);
+}
+
+.col-base-10,
+.focus-col-base-10:focus,
+.focus-vis-col-base-10:focus-visible,
+.hover-col-base-10:hover {
+  color: var(--base-10);
+}
+
+.col-base-20 {
+  color: var(--base-20);
+}
+
+.col-base-50,
+.focus-col-base-50:focus,
+.focus-vis-col-base-50:focus-visible,
+.hover-col-base-50:hover {
+  color: var(--base-50);
+}
+
+.col-base-80,
+.focus-col-base-80:focus,
+.focus-vis-col-base-80:focus-visible,
+.hover-col-base-80:hover {
+  color: var(--base-80);
+}
+
+.col-base-90,
+.focus-col-base-90:focus,
+.focus-vis-col-base-90:focus-visible,
+.hover-col-base-90:hover {
+  color: var(--base-90);
+}
+
+.col-base-95,
+.focus-col-base-95:focus,
+.focus-vis-col-base-95:focus-visible,
+.hover-col-base-95:hover {
+  color: var(--base-95);
+}
+
+.col-base-100,
+.focus-col-base-100:focus,
+.focus-vis-col-base-100:focus-visible,
+.hover-col-base-100:hover {
+  color: var(--base-100);
+}
+
+/* Text: primary */
+.col-primary,
+.focus-col-primary:focus,
+.focus-vis-col-primary:focus-visible,
+.hover-col-primary:hover {
+  color: var(--primary-base);
+}
+
+.col-primary-dark,
+.focus-col-primary-dark:focus,
+.focus-vis-col-primary-dark:focus-visible,
+.hover-col-primary-dark:hover {
+  color: var(--primary-dark);
+}
+
+.col-primary-darker,
+.focus-col-primary-darker:focus,
+.focus-vis-col-primary-darker:focus-visible,
+.hover-col-primary-darker:hover {
+  color: var(--primary-darker);
+}
+
+.col-primary-light,
+.focus-col-primary-light:focus,
+.focus-vis-col-primary-light:focus-visible,
+.hover-col-primary-light:hover {
+  color: var(--primary-light);
+}
+
+.col-primary-lighter,
+.focus-col-primary-lighter:focus,
+.focus-vis-col-primary-lighter:focus-visible,
+.hover-col-primary-lighter:hover {
+  color: var(--primary-lighter);
+}
+
+/* Text: secondary */
+.col-secondary,
+.focus-col-secondary:focus,
+.focus-vis-col-secondary:focus-visible,
+.hover-col-secondary:hover {
+  color: var(--secondary-base);
+}
+
+/* Text: status */
+.col-error {
+  color: var(--error);
+}
+
+.col-success-dark {
+  color: var(--success-dark, green);
+}
+
+/* SVG fill */
+.fill-base-00,
+.hover-fill-base-00:hover,
+.hover-fill-base-00:hover .icon-primary {
+  fill: var(--base-00);
+}
+
+.fill-base-100,
+.hover-fill-base-100:hover,
+.hover-fill-base-100:hover .icon-primary {
+  fill: var(--base-100);
+}
+
+.fill-primary,
+.hover-fill-primary:hover {
+  fill: var(--primary-base);
+}
+
+.fill-primary-lighter,
+.hover-fill-primary-lighter:hover {
+  fill: var(--primary-lighter);
+}

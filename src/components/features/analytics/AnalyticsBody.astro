@@ -1,0 +1,31 @@
+---
+// src/components/features/analytics/AnalyticsBody.astro
+import analyticsConfig from "@/config/analytics.mjs";
+
+const isProd = import.meta.env.PROD;
+
+const enabled =
+  analyticsConfig.enabled === true &&
+  (analyticsConfig.prodOnly !== true || isProd);
+
+const gtmId = String(analyticsConfig.googleTag?.id || "").trim();
+
+const useGTM =
+  enabled &&
+  analyticsConfig.googleTag?.enabled === true &&
+  analyticsConfig.googleTag?.consentRequired === false &&
+  /^GTM-[A-Z0-9]+$/i.test(gtmId);
+---
+
+{useGTM && (
+  <noscript>
+    <iframe
+      src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+      height="0"
+      width="0"
+      class="display-none invisible"
+      aria-hidden="true"
+      tabindex="-1"
+    ></iframe>
+  </noscript>
+)}

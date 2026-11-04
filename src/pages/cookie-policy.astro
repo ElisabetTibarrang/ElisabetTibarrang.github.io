@@ -1,0 +1,146 @@
+---
+// src/pages/cookie-policy.astro
+// Example cookie policy. The cookie name, lifetime and the analytics/advertising
+// rows follow src/config/consent.mjs, analytics.mjs and ads.mjs, so the page
+// matches what the site actually does. Review it before you publish.
+import PageLayout from "@/layouts/PageLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import brandConfig from "@/config/brand.mjs";
+import consentConfig from "@/config/consent.mjs";
+import { allPagesNormalized } from "@/config/pages.mjs";
+import { consentNeeded } from "@/utils/consent-needed.mjs";
+
+import "@/styles/pages/legal.css";
+
+const cfg = allPagesNormalized.cookiePolicy;
+
+const headProps = {
+  title: cfg.title,
+  description: cfg.description,
+  canonicalUrl: cfg.path,
+  type: "privacy",
+  index: cfg.index,
+};
+
+const org = brandConfig.organization || {};
+const email = org.email || brandConfig.contact?.email || "";
+const tracking = consentNeeded();
+const usesConsent = consentConfig.enabled === true && tracking.any;
+const lastUpdated = brandConfig.legal?.updated || "";
+---
+
+<PageLayout headProps={headProps} pageType="WebPage" mainVariant="default">
+  <section class="legal-page max-w-content mi-auto p-1">
+    <Breadcrumb items={[{ label: cfg.title, href: cfg.path }]} />
+
+    <header class="my-1">
+      <h1>{cfg.title}</h1>
+      {lastUpdated && <p class="text-sm opacity-80">Last updated: {lastUpdated}</p>}
+    </header>
+
+    <div class="legal-note">
+      <p>
+        This is example text and not legal advice. It lists what this starter site uses today;
+        edit <code>src/pages/cookie-policy.astro</code> when you add analytics, ads or other services.
+      </p>
+    </div>
+
+    <div class="legal-content">
+      <h2>1. What cookies are</h2>
+      <p>
+        Cookies are small text files that a website stores on your device. We also use similar
+        browser storage (such as local storage) to remember simple settings. Some are needed
+        for the site to work; others are optional and used only with your consent.
+      </p>
+
+      <h2>2. What we use</h2>
+      <div class="legal-table-wrap">
+        <table class="legal-table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Purpose</th>
+              <th scope="col">Type</th>
+              <th scope="col">Lasts</th>
+            </tr>
+          </thead>
+          <tbody>
+            {usesConsent && (
+              <tr>
+                <td><code>{consentConfig.cookieName}</code></td>
+                <td>Remembers your cookie choice so we do not ask again on every page.</td>
+                <td>Necessary (cookie)</td>
+                <td>{consentConfig.ttlDays} days</td>
+              </tr>
+            )}
+            <tr>
+              <td><code>theme</code></td>
+              <td>Remembers whether you chose the light or dark theme.</td>
+              <td>Preference (local storage, stays on your device)</td>
+              <td>Until you clear it</td>
+            </tr>
+            {tracking.analytics && (
+              <tr>
+                <td>Analytics cookies</td>
+                <td>Anonymous statistics about how the site is used, so we can improve it.</td>
+                <td>Optional, set only if you accept</td>
+                <td>Set by the analytics provider</td>
+              </tr>
+            )}
+            {tracking.ads && (
+              <tr>
+                <td>Advertising cookies</td>
+                <td>Show and measure ads.</td>
+                <td>Optional, set only if you accept</td>
+                <td>Set by the advertising provider</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      {!tracking.any && (
+        <p>
+          This site does not currently use analytics or advertising cookies, so it does not show a
+          cookie banner.
+        </p>
+      )}
+
+      <h2>3. Your choices</h2>
+      {usesConsent ? (
+        <p>
+          When you first visit, a bar asks you to accept or decline optional cookies. You can change
+          your mind at any time with the small shield button in the corner of the page.
+        </p>
+      ) : (
+        <p>
+          There are no optional cookies to switch on or off. If we add some, we will ask for your
+          consent first.
+        </p>
+      )}
+      <p>
+        You can also block or delete cookies in your browser settings. Blocking necessary cookies or
+        storage may stop parts of the site, such as the theme switch, from working.
+      </p>
+
+      <h2>4. Third-party cookies</h2>
+      <p>
+        {tracking.any
+          ? "Cookies set by analytics or advertising providers are controlled by those providers. See their own policies for details."
+          : "We do not set third-party cookies at the moment."}
+      </p>
+
+      <h2>5. Changes</h2>
+      <p>
+        We may update this policy when our use of cookies changes. The date at the top shows the
+        latest version. For how we handle personal information, read our
+        <a href="/privacy-policy/"> Privacy Policy</a>.
+      </p>
+
+      <h2>6. Contact</h2>
+      <p>
+        Questions about cookies? Write to
+        {email ? <a href={`mailto:${email}`}> {email}</a> : <a href="/contact-us/"> our contact page</a>}.
+      </p>
+    </div>
+  </section>
+</PageLayout>

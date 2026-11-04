@@ -1,0 +1,74 @@
+---
+// src/components/features/consent/ConsentBanner.astro
+// A small cookie bar (Accept / Decline). Rendered only when a vendor that needs
+// consent is on; see src/utils/consent-needed.mjs and src/config/consent.mjs.
+import consentConfig from "@/config/consent.mjs";
+import { consentNeeded } from "@/utils/consent-needed.mjs";
+import SvgIcon from "@/components/svg/SvgIcon.astro";
+import "@/styles/components/consent-banner.css";
+
+const needed = consentNeeded();
+const show = consentConfig.enabled === true && needed.any;
+
+const positions = ["bottom", "bottom-left", "bottom-right"];
+const position = positions.includes(consentConfig.position)
+  ? consentConfig.position
+  : "bottom";
+
+const purpose =
+  needed.analytics && needed.ads
+    ? "measure visits and show ads"
+    : needed.ads
+      ? "show ads"
+      : "measure how the site is used";
+
+const cfg = {
+  cookieName: consentConfig.cookieName || "site_consent",
+  version: consentConfig.version || "1",
+  ttlDays: Number(consentConfig.ttlDays || 180),
+  googleConsentMode: consentConfig.googleConsentMode || {},
+};
+
+const configData = encodeURIComponent(JSON.stringify(cfg));
+---
+
+{show && (
+  <>
+    <div id="consent-root" data-config={configData} hidden></div>
+
+    <div
+      id="consent-bar"
+      class="consent-bar is-hidden"
+      data-pos={position}
+      role="region"
+      aria-label="Cookie consent"
+    >
+      <p class="consent-text">
+        We use cookies to {purpose}. See our{" "}
+        <a href={consentConfig.policyUrl}>Cookie Policy</a>.
+      </p>
+
+      <div class="consent-actions">
+        <button id="consent-decline" type="button" class="consent-btn consent-btn--ghost">
+          Decline
+        </button>
+        <button id="consent-accept" type="button" class="consent-btn consent-btn--primary">
+          Accept
+        </button>
+      </div>
+    </div>
+
+    <button
+      id="consent-toggler"
+      class="consent-toggler is-hidden"
+      data-pos={position}
+      type="button"
+      aria-label="Cookie settings"
+      title="Cookie settings"
+    >
+      <SvgIcon name="privacy-shield" kind="mono" size="md" decorative />
+    </button>
+
+    <script src="../../../scripts/features/consent/index.js"></script>
+  </>
+)}

@@ -1,0 +1,15 @@
+---
+// src/components/features/ads/AdSenseHead.astro
+import adsConfig from "@/config/ads.mjs";
+
+const clientId = String(adsConfig.adsenseClientId || "").trim();
+
+const enabled =
+  adsConfig.enabled === true &&
+  adsConfig.headMeta !== false &&
+  clientId.length > 0;
+---
+
+{enabled && (
+  <meta name="google-adsense-account" content={clientId} />
+)}

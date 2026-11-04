@@ -1,0 +1,311 @@
+/* file: core/styles/main/utilities-size.css
+ * Generic width/height utilities used across the theme
+ * (including icons via .icon + .icon__svg).
+ */
+
+/* ───────── height (absolute) ───────── */
+
+.full-height,
+.h-full {
+  height: 100% !important;
+}
+
+.h-1-0  { height: 1rem; }
+.h-1-25 { height: 1.25rem; }
+.h-1-5  { height: 1.5rem; }
+.h-1-75 { height: 1.75rem; }
+.h-2-0  { height: 2rem; }
+.h-2-5  { height: 2.5rem; }
+.h-3-0  { height: 3rem; }
+
+.h-18px  { height: 18px; }
+.h-20px   { height: 20px; }
+.h-30px   { height: 30px; }
+.h-40px  { height: 40px; }
+.h-50px  { height: 50px; }
+.h-60px   { height: 60px; }
+.h-100px   { height: 100px; }
+.h-150px    { height: 150px; }
+.h-260px  { height: 260px; }
+
+.h-auto  { height: auto; }
+.h-fit   { height: fit-content; }
+.h-unset { height: unset !important; }
+
+/* fill available height in WebKit (rarely used) */
+.h-webkit {
+  height: -webkit-fill-available;
+}
+/* ───────── viewport units (modern, mobile safe) ───────── */
+
+.h-100vh  { height: 100vh; }
+.min-h-100vh { min-height: 100vh; }
+.max-h-100vh { max-height: 100vh; }
+
+/* modern viewport units */
+.h-100svh { height: 100svh; }
+.h-100dvh { height: 100dvh; }
+.h-100lvh { height: 100lvh; }
+
+.min-h-100svh { min-height: 100svh; }
+.min-h-100dvh { min-height: 100dvh; }
+.min-h-100lvh { min-height: 100lvh; }
+
+.max-h-100svh { max-height: 100svh; }
+.max-h-100dvh { max-height: 100dvh; }
+.max-h-100lvh { max-height: 100lvh; }
+
+/* ───────── height (min / max) ───────── */
+
+.min-h-230   { min-height: 230px; }
+.min-h-70vh  { min-height: 70vh; }
+/* optional: full-viewport min height helper */
+.min-h-100vh { min-height: 100vh; }
+.min-w-0 { min-width: 0; }
+.min-h-0 { min-height: 0; }
+
+.max-h-80vh  { max-height: 80vh; }
+.max-h-95vh  { max-height: 95vh; }
+/* optional: full viewport max height */
+.max-h-100vh { max-height: 100vh; }
+.max-h-full { max-height: 100%; }
+
+/* ───────── width (absolute) ───────── */
+
+.w-1-0  { width: 1rem; }
+.w-1-25 { width: 1.25rem; }
+.w-1-5  { width: 1.5rem; }
+.w-1-75 { width: 1.75rem; }
+.w-2-0  { width: 2rem; }
+.w-2-5  { width: 2.5rem; }
+.w-3-0  { width: 3rem; }
+
+.w-18px  { width: 18px; }
+.w-20px   { width: 20px; }
+.w-30px   { width: 30px; }
+.w-40px   { width: 40px; }
+.w-60px   { width: 60px; }
+.w-100px { width: 100px; }
+.w-120px { width: 120px; }
+.w-150px  { width: 150px; }
+.w-180px  { width: 180px; }
+.w-200px  { width: 200px; }
+.w-240px  { width: 240px; }
+.w-260px  { width: 260px; }
+.w-320px  { width: 320px; }
+.w-360px  { width: 360px; }
+.w-400px  { width: 400px; }
+.w-420px  { width: 420px; }
+.w-480px  { width: 480px; }
+.w-540px  { width: 540px; }
+.w-600px  { width: 600px; }
+.w-640px  { width: 640px; }
+.w-720px  { width: 720px; }
+.w-960px  { width: 960px; }
+.w-1280px { width: 1280px; }
+
+/* "50% minus gutter" helper */
+.w-50-1 { width: calc(50% - 1rem); }
+
+/* percentages */
+.w-90  { width: 90%; }
+.w-95  { width: 95%; }
+.w-100, .w-full{ width: 100% !important; }
+
+/* auto / fit / unset */
+.w-auto   { width: auto; }
+.w-fit    { width: fit-content; }
+.w-unset,
+.width-unset {
+  width: unset;
+}
+
+/* ───────── width (min / max, content vars) ───────── */
+
+
+
+/* common content caps */
+.max-w-280px { max-width: 280px; }
+.max-w-320px { max-width: 320px; }
+.max-w-360px { max-width: 360px; }
+.max-w-400px { max-width: 400px; }
+.max-w-420px { max-width: 420px; }
+.max-w-480px { max-width: 480px; }
+.max-w-640px { max-width: 640px; }
+.max-w-720px { max-width: 720px; }
+.max-w-960px { max-width: 960px; }
+.max-w-1280px { max-width: 1280px; }
+
+
+.max-w-95          { max-width: 95%; }
+.max-w-100        { max-width: 100%; }
+
+.max-w-content      { max-width: var(--content-width, 720px); }
+.max-w-featured     { max-width: var(--featured-image-width, 960px); }
+.max-w-featured-half {
+  max-width: calc(var(--featured-image-width, 960px) / 2);
+}
+.max-w-sidebar      { max-width: var(--sidebar-width, 320px); }
+.max-w-site         { max-width: var(--site-width, 1280px); }
+
+.min-w-160px { min-width: 160px; }
+.min-w-250px { min-width: 250px; }
+.min-w-320px { min-width: 320px; }
+
+.w-content  { width: var(--content-width, 720px); }
+.w-featured { width: var(--featured-image-width, 960px); }
+.w-sidebar  { width: var(--sidebar-width, 320px); }
+.w-site     { width: var(--site-width, 1280px); }
+
+/* ───────── responsive helpers ───────── */
+
+/* ───────── width/height full / screen / inherit ───────── */
+
+
+.h-inherit { height: inherit; }
+.w-inherit { width: inherit; }
+
+.max-w-full { max-width: 100%; }           /* you have max-w-100p, but this alias helps */
+.max-h-inherit { max-height: inherit; }
+
+
+/* small screens only (<= 768px) */
+@media (max-width: 768px) {
+
+  /* existing */
+  .sm-w-100{
+    width: 100%;
+  }
+
+  /* ───────── mobile width helpers ───────── */
+
+  .sm-w-auto { width: auto; }
+  .sm-w-fit { width: fit-content; }
+  .sm-w-full { width: 100% !important; } /* alias */
+
+  /* common pixel widths */
+  .sm-w-18px  { width: 18px; }
+  .sm-w-20px  { width: 20px; }
+  .sm-w-30px  { width: 30px; }
+  .sm-w-40px  { width: 40px; }
+  .sm-w-60px  { width: 60px; }
+  .sm-w-100px { width: 100px; }
+  .sm-w-150px { width: 150px; }
+  .sm-w-260px { width: 260px; }
+  .sm-w-320px { width: 320px; }
+  .sm-w-360px { width: 360px; }
+  .sm-w-400px { width: 400px; }
+
+  /* percentage widths */
+  .sm-w-90 { width: 90%; }
+  .sm-w-95 { width: 95%; }
+  .sm-w-100 { width: 100% !important; } /* keeps naming consistent */
+
+  /* ───────── mobile height helpers ───────── */
+
+  .sm-h-auto { height: auto; }
+  .sm-h-fit { height: fit-content; }
+  .sm-h-full { height: 100% !important; }
+
+  /* common pixel heights */
+  .sm-h-18px  { height: 18px; }
+  .sm-h-20px  { height: 20px; }
+  .sm-h-30px  { height: 30px; }
+  .sm-h-40px  { height: 40px; }
+  .sm-h-50px  { height: 50px; }
+  .sm-h-60px  { height: 60px; }
+  .sm-h-100px { height: 100px; }
+  .sm-h-120px { height: 120px; }
+  .sm-h-150px { height: 150px; }
+
+  /* ───────── mobile max/min helpers ───────── */
+
+  .sm-max-w-100 { max-width: 100%; }
+  .sm-max-h-100 { max-height: 100%; }
+
+  .sm-max-w-320px { max-width: 320px; }
+  .sm-max-w-360px { max-width: 360px; }
+  .sm-max-w-400px { max-width: 400px; }
+  .sm-max-w-420px { max-width: 420px; }
+
+  .sm-max-h-60px  { max-height: 60px; }
+  .sm-max-h-100px { max-height: 100px; }
+  .sm-max-h-120px { max-height: 120px; }
+
+  .sm-min-w-0 { min-width: 0; }
+  .sm-min-h-0 { min-height: 0; }
+
+  .sm-min-w-160px { min-width: 160px; }
+  .sm-min-w-250px { min-width: 250px; }
+  .sm-min-w-320px { min-width: 320px; }
+}
+
+
+/* tablet and up (>= 768px) */
+@media (min-width: 768px) {
+  /* prefix: big- (above small screens) */
+  .big-w-featured { width: var(--featured-image-width, 960px); }
+  .big-w-100, .big-w-full { width: 100% !important; }
+  .big-min-h-230px   { min-height: 230px !important; }
+
+  /* width */
+  .big-w-auto { width: auto !important; }
+  .big-w-fit { width: fit-content !important; }
+
+  .big-w-100px { width: 100px !important; }
+  .big-w-150px { width: 150px !important; }
+  .big-w-260px { width: 260px !important; }
+  .big-w-320px { width: 320px !important; }
+  .big-w-360px { width: 360px !important; }
+  .big-w-400px { width: 400px !important; }
+  .big-w-480px { width: 480px !important; }
+  .big-w-640px { width: 640px !important; }
+  .big-w-720px { width: 720px !important; }
+  .big-max-w-100 { max-width: 100% !important; }
+  .big-max-w-320px { max-width: 320px !important; }
+  .big-max-w-360px { max-width: 360px !important; }
+  .big-max-w-400px { max-width: 400px !important; }
+  .big-max-w-420px { max-width: 420px !important; }
+  .big-max-w-480px { max-width: 480px !important; }
+
+  /* height */
+  .big-h-auto { height: auto !important; }
+  .big-h-fit { height: fit-content !important; }
+  .big-h-full { height: 100% !important; }
+
+  .big-h-40px { height: 40px !important; }
+  .big-h-50px { height: 50px !important; }
+  .big-h-60px { height: 60px !important; }
+  .big-h-80px { height: 80px !important; }
+  .big-h-100px { height: 100px !important; }
+  .big-h-120px { height: 120px !important; }
+
+  .big-max-h-60px { max-height: 60px !important; }
+  .big-max-h-100px { max-height: 100px !important; }
+  .big-max-h-120px { max-height: 120px !important; }
+}
+
+/* medium only: tablets (768–1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .md-w-100{
+    width: 100% !important;
+  }
+}
+
+/* large only: small desktops (1024–1279px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .lg-max-w-sidebar   { max-width: var(--sidebar-width, 320px); }
+  .lg-w-100         { width: 100% !important; }
+  .lg-max-w-featured  { max-width: var(--featured-image-width, 960px); }
+  .lg-h-fit           { height: fit-content; }
+  .lg-max-h-40vh      { max-height: 40vh; }
+  .lg-max-h-60vh      { max-height: 60vh; }
+}
+
+/* full-width desktops (>= 1280px) */
+@media (min-width: 1280px) {
+  .full-max-w-sidebar  { max-width: var(--sidebar-width, 320px); }
+  .full-w-100        { width: 100% !important; }
+  .full-max-w-featured { max-width: var(--featured-image-width, 960px); }
+  .full-max-h-95vh     { max-height: 95vh; }
+}

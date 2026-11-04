@@ -1,0 +1,154 @@
+---
+// src/pages/contact-us.astro
+import PageLayout from "@/layouts/PageLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import SvgIcon from "@/components/svg/SvgIcon.astro";
+import brandConfig from "@/config/brand.mjs";
+import { allPagesNormalized } from "@/config/pages.mjs";
+import contactConfig from "@/config/contact.mjs";
+
+import "@/styles/pages/contact-form.css";
+
+const cfg = allPagesNormalized.contact;
+
+const headProps = {
+  title: cfg.title,
+  description: cfg.description,
+  canonicalUrl: cfg.path,
+  type: "contact",
+  index: cfg.index,
+};
+
+const contact = brandConfig.contact || {};
+const address = brandConfig.organization?.address;
+
+interface ContactMethod {
+  icon: string;
+  label: string;
+  value: string;
+  href: string;
+}
+
+const methods: ContactMethod[] = [
+  contact.email && {
+    icon: "email",
+    label: "Email",
+    value: contact.email,
+    href: `mailto:${contact.email}`,
+  },
+  contact.phone && {
+    icon: "phone",
+    label: "Phone",
+    value: contact.phone,
+    href: `tel:${String(contact.phone).replace(/\s+/g, "")}`,
+  },
+  contact.whatsapp && {
+    icon: "whatsapp",
+    label: "WhatsApp",
+    value: contact.phone || contact.whatsapp,
+    href: `https://wa.me/${String(contact.whatsapp).replace(/[^\d]/g, "")}`,
+  },
+].filter((method): method is ContactMethod => Boolean(method));
+
+---
+
+<PageLayout headProps={headProps} pageType="ContactPage" mainVariant="default">
+  <section class="contact-page max-w-content mi-auto p-1">
+    <Breadcrumb items={[{ label: "Contact", href: cfg.path }]} />
+
+    <header class="my-1">
+      <h1>{cfg.title}</h1>
+      <p class="text-l opacity-90">{cfg.description}</p>
+    </header>
+
+    <div class="contact-methods grid gap my-2" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
+      {methods.map((method) => (
+        <a
+          href={method.href}
+          class="contact-method-card flex flex-col gap-03 p-1 br-r bg-base-00 no-bb"
+          data-action="contact_method_click"
+          data-label={method.label}
+        >
+          <SvgIcon name={method.icon} size="lg" />
+          <span class="bold">{method.label}</span>
+          <span class="text-sm opacity-90">{method.value}</span>
+        </a>
+      ))}
+    </div>
+
+    {address && (
+      <address class="not-italic text-sm opacity-90 mb-2">
+        {[address.streetAddress, address.addressLocality, address.addressRegion, address.postalCode, address.addressCountry]
+          .filter(Boolean)
+          .join(", ")}
+      </address>
+    )}
+
+    {!contactConfig.enabled && (
+      <p class="contact-form-off text-sm opacity-80">
+        The message form is switched off in this starter. To turn it on, follow
+        <code>docs/features/contact-form.md</code>.
+      </p>
+    )}
+
+    {contactConfig.enabled && (
+      <div class="contact-form-wrapper max-w-420px">
+        <h2>Send a message</h2>
+
+        <form
+          class="contact-form flex flex-col gap"
+          action="/api/contact/"
+          method="post"
+          data-contact-form
+        >
+          <label>
+            Name <span class="required">*</span>
+            <input class="form-control" type="text" name="name" maxlength="80" autocomplete="name" required />
+          </label>
+
+          <label>
+            Email <span class="required">*</span>
+            <input class="form-control" type="email" name="email" maxlength="160" autocomplete="email" required />
+          </label>
+
+          <label>
+            Subject <span class="required">*</span>
+            <select class="form-control" name="subject" required>
+              {contactConfig.subjects.map((subject) => (
+                <option value={subject}>{subject}</option>
+              ))}
+            </select>
+          </label>
+
+          <label>
+            Message <span class="required">*</span>
+            <textarea class="form-control" name="message" rows="5" maxlength="4000" required></textarea>
+          </label>
+
+          <!-- Honeypot: hidden from people, filled in by bots. -->
+          <div class="hp-field" aria-hidden="true">
+            <label>
+              Website
+              <input type="text" name="website" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+
+          <button type="submit" class="button primary-button form-submit">
+            Send message
+          </button>
+
+          <p class="contact-status" data-contact-status role="status" aria-live="polite"></p>
+
+          <noscript>
+            <p class="text-sm opacity-80">
+              JavaScript is needed to send this form.
+              {contact.email && <>Email us at <a href={`mailto:${contact.email}`}>{contact.email}</a> instead.</>}
+            </p>
+          </noscript>
+        </form>
+      </div>
+    )}
+  </section>
+
+  {contactConfig.enabled && <script src="../scripts/features/contact/index.js"></script>}
+</PageLayout>

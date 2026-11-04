@@ -1,0 +1,28 @@
+---
+// src/components/header/Logo.astro
+// Text logo: the site name set in bold type. To use an image logo instead,
+// replace the <span> below with an <img> (and add its host to img-src if it is
+// not served from this site).
+import Anchor from "@/components/ui/Anchor.astro";
+import brandConfig from "@/config/brand.mjs";
+import "@/styles/components/logo.css";
+
+interface Props {
+  href?: string;
+  className?: string;
+}
+
+const { href = "/", className = "" } = Astro.props as Props;
+
+const name = brandConfig.siteName;
+---
+
+<Anchor
+  href={href}
+  title={name}
+  ariaLabel={`${name} Home`}
+  className={`text-logo ${className}`.trim()}
+  itemprop="url"
+>
+  <span class="text-logo__name" itemprop="name">{name}</span>
+</Anchor>

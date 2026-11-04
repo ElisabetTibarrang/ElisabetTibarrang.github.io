@@ -1,0 +1,18 @@
+---
+import FooterDefault from "./FooterDefault.astro";
+import FooterMinimal from "./FooterMinimal.astro";
+
+interface Props {
+  variant?: "default" | "minimal";
+}
+
+const {
+  variant = "default",
+} = Astro.props as Props;
+---
+
+{variant === "minimal"
+  ? <FooterMinimal />
+  : <FooterDefault />
+}
+

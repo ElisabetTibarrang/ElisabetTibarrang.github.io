@@ -1,0 +1,125 @@
+---
+// src/components/HeroOrbit.astro
+// Animated space scene for the home hero: twinkling stars, a sun, planets on
+// circular orbits (one with a moon and one with a ring) and passing comets.
+// Pure SVG + CSS (src/styles/components/hero-orbit.css): no script, no image
+// file, no inline styles, so it works under the strict CSP. Motion stops for
+// visitors who prefer reduced motion.
+import "@/styles/components/hero-orbit.css";
+
+interface Props {
+  label?: string;
+}
+
+const {
+  label = "Animated illustration of planets orbiting a sun among twinkling stars",
+} = Astro.props as Props;
+
+// Fixed pseudo-random stars, so the picture is the same on every build.
+let seed = 7;
+const rand = () => {
+  seed = (seed * 16807) % 2147483647;
+  return seed / 2147483647;
+};
+
+const stars = Array.from({ length: 38 }, () => ({
+  x: Math.round(rand() * 4500) / 10 - 25,
+  y: Math.round(rand() * 4500) / 10 - 25,
+  r: Math.round((0.6 + rand() * 1.1) * 10) / 10,
+}));
+---
+
+<div class="orbit-scene" role="img" aria-label={label}>
+  <svg viewBox="-30 -30 460 460" focusable="false" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="os-sun" cx="38%" cy="38%" r="75%">
+        <stop offset="0" stop-color="#fff7c2" />
+        <stop offset="0.55" stop-color="#ffc83d" />
+        <stop offset="1" stop-color="#ff8a1f" />
+      </radialGradient>
+      <radialGradient id="os-glow">
+        <stop offset="0" stop-color="#ffb43a" stop-opacity="0.55" />
+        <stop offset="1" stop-color="#ffb43a" stop-opacity="0" />
+      </radialGradient>
+      <radialGradient id="os-p1" cx="35%" cy="35%" r="75%">
+        <stop offset="0" stop-color="#e2e8f0" />
+        <stop offset="1" stop-color="#64748b" />
+      </radialGradient>
+      <radialGradient id="os-p2" cx="35%" cy="35%" r="75%">
+        <stop offset="0" stop-color="#7dd3fc" />
+        <stop offset="0.6" stop-color="#2563eb" />
+        <stop offset="1" stop-color="#1e3a8a" />
+      </radialGradient>
+      <radialGradient id="os-p3" cx="35%" cy="35%" r="75%">
+        <stop offset="0" stop-color="#fdba74" />
+        <stop offset="1" stop-color="#c2410c" />
+      </radialGradient>
+      <radialGradient id="os-p4" cx="35%" cy="35%" r="75%">
+        <stop offset="0" stop-color="#fde68a" />
+        <stop offset="1" stop-color="#b45309" />
+      </radialGradient>
+      <linearGradient id="os-trail" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#fff" stop-opacity="0" />
+        <stop offset="1" stop-color="#fff" stop-opacity="0.95" />
+      </linearGradient>
+    </defs>
+
+    <g>
+      {stars.map((s) => <circle class="star" cx={s.x} cy={s.y} r={s.r} />)}
+    </g>
+
+    <g transform="translate(30 50)">
+      <g class="comet comet--a">
+        <line x1="-34" y1="-17" x2="0" y2="0" stroke="url(#os-trail)" stroke-width="1.6" stroke-linecap="round" />
+        <circle r="1.8" fill="#fff" />
+      </g>
+    </g>
+    <g transform="translate(210 14)">
+      <g class="comet comet--b">
+        <line x1="-34" y1="-17" x2="0" y2="0" stroke="url(#os-trail)" stroke-width="1.4" stroke-linecap="round" />
+        <circle r="1.6" fill="#fff" />
+      </g>
+    </g>
+
+    <circle class="ring" cx="200" cy="200" r="56" />
+    <circle class="ring" cx="200" cy="200" r="90" />
+    <circle class="ring" cx="200" cy="200" r="124" />
+    <circle class="ring" cx="200" cy="200" r="158" />
+    <circle class="ring ring--dash" cx="200" cy="200" r="188" />
+
+    <circle class="sun-glow" cx="200" cy="200" r="68" fill="url(#os-glow)" />
+    <circle cx="200" cy="200" r="22" fill="url(#os-sun)" />
+
+    <g transform="translate(200 200)">
+      <g class="orbit orbit--1">
+        <circle cx="56" cy="0" r="4.5" fill="url(#os-p1)" />
+      </g>
+
+      <g class="orbit orbit--2">
+        <g transform="translate(90 0)">
+          <circle r="8" fill="url(#os-p2)" />
+          <g class="moon-orbit">
+            <circle cx="14" cy="0" r="2.2" fill="#e2e8f0" />
+          </g>
+        </g>
+      </g>
+
+      <g class="orbit orbit--3">
+        <circle cx="124" cy="0" r="6" fill="url(#os-p3)" />
+      </g>
+
+      <g class="orbit orbit--4">
+        <g transform="translate(158 0)">
+          <g class="upright">
+            <ellipse cx="0" cy="0" rx="19" ry="5" transform="rotate(-20)" fill="none" stroke="#fcd9a0" stroke-opacity="0.8" stroke-width="2" />
+            <circle r="10" fill="url(#os-p4)" />
+          </g>
+        </g>
+      </g>
+
+      <g class="orbit orbit--5">
+        <circle cx="188" cy="0" r="3" fill="#c4b5fd" />
+      </g>
+    </g>
+  </svg>
+</div>

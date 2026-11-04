@@ -1,0 +1,121 @@
+---
+// src/layouts/ArticleLayout.astro
+import BaseLayout from "./BaseLayout.astro";
+
+import type { HeadProps } from "@/types/HeadProps";
+import brandConfig from "@/config/brand.mjs";
+import { normalizeHeadProps } from "@/utils/head";
+
+import WebPageSchema from "@/components/schema/WebPageSchema.astro";
+import ArticleSchema from "@/components/schema/ArticleSchema.astro";
+
+type HeaderVariant = "default" | "minimal" | "none";
+type FooterVariant = "default" | "minimal" | "none";
+type MainVariant = "default" | "article" | "wide" | "blank";
+
+interface Props {
+  headProps: HeadProps;
+  lang?: string;
+  theme?: "light" | "dark" | "auto";
+  headerVariant?: HeaderVariant;
+  footerVariant?: FooterVariant;
+  mainVariant?: MainVariant;
+}
+
+const {
+  headProps,
+  lang = "en",
+  theme = "light",
+  headerVariant = "default",
+  footerVariant = "default",
+  mainVariant = "article",
+} = Astro.props as Props;
+
+const normalized = normalizeHeadProps(
+  {
+    ...headProps,
+    type: "article",
+  },
+  Astro.url.pathname,
+  brandConfig
+);
+
+const {
+  headProps: resolvedHeadProps,
+  title,
+  description,
+  canonicalUrl,
+  image,
+  publishedAtISO,
+  updatedAtISO,
+  authors,
+  keywords,
+} = normalized;
+
+const articleId = `${canonicalUrl}#article`;
+---
+
+<BaseLayout
+  headProps={resolvedHeadProps}
+  lang={lang}
+  theme={theme}
+  headerVariant={headerVariant}
+  footerVariant={footerVariant}
+  mainVariant={mainVariant}
+>
+  <article
+    id="article"
+    class="article-layout"
+    itemscope
+    itemtype="https://schema.org/Article"
+  >
+    <meta itemprop="mainEntityOfPage" content={canonicalUrl} />
+    <meta itemprop="url" content={canonicalUrl} />
+    <meta itemprop="headline" content={title} />
+    <meta itemprop="description" content={description} />
+
+    {image && <meta itemprop="image" content={image} />}
+    {publishedAtISO && <meta itemprop="datePublished" content={publishedAtISO} />}
+    {updatedAtISO && <meta itemprop="dateModified" content={updatedAtISO} />}
+
+    {authors.map((author) => (
+      <span
+        class="display-none"
+        itemprop="author"
+        itemscope
+        itemtype="https://schema.org/Person"
+      >
+        <meta itemprop="name" content={author.name} />
+        {author.url && <meta itemprop="url" content={author.url} />}
+      </span>
+    ))}
+
+    <slot />
+  </article>
+
+  <WebPageSchema
+    slot="body-end"
+    type="WebPage"
+    title={title}
+    description={description}
+    url={canonicalUrl}
+    image={image}
+    datePublished={publishedAtISO}
+    dateModified={updatedAtISO}
+    mainEntityId={articleId}
+  />
+
+  <ArticleSchema
+    slot="body-end"
+    title={title}
+    description={description}
+    url={canonicalUrl}
+    image={image}
+    datePublished={publishedAtISO}
+    dateModified={updatedAtISO}
+    authors={authors}
+    keywords={keywords}
+  />
+
+  <slot name="body-end" slot="body-end" />
+</BaseLayout>

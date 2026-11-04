@@ -1,0 +1,21 @@
+.hp-field {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+.hidden {
+  display: none !important;
+}
+
+.backup-codes-list ul {
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.backup-codes-list li {
+  margin: 0.25rem 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}

@@ -1,0 +1,51 @@
+---
+// src/components/header/MobileMenuToggle.astro
+import SvgIcon from "@/components/svg/SvgIcon.astro";
+
+interface Props {
+  controls?: string;
+  targets?: string;
+  className?: string;
+}
+
+const {
+  controls = "main-nav header-actions secondary-nav",
+  targets = "#main-nav,#header-actions,#secondary-nav",
+  className = "",
+} = Astro.props as Props;
+---
+
+<button
+  id="menu-toggle"
+  class={`menu-toggle ${className}`.trim()}
+  type="button"
+  aria-label="Toggle menu"
+  aria-controls={controls}
+  aria-expanded="false"
+  data-header-menu-toggle="true"
+  data-targets={targets}
+  data-menu-icon="#menu-icon"
+  data-close-icon="#close-icon"
+>
+  <span id="menu-icon" class="menu-toggle__icon">
+    <SvgIcon
+      name="hamburger"
+      kind="mono"
+      source="local"
+      filter="primary"
+      size="lg"
+      decorative={true}
+    />
+  </span>
+
+  <span id="close-icon" class="menu-toggle__icon display-none">
+    <SvgIcon
+      name="close"
+      kind="mono"
+      source="local"
+      filter="primary"
+      size="md"
+      decorative={true}
+    />
+  </span>
+</button>

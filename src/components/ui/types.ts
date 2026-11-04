@@ -1,0 +1,1 @@
+export type UiVariant = "plain" | "nav" | "primary" | "secondary" | "ghost";

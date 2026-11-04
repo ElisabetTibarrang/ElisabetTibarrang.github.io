@@ -1,0 +1,32 @@
+---
+// src/pages/404.astro
+import PageLayout from "@/layouts/PageLayout.astro";
+import brandConfig from "@/config/brand.mjs";
+import { allPagesNormalized } from "@/config/pages.mjs";
+
+const cfg = allPagesNormalized.notFound;
+
+const headProps = {
+  title: cfg.title,
+  description: cfg.description,
+  canonicalUrl: "/404/",
+  type: "404",
+  index: false,
+};
+---
+
+<PageLayout headProps={headProps} pageType="WebPage" mainVariant="default">
+  <section class="not-found-page max-w-content mi-auto p-2 ta-center">
+    <p class="text-4xl bold opacity-60 my-0">404</p>
+    <h1>Page not found</h1>
+    <p class="opacity-90">
+      The page you're looking for doesn't exist or may have moved.
+    </p>
+
+    <div class="flex flex-row wrap gap jc-center mt-1">
+      <a href="/" class="button primary-button">Go home</a>
+      <a href="/blog/" class="button secondary-button">Read the blog</a>
+      <a href="/search/" class="button secondary-button">Search {brandConfig.siteName}</a>
+    </div>
+  </section>
+</PageLayout>

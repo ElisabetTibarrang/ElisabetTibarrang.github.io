@@ -1,0 +1,174 @@
+---
+// src/components/ui/SocialLinks.astro
+import brandConfig from "@/config/brand.mjs";
+import IconSprite from "@/components/svg/IconSprite.astro";
+import SvgIcon from "@/components/svg/SvgIcon.astro";
+import "@styles/components/social-links.css";
+
+type IconKind = "auto" | "mono" | "brand";
+type IconSource = "auto" | "sprite" | "local" | "external";
+type IconFilter = "none" | "black" | "white" | "primary" | "secondary" | "base" | "base-invert";
+type IconShape = "round" | "square" | "soft" | "plain";
+
+interface Props {
+  id?: string;
+  class?: string;
+  className?: string;
+  itemClass?: string;
+  linkClass?: string;
+  iconSize?: string;
+  iconKind?: IconKind;
+  iconSource?: IconSource;
+  iconBaseUrl?: string;
+  iconFilter?: IconFilter;
+  shape?: IconShape;
+}
+
+const {
+  id = "social-links",
+  class: classAttr = "",
+  className = "",
+  itemClass = "",
+  linkClass = "",
+  iconSize = "w-1-25 h-1-25",
+  iconKind = "mono",
+  iconSource = "local",
+  iconBaseUrl = "/icons",
+  iconFilter = "base",
+  shape = "round",
+} = Astro.props as Props;
+
+const links = (brandConfig.socialLinks || {}) as Record<string, string | undefined>;
+
+function isEmail(value: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function getHref(key: string, raw: string): string {
+  const value = raw.trim();
+
+  if (/^(https?:|mailto:|tel:)/i.test(value)) return value;
+  // "#" (or a site path) is a placeholder link that stays on this site.
+  if (value.startsWith("#") || value.startsWith("/")) return value;
+  if (key === "email" || isEmail(value)) return `mailto:${value}`;
+  if (key === "phone") return `tel:${value.replace(/\s+/g, "")}`;
+  if (key === "whatsapp") return `https://wa.me/${value.replace(/[^\d]/g, "")}`;
+  if (key === "x" || key === "twitter") return `https://x.com/${value.replace(/^@/, "")}`;
+
+  return `https://${value.replace(/^\/+/, "")}`;
+}
+
+function prettyName(key: string): string {
+  if (key === "x" || key === "twitter") return "X";
+  if (key === "email") return "Email";
+  if (key === "phone") return "Phone";
+  if (key === "whatsapp") return "WhatsApp";
+
+  return key
+    .replace(/[-_]+/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function getAriaLabel(key: string, value: string): string {
+  if (key === "email" || isEmail(value)) return `Email us at ${value.replace(/^mailto:/, "")}`;
+  if (key === "phone") return `Call us at ${value}`;
+  if (key === "whatsapp") return "Contact us on WhatsApp";
+
+  return `Follow us on ${prettyName(key)}`;
+}
+
+function getIconName(key: string): string {
+  if (key === "twitter") return "x";
+  if (key === "email") return "email";
+  if (key === "phone") return "phone";
+
+  return key.toLowerCase();
+}
+
+function resolveKind(icon: string): "mono" | "brand" {
+  if (iconKind === "brand") return "brand";
+  if (iconKind === "mono") return "mono";
+
+  return icon === "email" || icon === "phone" ? "mono" : "brand";
+}
+
+function resolveSource(kind: "mono" | "brand"): "sprite" | "local" | "external" {
+  if (iconSource === "sprite") return "sprite";
+  if (iconSource === "local") return "local";
+  if (iconSource === "external") return "external";
+
+  return kind === "mono" ? "local" : "local";
+}
+
+function isLocal(href: string): boolean {
+  return href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("#") || href.startsWith("/");
+}
+
+function getTarget(href: string): "_blank" | undefined {
+  return isLocal(href) ? undefined : "_blank";
+}
+
+function getRel(href: string): string | undefined {
+  return isLocal(href) ? undefined : "noopener noreferrer";
+}
+
+const entries = Object.entries(links).filter(([, value]) => Boolean(value));
+
+const spriteIcons = entries
+  .map(([key]) => getIconName(key))
+  .filter((icon) => {
+    const kind = resolveKind(icon);
+    const source = resolveSource(kind);
+    return kind === "mono" && source === "sprite";
+  });
+
+const navClass = ["social-media-links flex ai-center", classAttr, className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<IconSprite names={spriteIcons} kind="mono" />
+
+{entries.length > 0 && (
+  <nav id={id} class={navClass} aria-label="Social media links">
+    <ul class="social-media-list flex wrap ai-center gap-05 m-0 p-0 no-bullets" role="list">
+      {entries.map(([key, value]) => {
+        const raw = String(value || "").trim();
+        const href = getHref(key, raw);
+        const label = getAriaLabel(key, raw);
+        const icon = getIconName(key);
+        const kind = resolveKind(icon);
+        const source = resolveSource(kind);
+        const filter = kind === "mono" ? iconFilter : "none";
+
+        return (
+          <li class={`social-media-item inline-flex m-0 p-0 ${itemClass}`.trim()} role="none">
+            <a
+              href={href}
+              target={getTarget(href)}
+              rel={getRel(href)}
+              aria-label={label}
+              title={label}
+              class={`social-media-link inline-flex ai-center jc-center col-base-100 bg-base-05 br-base-10 lh-0 td-none social-media-link--${shape} ${linkClass}`.trim()}
+              data-action="social_click"
+              data-label={prettyName(key)}
+            >
+              <SvgIcon
+                name={icon}
+                kind={kind}
+                source={source}
+                baseUrl={iconBaseUrl}
+                filter={filter}
+                size="md"
+                className={iconSize}
+                decorative={true}
+              />
+
+              <span class="sr-only">{label}</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+)}

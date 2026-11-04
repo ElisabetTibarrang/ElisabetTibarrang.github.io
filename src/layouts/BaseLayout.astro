@@ -1,0 +1,119 @@
+---
+// src/layouts/BaseLayout.astro
+import "../styles/main.css";
+
+import type { HeadProps } from "@/types/HeadProps";
+import brandConfig from "@/config/brand.mjs";
+import { normalizeHeadProps } from "@/utils/head";
+
+import BaseHead from "@/components/seo/BaseHead.astro";
+import Fonts from "@/components/system/Fonts.astro";
+import BaseCss from "@/components/system/BaseCss.astro";
+
+import Header from "@/components/header/Header.astro";
+import Footer from "@/components/footer/Footer.astro";
+
+import AnalyticsHead from "@/components/features/analytics/AnalyticsHead.astro";
+import AnalyticsBody from "@/components/features/analytics/AnalyticsBody.astro";
+import AnalyticsLoader from "@/components/features/analytics/AnalyticsLoader.astro";
+
+import AdSenseHead from "@/components/features/ads/AdSenseHead.astro";
+import AdSenseLoader from "@/components/features/ads/AdSenseLoader.astro";
+
+import ConsentBanner from "@/components/features/consent/ConsentBanner.astro";
+
+import OrganizationSchema from "@/components/schema/OrganizationSchema.astro";
+import WebsiteSchema from "@/components/schema/WebsiteSchema.astro";
+
+type HeaderVariant = "default" | "minimal" | "none";
+type FooterVariant = "default" | "minimal" | "none";
+type MainVariant = "default" | "article" | "wide" | "blank";
+
+interface Props {
+  headProps?: HeadProps;
+  lang?: string;
+  theme?: "light" | "dark" | "auto";
+  headerVariant?: HeaderVariant;
+  footerVariant?: FooterVariant;
+  mainVariant?: MainVariant;
+}
+
+const {
+  headProps = {
+    title: brandConfig.title || brandConfig.siteName || "Default Title",
+    description: brandConfig.description || "",
+    type: "webpage",
+    index: true,
+  },
+  lang = "en",
+  theme = "light",
+  headerVariant = "default",
+  footerVariant = "default",
+  mainVariant = "default",
+} = Astro.props as Props;
+
+const { headProps: resolvedHeadProps } = normalizeHeadProps(
+  headProps,
+  Astro.url.pathname,
+  brandConfig
+);
+
+const mainClass = `site-main site-main-${mainVariant}`;
+---
+
+<!doctype html>
+<html lang={lang} data-theme={theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <slot name="head-top" />
+
+    <Fonts />
+    <BaseCss />
+
+    <AnalyticsHead />
+    <AdSenseHead />
+
+    <BaseHead {...resolvedHeadProps} />
+
+    <slot name="head-bottom" />
+  </head>
+
+  <body itemscope itemtype="https://schema.org/WebPage">
+    <AnalyticsBody />
+
+    <a href="#main-content" class="skip-link">
+      Skip to main content
+    </a>
+
+    {headerVariant !== "none" && <Header variant={headerVariant} />}
+
+    <main id="main-content" class={mainClass} itemprop="mainContentOfPage">
+      <slot />
+    </main>
+
+    {footerVariant !== "none" && (
+      <footer
+        id="site-footer"
+        class={`site-footer site-footer-${footerVariant}`}
+        role="contentinfo"
+        itemscope
+        itemtype="https://schema.org/WPFooter"
+      >
+        <Footer variant={footerVariant} />
+      </footer>
+    )}
+
+    <ConsentBanner />
+
+    <AdSenseLoader />
+    <AnalyticsLoader />
+
+    <OrganizationSchema />
+    <WebsiteSchema />
+    <Fonts footer />
+
+    <slot name="body-end" />
+  </body>
+</html>

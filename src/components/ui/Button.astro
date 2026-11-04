@@ -1,0 +1,83 @@
+---
+// src/components/ui/Button.astro
+import type { UiVariant } from "./types";
+
+interface Props {
+  id?: string;
+  label?: string;
+  type?: "button" | "submit" | "reset";
+  variant?: Exclude<UiVariant, "nav">;
+  class?: string;
+  className?: string;
+  ariaLabel?: string;
+  ariaExpanded?: boolean;
+  ariaControls?: string;
+  ariaPressed?: boolean;
+  ariaHasPopup?: "menu" | "listbox" | "dialog" | "grid" | "tree" | "true" | "false";
+  disabled?: boolean;
+  title?: string;
+  name?: string;
+  value?: string;
+  form?: string;
+  dataAction?: string;
+  dataLabel?: string;
+  dataTargets?: string;
+}
+
+const {
+  id,
+  label,
+  type = "button",
+  variant = "primary",
+  class: classAttr = "",
+  className = "",
+  ariaLabel,
+  ariaExpanded,
+  ariaControls,
+  ariaPressed,
+  ariaHasPopup,
+  disabled = false,
+  title,
+  name,
+  value,
+  form,
+  dataAction,
+  dataLabel,
+  dataTargets,
+  ...rest
+} = Astro.props as Props & Record<string, any>;
+
+const variantClassMap: Record<string, string> = {
+  primary: "button primary-button",
+  secondary: "button bg-transparent br-primary col-primary hover-bg-primary-lighter",
+  ghost: "button bg-transparent col-inherit hover-bg-base-10",
+  plain: "button bg-transparent col-inherit",
+};
+
+const computedClass = `${variantClassMap[variant] || ""} ${classAttr} ${className}`.trim();
+const resolvedLabel = label || ariaLabel || title || "";
+---
+
+<button
+  id={id}
+  type={type}
+  class={computedClass}
+  disabled={disabled || undefined}
+  aria-label={ariaLabel || resolvedLabel || undefined}
+  aria-expanded={ariaExpanded}
+  aria-controls={ariaControls}
+  aria-pressed={ariaPressed}
+  aria-haspopup={ariaHasPopup}
+  title={title || resolvedLabel || undefined}
+  name={name}
+  value={value}
+  form={form}
+  data-action={dataAction}
+  data-label={dataLabel || resolvedLabel || undefined}
+  data-targets={dataTargets}
+  {...rest}
+>
+  <slot name="icon-left" />
+  <slot />
+  <slot name="icon-right" />
+</button>

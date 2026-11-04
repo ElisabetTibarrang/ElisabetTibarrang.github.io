@@ -1,0 +1,46 @@
+---
+title: "Organizing posts with tags and categories"
+description: "A dummy post that explains the tag and category archive pages."
+slug: "organizing-with-tags-and-categories"
+
+index: true
+draft: false
+featured: false
+
+publishedDate: "2026-11-02"
+lastModified: "2026-11-02"
+
+keywords:
+  - tags
+  - categories
+
+tags:
+  - writing
+  - organization
+
+categories:
+  - guides
+
+heroImage: "/images/featured.png"
+heroImageAlt: "Featured image"
+heroImageTitle: "Featured image"
+
+toc: true
+related: []
+---
+
+## Tags and categories
+
+Add a few `tags` to each post and one `categories` entry. The site builds a page
+for every value: `/tags/writing/` lists all posts tagged `writing`, and
+`/categories/guides/` lists the posts in the `guides` category.
+
+## Naming rules
+
+Write tags and categories in lowercase with hyphens (`getting-started`, not
+`Getting Started`). The value is used as it is in the URL.
+
+## Turning them off
+
+Both are on by default. Set `enabled: false` for `tags` or `categories` in
+`src/config/pages.mjs` if you do not need them.

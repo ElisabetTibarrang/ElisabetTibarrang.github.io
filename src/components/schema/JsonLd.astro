@@ -1,0 +1,35 @@
+---
+interface Props {
+  id?: string;
+  data: Record<string, any>;
+}
+
+const { id, data } = Astro.props as Props;
+const nonce = (Astro.locals as any)?.nonce;
+
+function cleanObject(obj: any): any {
+  if (Array.isArray(obj)) {
+    return obj.map(cleanObject).filter(Boolean);
+  }
+
+  if (obj && typeof obj === "object") {
+    return Object.fromEntries(
+      Object.entries(obj)
+        .filter(([, value]) => value !== undefined && value !== null && value !== "")
+        .map(([key, value]) => [key, cleanObject(value)])
+    );
+  }
+
+  return obj;
+}
+
+const json = JSON.stringify(cleanObject(data)).replace(/</g, "\\u003c");
+---
+
+<script
+    is:inline
+  id={id}
+  type="application/ld+json"
+  nonce={nonce}
+  set:html={json}
+/>

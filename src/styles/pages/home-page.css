@@ -1,0 +1,363 @@
+/* ==========================================
+   HOME PAGE: "how to start" guide
+   Uses the theme tokens, so light and dark mode both work.
+   The help band uses fixed colours on purpose (always dark purple + white text).
+========================================== */
+
+.start-wrap {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.start-section {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  scroll-margin-top: 5rem;
+}
+
+.start-section--alt {
+  background: var(--base-05);
+}
+
+.start-heading {
+  text-align: center;
+  margin: 0 auto 2rem;
+  max-width: 40rem;
+}
+
+.start-heading h2 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+  line-height: 1.15;
+}
+
+.start-heading p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* ---------- Hero ---------- */
+
+.start-hero {
+  padding-block: clamp(2rem, 6vw, 4.5rem);
+  background:
+    radial-gradient(48rem 24rem at 8% -10%, hsl(274 100% 70% / 0.16), transparent 70%),
+    radial-gradient(40rem 20rem at 100% 0%, hsl(234 95% 65% / 0.12), transparent 70%);
+}
+
+.start-hero__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+}
+
+.start-eyebrow {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  background: hsl(274 100% 70% / 0.16);
+  color: var(--primary-base);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.start-hero h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 5.2vw, 3.4rem);
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.start-lead {
+  margin: 0 0 1.5rem;
+  max-width: 36rem;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+.start-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.start-cta-row .button {
+  min-height: 3rem;
+  padding-inline: 1.5rem;
+  gap: 0.5rem;
+}
+
+.start-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.start-trust li::before {
+  content: "\2713";
+  margin-right: 0.4rem;
+  color: var(--success);
+  font-weight: 800;
+}
+
+.start-help-link {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.start-help-link a {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.start-hero__media {
+  margin: 0;
+}
+
+/* ---------- Steps ---------- */
+
+.start-steps {
+  display: grid;
+  gap: 1rem;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.start-step {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--base-00);
+  border: 1px solid var(--base-10);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+}
+
+.start-step__num {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--primary-base);
+  color: #fff;
+  font-weight: 800;
+}
+
+.start-step h3 {
+  margin: 0.1rem 0 0.35rem;
+  font-size: 1.2rem;
+  line-height: 1.25;
+}
+
+.start-step p {
+  margin: 0 0 0.5rem;
+  opacity: 0.85;
+}
+
+.start-step p:last-child {
+  margin-bottom: 0;
+}
+
+.start-step code,
+.start-note code {
+  margin-inline: 0.1em;
+  padding: 0.1em 0.4em;
+  border-radius: 0.3rem;
+  background: var(--base-05);
+  color: var(--text-color);
+  font-size: 0.9em;
+}
+
+.start-code {
+  position: relative;
+  margin: 0.6rem 0 0.6rem;
+  border-radius: 0.75rem;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.start-code pre {
+  margin: 0;
+  padding: 0.9rem 5.5rem 0.9rem 1rem;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  white-space: pre;
+}
+
+.start-step .start-code code {
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+.start-code .line {
+  display: block;
+}
+
+.start-code .prompt {
+  color: #94a3b8;
+  user-select: none;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid #475569;
+  border-radius: 0.5rem;
+  background: #1e293b;
+  color: #f8fafc;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.copy-btn:hover {
+  background: #334155;
+}
+
+.copy-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.copy-btn[data-copied="true"] {
+  background: #166534;
+  border-color: #166534;
+}
+
+.start-note {
+  margin: 1.5rem auto 0;
+  max-width: 52rem;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--primary-base);
+  border-radius: 0.5rem;
+  background: var(--base-00);
+  border-top: 1px solid var(--base-10);
+  border-right: 1px solid var(--base-10);
+  border-bottom: 1px solid var(--base-10);
+}
+
+.start-note code {
+  background: var(--base-05);
+}
+
+.start-note p {
+  margin: 0;
+}
+
+/* ---------- Feature cards ---------- */
+
+.start-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+
+.start-card {
+  padding: 1.25rem;
+  background: var(--base-00);
+  border: 1px solid var(--base-10);
+  border-radius: 1rem;
+}
+
+.start-card__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.75rem;
+  background: hsl(274 100% 70% / 0.16);
+  color: var(--primary-base);
+}
+
+.start-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+}
+
+.start-card p {
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* ---------- Final call ---------- */
+
+.start-final {
+  text-align: center;
+}
+
+.start-final h2 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+}
+
+.start-final p {
+  margin: 0 0 1.25rem;
+  opacity: 0.85;
+}
+
+.start-final .start-cta-row {
+  justify-content: center;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 860px) {
+  .start-hero__grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 520px) {
+  .start-step {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .start-cta-row .button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .copy-btn {
+    transition: background-color 0.15s ease;
+  }
+}
+
+.start-card__link {
+  margin-top: 0.75rem;
+  font-weight: 700;
+}
+
+.start-card__link a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

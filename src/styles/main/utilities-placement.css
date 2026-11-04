@@ -1,0 +1,106 @@
+/* core/styles/main/utilities-placement.css */
+.ai-center {
+	align-items: center;
+}
+
+.ai-f-end {
+	align-items: flex-end;
+}
+
+.ai-f-start {
+	align-items: flex-start;
+}
+.ac-center {
+	align-content: center;
+}
+
+.center {
+	place-content: center;
+	place-items: center;
+	place-self: center;
+	text-align: center;
+}
+.place-items-center{
+	place-items: center;
+}
+
+.jc-center {
+	justify-content: center;
+}
+
+.jc-even {
+	justify-content: space-evenly;
+}
+
+.jc-f-start {
+	justify-content: flex-start;
+}
+.jc-f-end {
+	justify-content: flex-end;
+}
+
+.jc-space-between {
+	justify-content: space-between;
+}
+
+.jc-start {
+	justify-content: flex-start;
+}
+.ji-center {
+	justify-items: center;
+}
+
+
+.no-jc {
+	justify-content: unset;
+}
+.pc-center {
+	place-content: center;
+}
+@media (max-width: 768px) {
+	/* sm- [ only small screens]*/
+		.sm-ai-start {
+		align-items: start !important;
+	}
+	.sm-ai-center {
+		align-items: center;
+	}
+
+
+	.sm-jc-space-between {
+		justify-content: space-between;
+	}
+	
+}
+@media (min-width: 1280px) {
+  /* full- [ only above 1280px wide screen] */
+}
+
+
+@media (min-width: 768px) {
+  /* 
+   * above small screens
+   * prefix: big- 
+   */
+   	.big-jc-between {
+		justify-content: space-between;
+	}
+	
+	.big-jc-center {
+		justify-content: center;
+	}
+	.big-ai-center {
+		align-items: center;
+	}
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* md- [ only medium screens - tablets ] */
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  	/* lg- [ only large screens - above tablet version desktops ] */
+	
+
+	.lg-jc-center {
+		justify-content: center;
+	}
+}

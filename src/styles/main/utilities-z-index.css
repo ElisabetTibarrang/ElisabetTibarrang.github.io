@@ -1,0 +1,40 @@
+.z-0 {
+	z-index: 0;
+}
+
+.z-1 {
+	z-index: 1;
+}
+
+.z-10 {
+	z-index: 10;
+}
+
+.z-100 {
+	z-index: 100;
+}
+
+.z-1000 {
+	z-index: 1000;
+}
+@media (max-width: 768px) {
+	/* sm- [ only small screens]*/
+	
+}
+@media (min-width: 1280px) {
+  /* full- [ only above 1280px wide screen] */
+}
+
+
+@media (min-width: 768px) {
+  /* 
+   * above small screens
+   * prefix: big- 
+   */
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* md- [ only medium screens - tablets ] */
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  	/* lg- [ only large screens - above tablet version desktops ] */
+}

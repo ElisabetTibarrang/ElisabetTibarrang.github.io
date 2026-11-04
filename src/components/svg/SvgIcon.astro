@@ -1,0 +1,274 @@
+---
+// src/components/svg/SvgIcon.astro
+import { getIcon } from "@/data/icons/manifest.mjs";
+import "src/styles/components/icon.css";
+
+type IconKind = "mono" | "brand";
+type IconSource = "sprite" | "inline" | "local" | "external";
+type LegacyMode = "sprite" | "inline" | "img" | "url";
+type IconFilter =
+  | "none"
+  | "black"
+  | "white"
+  | "primary"
+  | "primary-dark"
+  | "secondary"
+  | "accent"
+  | "success"
+  | "error"
+  | "alert"
+  | "note"
+  | "base"
+  | "base-invert";
+
+interface Props {
+  name: string;
+  kind?: IconKind;
+
+  /**
+   * Preferred API.
+   * local    = public/local URL from manifest, default
+   * external = baseUrl + kind + name.svg
+   * sprite   = <use href="#id">
+   * inline   = inline SVG body
+   */
+  source?: IconSource;
+
+  /**
+   * Backward-compatible alias.
+   * img/url map to local.
+   */
+  mode?: LegacyMode;
+
+  /**
+   * Used only with source="external".
+   * Example: https://assets.example.com/icons
+   * Final:   https://assets.example.com/icons/mono/facebook.svg
+   */
+  baseUrl?: string;
+
+  size?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
+
+  /**
+   * CSS filter utility for mono URL icons.
+   * Applies only when kind="mono" and source is local/external.
+   * Default "base" follows the theme (black in light mode, white in dark mode).
+   * Pass "none" to keep the file's own colour.
+   */
+  filter?: IconFilter;
+
+  class?: string;
+  className?: string;
+  svgClass?: string;
+  imgClass?: string;
+  title?: string;
+  decorative?: boolean;
+  loading?: "eager" | "lazy";
+  decoding?: "sync" | "async" | "auto";
+
+  /** Wrapper element tag. Defaults to "span". */
+  wrapper?: string;
+  /** Explicit id on the wrapper element. */
+  id?: string;
+  /** Extra data-* attributes, e.g. { action: "dropdown-toggle" } -> data-action. */
+  data?: Record<string, string | number | boolean>;
+  /** Background color applied to the wrapper. */
+  bgColor?: string;
+  /** Fill/currentColor override applied to the icon itself. */
+  fillColor?: string;
+}
+
+const {
+  name,
+  kind = "mono",
+  source,
+  mode,
+  baseUrl = "",
+  size = "md",
+  filter = "base",
+  class: classAttr = "",
+  className = "",
+  svgClass = "",
+  imgClass = "",
+  title,
+  decorative = true,
+  loading = "lazy",
+  decoding = "async",
+  wrapper = "span",
+  id,
+  data = {},
+  bgColor,
+  fillColor,
+} = Astro.props as Props;
+
+const Wrapper = wrapper as keyof HTMLElementTagNameMap;
+
+const dataAttrs = Object.fromEntries(
+  Object.entries(data).map(([k, v]) => [`data-${k}`, String(v)]),
+);
+
+const wrapperStyle = bgColor ? `background-color:${bgColor};` : undefined;
+const svgStyle = fillColor ? `fill:${fillColor};color:${fillColor};` : undefined;
+
+const icon = getIcon(name, kind);
+const titleText = title || icon?.name || name;
+
+function normalizeSource(): IconSource {
+  if (source) return source;
+
+  if (mode === "sprite") return "sprite";
+  if (mode === "inline") return "inline";
+  if (mode === "img" || mode === "url") return "local";
+
+  return "local";
+}
+
+function cleanPart(value: string): string {
+  return String(value || "")
+    .trim()
+    .replace(/^\/+|\/+$/g, "");
+}
+
+function buildExternalUrl(): string {
+  const base = String(baseUrl || "").replace(/\/+$/g, "");
+  const iconName = cleanPart(name).toLowerCase();
+
+  if (!base || !iconName) return "";
+
+  return `${base}/${kind}/${iconName}.svg`;
+}
+
+const requestedSource = normalizeSource();
+
+/**
+ * Brand icons should normally stay URL-based to preserve original colors.
+ * If someone requests sprite/inline for brand, force local URL.
+ */
+const resolvedSource: IconSource =
+  kind === "brand" && (requestedSource === "sprite" || requestedSource === "inline")
+    ? "local"
+    : requestedSource;
+
+const isUrlSource = resolvedSource === "local" || resolvedSource === "external";
+const imageSrc =
+  resolvedSource === "external"
+    ? buildExternalUrl()
+    : icon?.file || "";
+
+const sizeClassMap: Record<string, string> = {
+  sm: "w-1-0 h-1-0",
+  md: "w-1-5 h-1-5",
+  lg: "w-2-0 h-2-0",
+  xl: "w-2-5 h-2-5",
+  "2xl": "w-3-0 h-3-0",
+  "3xl": "w-3-5 h-3-5",
+};
+
+const sizeClass = sizeClassMap[size] || sizeClassMap.md;
+
+const filterClass =
+  kind === "mono" && isUrlSource
+    ? `filter-${filter}`
+    : "";
+
+const wrapperClass = [
+  "svg-icon",
+  "inline-flex",
+  "ai-center",
+  "jc-center",
+  sizeClass,
+  classAttr,
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+
+const commonSvgClass = ["svg-icon__svg", "w-100", "h-100", svgClass]
+  .filter(Boolean)
+  .join(" ");
+
+const commonImgClass = [
+  "svg-icon__img",
+  "w-100",
+  "h-100",
+  filterClass,
+  imgClass,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+{imageSrc && isUrlSource && (
+  <Wrapper
+    class={wrapperClass}
+    style={wrapperStyle}
+    {...(id ? { id } : {})}
+    {...dataAttrs}
+    data-kind={kind}
+    data-source={resolvedSource}
+    aria-hidden={decorative ? "true" : undefined}
+    role={!decorative ? "img" : undefined}
+    aria-label={!decorative ? titleText : undefined}
+  >
+    <img
+      src={imageSrc}
+      alt={decorative ? "" : titleText}
+      class={commonImgClass}
+      style={svgStyle}
+      loading={loading}
+      decoding={decoding}
+    />
+  </Wrapper>
+)}
+
+{icon && resolvedSource === "inline" && icon.body && (
+  <Wrapper
+    class={wrapperClass}
+    style={wrapperStyle}
+    {...(id ? { id } : {})}
+    {...dataAttrs}
+    data-kind={kind}
+    data-source={resolvedSource}
+    aria-hidden={decorative ? "true" : undefined}
+    role={!decorative ? "img" : undefined}
+    aria-label={!decorative ? titleText : undefined}
+  >
+    <svg
+      class={commonSvgClass}
+      style={svgStyle}
+      viewBox={icon.viewBox}
+      focusable="false"
+      aria-hidden={decorative ? "true" : undefined}
+      fill="currentColor"
+    >
+      {!decorative && <title>{titleText}</title>}
+      <Fragment set:html={icon.body} />
+    </svg>
+  </Wrapper>
+)}
+
+{icon && resolvedSource === "sprite" && (
+  <Wrapper
+    class={wrapperClass}
+    style={wrapperStyle}
+    {...(id ? { id } : {})}
+    {...dataAttrs}
+    data-kind={kind}
+    data-source={resolvedSource}
+    aria-hidden={decorative ? "true" : undefined}
+    role={!decorative ? "img" : undefined}
+    aria-label={!decorative ? titleText : undefined}
+  >
+    <svg
+      class={commonSvgClass}
+      style={svgStyle}
+      viewBox={icon.viewBox}
+      focusable="false"
+      aria-hidden={decorative ? "true" : undefined}
+      fill="currentColor"
+    >
+      {!decorative && <title>{titleText}</title>}
+      <use href={`#${icon.id}`} />
+    </svg>
+  </Wrapper>
+)}

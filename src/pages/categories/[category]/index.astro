@@ -1,0 +1,49 @@
+---
+// src/pages/categories/[category]/index.astro
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import BlogCard from "@/components/BlogCard.astro";
+import { getFieldValueCounts, getEntriesByFieldValue } from "@/utils/collections.mjs";
+import { fieldCollections } from "@/config/pages.mjs";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const categories = await getFieldValueCounts("blog", "categories");
+
+  return categories.map((category) => ({
+    params: { category: category.value },
+  }));
+}
+
+const { category } = Astro.params;
+const cfg = fieldCollections.categories;
+const entries = await getEntriesByFieldValue("blog", cfg.fieldName, category as string);
+
+const headProps = {
+  title: `${category} - ${cfg.title}`,
+  description: `Posts in the "${category}" category.`,
+  canonicalUrl: `/categories/${category}/`,
+  type: "collection",
+  index: entries.length > 0,
+};
+---
+
+<ArticleLayout headProps={headProps}>
+  <section class="category-page max-w-content mi-auto p-1">
+    <Breadcrumb
+      items={[
+        { label: cfg.title, href: "/categories/" },
+        { label: category as string },
+      ]}
+    />
+
+    <header class="my-1">
+      <h1>Category: {category}</h1>
+    </header>
+
+    <div class="grid gap my-2" data-card-collections>
+      {entries.map((entry) => <BlogCard entry={entry} collectionKey="blog" />)}
+    </div>
+  </section>
+</ArticleLayout>

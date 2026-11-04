@@ -1,0 +1,64 @@
+---
+import brandConfig from "@/config/brand.mjs";
+import JsonLd from "./JsonLd.astro";
+
+interface Author {
+  name: string;
+  url?: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  url: string;
+  image?: string;
+  datePublished?: string;
+  dateModified?: string;
+  authors?: Author[];
+  keywords?: string[];
+}
+
+const {
+  title,
+  description,
+  url,
+  image,
+  datePublished,
+  dateModified,
+  authors = [],
+  keywords = [],
+} = Astro.props as Props;
+
+const effectiveAuthors = authors.length
+  ? authors
+  : brandConfig.defaultAuthor
+    ? [brandConfig.defaultAuthor]
+    : [];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${url}#article`,
+  headline: title,
+  name: title,
+  description,
+  url,
+  image,
+  keywords,
+  datePublished,
+  dateModified,
+  mainEntityOfPage: {
+    "@id": `${url}#webpage`,
+  },
+  author: effectiveAuthors.map((author) => ({
+    "@type": "Person",
+    name: author.name,
+    url: author.url,
+  })),
+  publisher: {
+    "@id": `${brandConfig.siteUrl}#organization`,
+  },
+};
+---
+
+<JsonLd id="article-schema" data={schema} />

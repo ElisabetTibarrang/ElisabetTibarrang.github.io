@@ -1,0 +1,153 @@
+/* =====================================
+   Font Utilities
+===================================== */
+
+.bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.regular {
+  font-weight: var(--font-weight-regular);
+}
+
+.italic {
+  font-style: italic;
+}
+
+.font-base {
+  font-family: var(--font-family-base);
+}
+
+.font-heading {
+  font-family: var(--font-family-heading);
+}
+
+.font-mono {
+  font-family: var(--font-family-mono);
+}
+
+.font-inherit {
+  font: inherit;
+}
+
+/* =====================================
+   Text Transform
+===================================== */
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+/* =====================================
+   Text Alignment
+===================================== */
+
+.ta-center {
+  text-align: center;
+}
+
+.ta-end {
+  text-align: end;
+}
+
+.ta-start {
+  text-align: start;
+}
+
+/* =====================================
+   Text Decoration
+===================================== */
+
+.td-none {
+  text-decoration: none;
+}
+
+.td-underline {
+  text-decoration: underline;
+}
+
+/* =====================================
+   Line Height
+===================================== */
+
+.lh-0 {
+  line-height: 0;
+}
+
+.lh-1 {
+  line-height: 1;
+}
+
+.lh-1-2 {
+  line-height: 1.2;
+}
+
+.lh-1-4 {
+  line-height: 1.4;
+}
+
+.lh-1-6 {
+  line-height: 1.6;
+}
+
+.no-line-height {
+  line-height: unset;
+}
+
+/* =====================================
+   Word Break
+===================================== */
+
+.wb-break-word {
+  word-break: break-word;
+}
+
+.ow-anywhere,
+.overflow-wrap-anywhere {
+  overflow-wrap: anywhere;
+}
+
+/* =====================================
+   Legacy / Compatibility
+===================================== */
+
+.text-x-small {
+  font-size: 0.8rem;
+}
+
+@media (min-width: 768px) {
+	/* 
+   * above small screens
+   * prefix: big- 
+   */
+  .big-ta-start {
+    text-align: start;
+  }
+}
+
+@media (max-width: 768px) {
+	/* sm- [ only small screens]*/
+	
+}
+@media (min-width: 1280px) {
+  /* full- [ only above 1280px wide screen] */
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* md- [ only medium screens - tablets ] */
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  	/* lg- [ only large screens - above tablet version desktops ] */
+}

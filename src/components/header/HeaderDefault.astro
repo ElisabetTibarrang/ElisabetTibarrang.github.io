@@ -1,0 +1,204 @@
+---
+// src/components/header/Header.astro
+import IconSprite from "../svg/IconSprite.astro";
+import SvgIcon from "../svg/SvgIcon.astro";
+
+import Logo from "./Logo.astro";
+import SearchButton from "./SearchButton.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+import MobileMenuToggle from "./MobileMenuToggle.astro";
+
+import { allPagesNormalized } from "@/config/pages.mjs";
+
+interface NavChild {
+  label: string;
+  href: string;
+  title?: string;
+  icon?: string;
+}
+
+interface NavItem extends Partial<NavChild> {
+  type?: "dropdown";
+  items?: NavChild[];
+}
+
+// Icon per config page key. Pages without an entry render without an icon.
+const PAGE_ICONS: Record<string, string> = {
+  about: "avatar",
+  contact: "email",
+};
+
+const staticNavItems: NavItem[] = [
+  { label: "Home", href: "/", title: "Home page", icon: "home" },
+  { label: "Blog", href: "/blog/", title: "Blog", icon: "blog" },
+];
+
+// "search" gets its own icon button in header-actions, not a text nav link.
+const configNavItems: NavItem[] = Object.values(allPagesNormalized)
+  .filter((page: any) => page.enabled && page.showInHeaderNav && page.key !== "search")
+  .map((page: any) => ({
+    label: page.label,
+    href: page.path,
+    title: page.title || page.label,
+    icon: PAGE_ICONS[page.key],
+  }));
+
+const navItems: NavItem[] = [...staticNavItems, ...configNavItems];
+
+const contactPage = allPagesNormalized.contact;
+
+const cta = {
+  label: "Get Started",
+  href: contactPage?.enabled ? contactPage.path : "/contact-us/",
+  title: "Start your project",
+};
+
+const headerIcons = [
+  "menu",
+  "close",
+  "search",
+  "sun",
+  "moon",
+  "bw",
+  "arrow-down",
+  "home",
+  "blog",
+  "email",
+  "avatar",
+];
+---
+
+<IconSprite names={headerIcons} />
+
+<header
+  id="site-header"
+  class="site-header w-100 bg-base-00 col-base-100 box-shadow-bottom"
+  data-header
+  itemscope
+  itemtype="https://schema.org/WPHeader"
+>
+  <meta itemprop="name" content="Site header" />
+
+  <div class="site-header__inner max-w-site mi-auto flex ai-center jc-space-between gap p-1">
+    <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+      <Logo />
+    </div>
+
+    <nav
+      id="main-nav"
+      class="main-nav flex ai-center gap"
+      aria-label="Primary navigation"
+      data-header-nav
+      itemprop="hasPart"
+    >
+      <ul class="nav-list flex ai-center gap no-bullets">
+        {navItems.map((item, index) => {
+          const isDropdown = item.type === "dropdown";
+          const dropdownId = `header-dropdown-${index}`;
+          const triggerId = `dropdown-trigger-${index}`;
+
+          return (
+            <li class={`nav-item ${isDropdown ? "dropdown" : ""}`}>
+              {!isDropdown && item.href && (
+                <span
+                  itemscope
+                  itemtype="https://schema.org/SiteNavigationElement"
+                >
+                  <a
+                    href={item.href}
+                    class="nav-link td-none pi-05 pb-02 inline-flex ai-center gap-03"
+                    title={item.title || item.label}
+                    itemprop="url"
+                  >
+                    {item.icon && (
+                      <SvgIcon name={item.icon} className="w-1-0 h-1-0" />
+                    )}
+                    <span itemprop="name">{item.label}</span>
+                  </a>
+                </span>
+              )}
+
+              {isDropdown && (
+                <>
+                  <button
+                    id={triggerId}
+                    class="nav-trigger bg-transparent pi-05 pb-02 pointer inline-flex ai-center gap-03"
+                    type="button"
+                    aria-controls={dropdownId}
+                    aria-expanded="false"
+                    aria-label={`${item.label} menu`}
+                    aria-haspopup="menu"
+                    data-action="dropdown-toggle"
+                  >
+                    {item.icon && (
+                      <SvgIcon name={item.icon} className="w-1-0 h-1-0" />
+                    )}
+                    <span>{item.label}</span>
+                    <SvgIcon
+                      name="arrow-down"
+                      className="w-1-0 h-1-0 nav-arrow"
+                    />
+                  </button>
+
+                  <div
+                    id={dropdownId}
+                    class="dropdown-menu bg-base-00 br-r box-shadow p-05"
+                    role="menu"
+                    aria-labelledby={triggerId}
+                    aria-hidden="true"
+                  >
+                    {item.items?.map((subItem) => (
+                      <span
+                        itemscope
+                        itemtype="https://schema.org/SiteNavigationElement"
+                      >
+                        <a
+                          href={subItem.href}
+                          class="dropdown-link td-none pi-05 pb-02 inline-flex ai-center gap-03"
+                          title={subItem.title || subItem.label}
+                          role="menuitem"
+                          itemprop="url"
+                        >
+                          {subItem.icon && (
+                            <SvgIcon name={subItem.icon} className="w-1-0 h-1-0" />
+                          )}
+                          <span itemprop="name">{subItem.label}</span>
+                        </a>
+                      </span>
+                    ))}
+                  </div>
+                </>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <div
+      id="header-actions"
+      class="header-actions flex ai-center gap"
+      data-header-actions
+    >
+      {allPagesNormalized.search?.enabled && <SearchButton />}
+      <ThemeToggle />
+
+      <a
+        href={cta.href}
+        class="primary-button"
+        title={cta.title}
+        data-action="cta_click"
+        data-label={cta.label}
+      >
+        {cta.label}
+      </a>
+    </div>
+
+    <MobileMenuToggle
+      controls="main-nav header-actions"
+      targets="#main-nav,#header-actions"
+    />
+  </div>
+</header>
+
+<script src="../../scripts/features/header/index.js"></script>

@@ -1,0 +1,67 @@
+---
+// src/components/features/analytics/AnalyticsFooter.astro
+import analyticsConfig from "@/config/analytics.mjs";
+
+const isProd = import.meta.env.PROD;
+
+const enabled =
+  analyticsConfig.enabled === true &&
+  (analyticsConfig.prodOnly !== true || isProd);
+
+const gtmId = String(analyticsConfig.googleTag?.id || "").trim();
+const gaId = String(analyticsConfig.googleAnalytics?.id || "").trim();
+const cfToken = String(analyticsConfig.cloudflareAnalytics?.token || "").trim();
+const ahrefsKey = String(analyticsConfig.ahrefs?.key || "").trim();
+
+const useGTM =
+  enabled &&
+  analyticsConfig.googleTag?.enabled === true &&
+  /^GTM-[A-Z0-9]+$/i.test(gtmId);
+
+const useGA =
+  enabled &&
+  !useGTM &&
+  analyticsConfig.googleAnalytics?.enabled === true &&
+  /^G-[A-Z0-9]+$/i.test(gaId);
+
+const useCF =
+  enabled &&
+  analyticsConfig.cloudflareAnalytics?.enabled === true &&
+  analyticsConfig.cloudflareRum?.enabled !== true &&
+  /^[a-f0-9]{32}$/i.test(cfToken);
+
+const useAhrefs =
+  enabled &&
+  analyticsConfig.ahrefs?.enabled === true &&
+  ahrefsKey.length > 0;
+
+const config = {
+  useGTM,
+  gtmId,
+  useGA,
+  gaId,
+  useCF,
+  cfToken,
+  useAhrefs,
+  ahrefsKey,
+
+  gtmConsentRequired: analyticsConfig.googleTag?.consentRequired !== false,
+  gaConsentRequired: analyticsConfig.googleAnalytics?.consentRequired !== false,
+  cfConsentRequired: analyticsConfig.cloudflareAnalytics?.consentRequired === true,
+  ahrefsConsentRequired: analyticsConfig.ahrefs?.consentRequired === true,
+};
+
+const configData = encodeURIComponent(JSON.stringify(config));
+---
+
+{enabled && (
+  <>
+    <div
+      id="analytics-root"
+      data-config={configData}
+      hidden
+    ></div>
+
+    <script src="../../../scripts/features/analytics/index.js"></script>
+  </>
+)}

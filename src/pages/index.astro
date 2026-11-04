@@ -1,0 +1,325 @@
+---
+// src/pages/index.astro
+// Starter home page: a "how to start" guide. Replace the copy with your own.
+// Site name and the shared image come from src/config/brand.mjs.
+// The clone command and the "Need help?" links read the repository URL from
+// package.json, so renaming the repository there updates this page.
+import PageLayout from "@/layouts/PageLayout.astro";
+import "src/styles/pages/home-page.css";
+
+import Anchor from "@/components/ui/Anchor.astro";
+import Faq from "@/components/ui/Faq.astro";
+import SvgIcon from "@/components/svg/SvgIcon.astro";
+import IconSprite from "@/components/svg/IconSprite.astro";
+import HeroOrbit from "@/components/HeroOrbit.astro";
+
+import type { HeadProps } from "@/types/HeadProps";
+
+import brandConfig from "@/config/brand.mjs";
+import pkg from "../../package.json";
+
+const siteName = brandConfig.siteName;
+
+const repoUrl = String(pkg.repository?.url || "");
+const repoDir = repoUrl.split("/").pop()?.replace(/\.git$/, "") || "my-site";
+const repoWeb = repoUrl.replace(/\.git$/, "");
+const issuesUrl = String(pkg.bugs?.url || (repoWeb ? `${repoWeb}/issues` : ""));
+const docsUrl = repoWeb ? `${repoWeb}/tree/main/docs/features` : "";
+
+const headProps: HeadProps = {
+  title: `Launch your website in 5 minutes | ${siteName}`,
+  description:
+    "Follow five short steps to get your site running, edit it with plain text files and put it online.",
+  canonicalUrl: "/",
+  type: "website",
+  image: brandConfig.featuredImage,
+  imageAlt: brandConfig.featuredImageAlt,
+  imageWidth: brandConfig.featuredImageWidth,
+  imageHeight: brandConfig.featuredImageHeight,
+  index: true,
+};
+
+const iconNames = [
+  "lightning",
+  "search",
+  "blog",
+  "bw",
+  "privacy-shield",
+  "email",
+  "book",
+  "arrow-right",
+];
+
+const cloneCommands = [`git clone ${repoUrl}`, `cd ${repoDir}`, "pnpm install"];
+const deployCommands = ["pnpm wrangler_json", "pnpm build", "pnpm exec wrangler deploy"];
+
+const features = [
+  {
+    icon: "lightning",
+    title: "Fast by default",
+    text: "Pages are built once and served from Cloudflare, close to your visitors.",
+  },
+  {
+    icon: "search",
+    title: "Ready for search engines",
+    text: "Sitemap, RSS, robots.txt and llms.txt are generated for you.",
+  },
+  {
+    icon: "blog",
+    title: "A blog in plain text",
+    text: "Write posts as Markdown files. Tags, categories and search work out of the box.",
+  },
+  {
+    icon: "bw",
+    title: "Light and dark mode",
+    text: "Visitors can switch themes, and your colours are set in one file.",
+  },
+  {
+    icon: "privacy-shield",
+    title: "Secure and private",
+    text: "Strict security headers and an opt-in cookie banner come built in.",
+  },
+  {
+    icon: "email",
+    title: "Contact form ready",
+    text: "A form that sends email through a handler you choose. It stays off until you switch it on.",
+  },
+];
+
+const helpCards = [
+  {
+    icon: "book",
+    title: "Read the docs",
+    text: "Every feature has a short page: what it does, which file to edit and how to check it.",
+    href: docsUrl,
+    label: "Open the docs",
+  },
+  {
+    icon: "search",
+    title: "Search the issues",
+    text: "Someone may have hit the same problem. Known gaps are listed in docs/known-gaps.md.",
+    href: issuesUrl,
+    label: "Browse issues",
+  },
+  {
+    icon: "email",
+    title: "Open an issue",
+    text: "Describe what you expected, what happened and your Node and pnpm versions.",
+    href: issuesUrl ? `${issuesUrl}/new/choose` : "",
+    label: "New issue",
+  },
+];
+
+// Placeholder questions. Delete this block and the <Faq /> line to remove the FAQ.
+const faq = [
+  {
+    question: "Do I need to know how to code?",
+    answer:
+      "No. You edit text files: one settings file for your details, and Markdown files for your posts. If you can edit a document, you can do this.",
+    speakable: true,
+  },
+  {
+    question: "What does it cost to run?",
+    answer:
+      "The theme is free, and Cloudflare's free plan is enough for most small sites. The contact form is optional and off by default; the contact form doc explains what it needs.",
+  },
+  {
+    question: "Where is my site hosted?",
+    answer:
+      "On Cloudflare. Your pages are built once and delivered from servers near each visitor, so they load quickly.",
+  },
+  {
+    question: "What if I get stuck?",
+    answer:
+      "Read the docs in the repository, search the open issues and, if yours is not there, open a new issue with the details. The Need help section below has the links.",
+  },
+];
+---
+
+<PageLayout headProps={headProps} pageType="WebPage" mainVariant="wide">
+  <IconSprite names={iconNames} kind="mono" />
+
+  <article id="home">
+    <header class="start-hero">
+      <div class="start-wrap start-hero__grid">
+        <div class="start-hero__copy">
+          <p class="start-eyebrow">{siteName} starter</p>
+
+          <h1>Launch your website in 5 minutes</h1>
+
+          <p class="start-lead">
+            Download the theme, change a few lines of text and put your site
+            online. No database, no account for the code, nothing to
+            configure first.
+          </p>
+
+          <div class="start-cta-row">
+            <Anchor href="#start" variant="primary" ariaLabel="Go to the five steps">
+              Start in 5 minutes
+              <SvgIcon slot="icon-right" name="arrow-right" kind="mono" mode="sprite" size="sm" decorative />
+            </Anchor>
+            <Anchor href="/blog/" variant="secondary" ariaLabel="See the example blog posts">
+              See an example post
+            </Anchor>
+          </div>
+
+          <ul class="start-trust">
+            <li>Free theme</li>
+            <li>No coding needed</li>
+            <li>Free hosting on Cloudflare</li>
+          </ul>
+
+          <p class="start-help-link">
+            Stuck? <a href="#help">See where to get help.</a>
+          </p>
+        </div>
+
+        <div class="start-hero__media">
+          <HeroOrbit />
+        </div>
+      </div>
+    </header>
+
+    <section id="start" class="start-section start-section--alt" aria-labelledby="start-heading">
+      <div class="start-wrap">
+        <div class="start-heading">
+          <h2 id="start-heading">How to start</h2>
+          <p>Five short steps from download to a live website.</p>
+        </div>
+
+        <ol class="start-steps">
+          <li class="start-step">
+            <span class="start-step__num" aria-hidden="true">1</span>
+            <div>
+              <h3>Get the theme</h3>
+              <p>Download the project and install it. You need Node 22.12 or newer and pnpm.</p>
+              <div class="start-code">
+                <pre><code>{cloneCommands.map((line) => <span class="line"><span class="prompt" aria-hidden="true">$ </span>{line}</span>)}</code></pre>
+                <button type="button" class="copy-btn" data-copy={cloneCommands.join("\n")} aria-label="Copy the install commands">Copy</button>
+              </div>
+            </div>
+          </li>
+
+          <li class="start-step">
+            <span class="start-step__num" aria-hidden="true">2</span>
+            <div>
+              <h3>Preview it</h3>
+              <p>Start the preview, then open <a href="http://localhost:4321">localhost:4321</a> in your browser. It updates as you edit.</p>
+              <div class="start-code">
+                <pre><code><span class="prompt" aria-hidden="true">$ </span>pnpm dev</code></pre>
+                <button type="button" class="copy-btn" data-copy="pnpm dev" aria-label="Copy the preview command">Copy</button>
+              </div>
+            </div>
+          </li>
+
+          <li class="start-step">
+            <span class="start-step__num" aria-hidden="true">3</span>
+            <div>
+              <h3>Make it yours</h3>
+              <p>
+                Open <code>src/config/brand.mjs</code>, search for <code>EDIT</code> and replace
+                the name, address, contact details and links. Swap
+                <code>public/images/featured.png</code> for your own picture.
+              </p>
+            </div>
+          </li>
+
+          <li class="start-step">
+            <span class="start-step__num" aria-hidden="true">4</span>
+            <div>
+              <h3>Write your first post</h3>
+              <p>
+                Copy a file in <code>src/content/blog/</code>, change the title and the text, and
+                save. It shows up on the <a href="/blog/">blog</a> straight away.
+              </p>
+            </div>
+          </li>
+
+          <li class="start-step">
+            <span class="start-step__num" aria-hidden="true">5</span>
+            <div>
+              <h3>Go live</h3>
+              <p>
+                Set <code>projectName</code> in <code>src/config/wrangler.mjs</code>, then publish
+                with a free Cloudflare account.
+              </p>
+              <div class="start-code">
+                <pre><code>{deployCommands.map((line) => <span class="line"><span class="prompt" aria-hidden="true">$ </span>{line}</span>)}</code></pre>
+                <button type="button" class="copy-btn" data-copy={deployCommands.join("\n")} aria-label="Copy the publish commands">Copy</button>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="start-note">
+          <p>
+            <strong>Want the contact form?</strong> It is off by default. Turning it on needs a handler
+            URL and two secrets; the steps are in <code>docs/features/contact-form.md</code>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="start-section" aria-labelledby="included-heading">
+      <div class="start-wrap">
+        <div class="start-heading">
+          <h2 id="included-heading">What you get</h2>
+          <p>Everything a small site needs, with nothing to switch on.</p>
+        </div>
+
+        <div class="start-grid">
+          {features.map((item) => (
+            <div class="start-card">
+              <span class="start-card__icon">
+                <SvgIcon name={item.icon} kind="mono" mode="sprite" size="md" decorative />
+              </span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="help" class="start-section" aria-labelledby="help-heading">
+      <div class="start-wrap">
+        <div class="start-heading">
+          <h2 id="help-heading">Need help?</h2>
+          <p>Most questions are answered in the docs. If yours is not, open an issue.</p>
+        </div>
+
+        <div class="start-grid">
+          {helpCards.map((card) => (
+            <div class="start-card">
+              <span class="start-card__icon">
+                <SvgIcon name={card.icon} kind="mono" mode="sprite" size="md" decorative />
+              </span>
+              <h3>{card.title}</h3>
+              <p>{card.text}</p>
+              {card.href && (
+                <p class="start-card__link">
+                  <a href={card.href} target="_blank" rel="noopener noreferrer">{card.label}</a>
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <Faq faq={faq} />
+
+    <section class="start-section start-final" aria-labelledby="final-heading">
+      <div class="start-wrap">
+        <h2 id="final-heading">Ready to begin?</h2>
+        <p>Your site can be live today.</p>
+        <div class="start-cta-row">
+          <Anchor href="#start" variant="primary" ariaLabel="Back to the five steps">Start with step 1</Anchor>
+          <Anchor href="/blog/" variant="secondary">See the example posts</Anchor>
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <script src="../scripts/features/copy/index.js"></script>
+</PageLayout>

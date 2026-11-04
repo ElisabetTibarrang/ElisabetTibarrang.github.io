@@ -1,0 +1,194 @@
+---
+// src/pages/about-us.astro
+// Example About page. Every paragraph below is sample text: replace it with
+// your own story. Names and contact details come from src/config/brand.mjs;
+// the credits come from src/config/credit.mjs.
+import PageLayout from "@/layouts/PageLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import Anchor from "@/components/ui/Anchor.astro";
+import brandConfig from "@/config/brand.mjs";
+import creditConfig from "@/config/credit.mjs";
+import { allPagesNormalized } from "@/config/pages.mjs";
+
+import "@/styles/pages/about.css";
+
+const cfg = allPagesNormalized.about;
+
+const headProps = {
+  title: cfg.title,
+  description: `About ${brandConfig.siteName}: our story, what we do and the people behind it.`,
+  canonicalUrl: cfg.path,
+  type: "about",
+  index: cfg.index,
+};
+
+const siteName = brandConfig.siteName;
+const org = brandConfig.organization || {};
+const person = brandConfig.incharge || {};
+const email = brandConfig.contact?.email || org.email || "";
+
+const location = [org.address?.addressLocality, org.address?.addressRegion, org.address?.addressCountry]
+  .filter(Boolean)
+  .join(", ");
+
+const services = [
+  {
+    title: "Plan",
+    text: "We start by listening. A short call or a few emails are enough to agree on what you need.",
+  },
+  {
+    title: "Build",
+    text: "We create it step by step and show you progress along the way, so there are no surprises.",
+  },
+  {
+    title: "Support",
+    text: "After launch we stay available to fix problems, answer questions and help you grow.",
+  },
+];
+
+const values = [
+  { title: "Clear", text: "Plain language, honest prices and simple answers." },
+  { title: "Careful", text: "We test our work and fix what we find before you see it." },
+  { title: "Kind", text: "Good work comes from respect for the people who use it." },
+];
+
+const credit = creditConfig;
+
+const credits = [
+  {
+    name: credit?.text || "AstroWebTheme Free",
+    role: `Free website theme${credit?.by ? ` by ${credit.by}` : ""}`,
+    url: credit?.url || "https://github.com/nviewsweb/astrowebtheme-free",
+  },
+  { name: "Astro", role: "Web framework", url: "https://astro.build" },
+  { name: "Cloudflare Workers", role: "Hosting", url: "https://workers.cloudflare.com" },
+  { name: "Inter", role: "Typeface, SIL Open Font License", url: "https://rsms.me/inter/" },
+];
+---
+
+<PageLayout headProps={headProps} pageType="AboutPage" mainVariant="default">
+  <section class="about-page max-w-content mi-auto p-1">
+    <Breadcrumb items={[{ label: "About", href: cfg.path }]} />
+
+    <header class="about-header">
+      <h1>About {siteName}</h1>
+      <p class="about-lead">
+        We are a small team that turns good ideas into clear, fast and friendly websites.
+      </p>
+      <p class="about-example">
+        This is example text. Edit it in <code>src/pages/about-us.astro</code>.
+      </p>
+    </header>
+
+    <section class="about-section" aria-labelledby="story-heading">
+      <h2 id="story-heading">Our story</h2>
+      <p>
+        {siteName} began with a simple belief: a website should be easy to run and a pleasure to
+        use. We saw too many good businesses held back by slow, confusing sites, so we set out to
+        make something better.
+      </p>
+      <p>
+        Today we help people and small organisations share what they do, answer questions before
+        they are asked and stay easy to reach. Every project starts with a conversation, and we
+        keep talking until it is live and working well.
+      </p>
+    </section>
+
+    <section class="about-section" aria-labelledby="do-heading">
+      <h2 id="do-heading">What we do</h2>
+      <div class="about-grid">
+        {services.map((item, index) => (
+          <div class="about-card">
+            <span class="about-card__num" aria-hidden="true">{index + 1}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="about-section" aria-labelledby="values-heading">
+      <h2 id="values-heading">What we believe</h2>
+      <div class="about-grid">
+        {values.map((item) => (
+          <div class="about-card">
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {person.name && (
+      <section class="about-section" aria-labelledby="people-heading">
+        <h2 id="people-heading">The people</h2>
+        <div class="about-person">
+          <span class="about-person__initial" aria-hidden="true">{person.name.charAt(0)}</span>
+          <div>
+            <h3>{person.name}</h3>
+            {person.jobTitle && <p class="about-person__role">{person.jobTitle}</p>}
+            <p>
+              {person.name.split(" ")[0]} leads the team and works with every client. Ask
+              anything: if we do not know, we will find out.
+            </p>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <section class="about-section" aria-labelledby="facts-heading">
+      <h2 id="facts-heading">Quick facts</h2>
+      <dl class="about-facts">
+        {org.name && (
+          <>
+            <dt>Organisation</dt>
+            <dd>{org.name}</dd>
+          </>
+        )}
+        {org.foundingDate && (
+          <>
+            <dt>Founded</dt>
+            <dd>{org.foundingDate.slice(0, 4)}</dd>
+          </>
+        )}
+        {location && (
+          <>
+            <dt>Based in</dt>
+            <dd>{location}</dd>
+          </>
+        )}
+        {email && (
+          <>
+            <dt>Email</dt>
+            <dd><a href={`mailto:${email}`}>{email}</a></dd>
+          </>
+        )}
+      </dl>
+    </section>
+
+    <section class="about-cta" aria-labelledby="cta-heading">
+      <h2 id="cta-heading">Want to work with us?</h2>
+      <p>Tell us about your project. We usually reply within one working day.</p>
+      <div class="about-cta__buttons">
+        <Anchor href="/contact-us/" variant="primary">Contact us</Anchor>
+        <Anchor href="/blog/" variant="secondary">Read our blog</Anchor>
+      </div>
+    </section>
+
+    <section class="about-section about-credits" aria-labelledby="credits-heading">
+      <h2 id="credits-heading">Credits</h2>
+      <p>
+        This website is built with {credit?.text || "AstroWebTheme Free"}, a free website theme
+        {credit?.by ? ` by ${credit.by}` : ""}. Thank you to the people behind the tools below.
+      </p>
+      <ul class="about-credit-list">
+        {credits.map((item) => (
+          <li>
+            <a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}</a>
+            <span>{item.role}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </section>
+</PageLayout>

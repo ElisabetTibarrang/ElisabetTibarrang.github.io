@@ -1,0 +1,42 @@
+---
+import brandConfig from "@/config/brand.mjs";
+import JsonLd from "./JsonLd.astro";
+
+const org = brandConfig.organization || {};
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": org.type || "Organization",
+  "@id": `${brandConfig.siteUrl}#organization`,
+  name: org.name || brandConfig.siteName,
+  legalName: org.legalName,
+  url: org.url || brandConfig.siteUrl,
+  logo: org.logo,
+  email: org.email || brandConfig.contact?.email,
+  foundingDate: org.foundingDate,
+  taxID: org.taxId,
+  identifier: org.registrationId,
+  sameAs: org.sameAs || [],
+
+  address: org.address
+    ? {
+        "@type": "PostalAddress",
+        streetAddress: org.address.streetAddress,
+        addressLocality: org.address.addressLocality,
+        addressRegion: org.address.addressRegion,
+        postalCode: org.address.postalCode,
+        addressCountry: org.address.addressCountry,
+      }
+    : undefined,
+
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: brandConfig.contact?.email,
+    telephone: brandConfig.contact?.phone,
+    contactType: "customer support",
+    availableLanguage: ["en"],
+  },
+};
+---
+
+<JsonLd id="organization-schema" data={schema} />

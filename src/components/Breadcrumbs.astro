@@ -1,0 +1,68 @@
+---
+// src/components/Breadcrumbs.astro
+interface BreadcrumbItem {
+  href?: string;
+  label: string;
+}
+
+interface Props {
+  items?: BreadcrumbItem[];
+  includeHome?: boolean;
+  homeLabel?: string;
+  homeHref?: string;
+  class?: string;
+  className?: string;
+}
+
+const {
+  items = [],
+  includeHome = true,
+  homeLabel = "Home",
+  homeHref = "/",
+  class: classAttr = "",
+  className = "",
+} = Astro.props as Props;
+
+const allItems: BreadcrumbItem[] = [
+  ...(includeHome ? [{ label: homeLabel, href: homeHref }] : []),
+  ...items,
+];
+
+const navClass = `breadcrumbs text-sm my-1 ${classAttr} ${className}`.trim();
+---
+
+{allItems.length > 0 && (
+  <nav class={navClass} aria-label="Breadcrumb">
+    <ol
+      class="flex wrap gap no-bullets"
+      itemscope
+      itemtype="https://schema.org/BreadcrumbList"
+    >
+      {allItems.map((item, index) => {
+        const isLast = index === allItems.length - 1;
+
+        return (
+          <li
+            itemscope
+            itemprop="itemListElement"
+            itemtype="https://schema.org/ListItem"
+          >
+            {index > 0 && <span aria-hidden="true">/</span>}
+
+            {item.href && !isLast ? (
+              <a href={item.href} itemprop="item">
+                <span itemprop="name">{item.label}</span>
+              </a>
+            ) : (
+              <span itemprop="name" aria-current={isLast ? "page" : undefined}>
+                {item.label}
+              </span>
+            )}
+
+            <meta itemprop="position" content={String(index + 1)} />
+          </li>
+        );
+      })}
+    </ol>
+  </nav>
+)}

@@ -1,0 +1,90 @@
+---
+// src/components/ui/Faq.astro
+
+import "src/styles/components/faq.css";
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+  speakable?: boolean;
+}
+
+interface Props {
+  faq?: FaqItem[];
+}
+
+const { faq = [] } = Astro.props as Props;
+
+const hasSpeakable = faq.some((item) => item.speakable === true);
+
+const speakableJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: [
+      "#faq .speakable-faq-question",
+      "#faq .speakable-faq-answer",
+    ],
+  },
+}).replace(/</g, "\\u003c");
+
+const nonce = (Astro.locals as any)?.nonce;
+---
+
+{faq.length > 0 && (
+  <section
+    id="faq"
+    class="faq w-100 bg br-r mb-1 pb-1 bg-base-00 w-100 mi-auto mb-2 p-2"
+    aria-labelledby="faq-heading"
+    itemscope
+    itemtype="https://schema.org/FAQPage"
+  >
+    <h2 id="faq-heading" class="text-xl mb-0 max-w-featured mi-auto ta-center">
+      Frequently Asked Questions
+    </h2>
+
+    <div class="faq-list max-w-content mb-s-1 max-w-featured mi-auto">
+      {faq.map((item, index) => (
+        <details
+          data-key={String(index)}
+          class="faq-item"
+          itemscope
+          itemprop="mainEntity"
+          itemtype="https://schema.org/Question"
+        >
+          <summary
+            class:list={[
+              "faq-question",
+              item.speakable && "speakable-faq-question",
+            ]}
+            itemprop="name"
+          >
+            {item.question}
+          </summary>
+
+          <div
+            class:list={[
+              "faq-answer",
+              item.speakable && "speakable-faq-answer",
+            ]}
+            itemscope
+            itemprop="acceptedAnswer"
+            itemtype="https://schema.org/Answer"
+          >
+            <p itemprop="text">{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+
+    {hasSpeakable && (
+      <script 
+        is:inline
+        type="application/ld+json"
+        nonce={nonce}
+        set:html={speakableJson}
+      />
+    )}
+  </section>
+)}

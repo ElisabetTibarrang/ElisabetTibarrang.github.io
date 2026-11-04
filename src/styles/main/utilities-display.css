@@ -1,0 +1,136 @@
+/* file: core/styles/main/utilities-display.css
+ * Generic display utilities used across the theme
+ */
+
+/* ───────── display ───────── */
+
+.block {
+	display: block;
+}
+
+.big-display-block {
+	display: none;
+}
+
+.sm-display {
+	display: block;
+}
+
+.flex {
+	display: flex;
+}
+.grid{
+	display: grid;
+}
+
+.inherit {
+	display: inherit !important;
+}
+
+.initial {
+	display: initial !important;
+}
+
+.inline {
+	display: inline;
+}
+
+.inline-block {
+	display: inline-block;
+}
+
+.inline-flex {
+	display: inline-flex;
+}
+
+.display-none.display {
+	display: block;
+}
+
+.hide, .hidden, .display-none, .none, .is-hidden {
+	display: none !important;
+}
+
+.visible {
+	visibility: visible;
+}
+.invisible {
+	visibility: hidden;
+}
+.collapse {
+	visibility: collapse;
+}
+
+@media (max-width: 768px) {
+	/* sm- [ only small screens]*/
+	
+}
+@media (min-width: 1280px) {
+  /* full- [ only above 1280px wide screen] */
+  	.full-display-none {
+		display: none !important;
+	}
+}
+
+
+@media (min-width: 768px) {
+  /* 
+   * above small screens
+   * prefix: big- 
+   */
+   	.big-display-block {
+		display: block;
+	}
+	.big-display-block {
+		display: block;
+	}
+	.md-display-block {
+		display: block !important;
+	}
+
+	.md-display-flex {
+		display: flex !important;
+	}
+    	.sm-display {
+		display: none;
+	}
+
+	.md-display-none {
+		display: none !important;
+	}
+	.big-display-none {
+		display: none !important;
+	}
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* md- [ only medium screens - tablets ] */
+  	.md-display-none {
+		display: none !important;
+	}
+
+	.md-display-block {
+		display: block !important;
+	}
+
+	.md-display-flex {
+		display: flex !important;
+	}
+
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  	/* lg- [ only large screens - above tablet version desktops ] */
+    	.lg-display-none {
+		display: none !important;
+	}
+
+	.lg-display-block {
+		display: block !important;
+	}
+
+	.lg-display-flex {
+		display: flex !important;
+	}
+	.lg-display-grid {
+		display: grid !important;
+	}
+}

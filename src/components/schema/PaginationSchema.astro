@@ -1,0 +1,37 @@
+---
+import JsonLd from "./JsonLd.astro";
+
+interface Props {
+  title: string;
+  url: string;
+  currentPage: number;
+  totalPages: number;
+  prevUrl?: string;
+  nextUrl?: string;
+}
+
+const {
+  title,
+  url,
+  currentPage,
+  totalPages,
+  prevUrl,
+  nextUrl,
+} = Astro.props as Props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${url}#pagination`,
+  name: `${title} - Page ${currentPage}`,
+  url,
+  pagination: {
+    currentPage,
+    totalPages,
+    previousPage: prevUrl,
+    nextPage: nextUrl,
+  },
+};
+---
+
+<JsonLd id="pagination-schema" data={schema} />

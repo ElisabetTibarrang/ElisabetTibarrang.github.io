@@ -1,0 +1,133 @@
+.absolute {
+	position: absolute;
+}
+.bottom-0 {
+	bottom: 0;
+}
+.bottom-10 {
+	bottom: 10px;
+}
+
+.fixed {
+	position: fixed;
+}
+
+.float-right {
+	float: right;
+}
+.float-left {
+	float: left;
+}
+
+.left-0 {
+	left: 0;
+}
+
+.left-50 {
+	left: 50%;
+}
+
+.relative {
+	position: relative;
+}
+
+.right-0 {
+	right: 0;
+}
+
+.static {
+	position: static;
+}
+
+.sticky {
+	position: sticky;
+}
+.top-0 {
+	top: 0;
+}
+.top-10vh {
+	top: 10vh;
+}
+
+.top-0-20 {
+	top: -20px;
+}
+
+.top-20 {
+	top: 20px;
+}
+.top-2 {
+	top: 2rem;
+}
+.top-5{
+	top: 5rem;
+}
+
+.top-100p {
+	top: 100%;
+}
+@media (max-width: 768px) {
+	/* sm- [ only small screens]*/
+    
+
+	.top-70p {
+		top: 70%;
+	}
+
+	
+}
+@media (min-width: 1280px) {
+  /* full- [ only above 1280px wide screen] */
+  .full-sticky {
+		position: sticky;
+	}
+    
+	.full-top-0{
+		top: 0;
+	}
+	
+}
+
+
+@media (min-width: 768px) {
+  /* 
+   * above small screens
+   * prefix: big- 
+   */
+   	.big-absolute {
+		position: absolute;
+	}
+
+	.big-float-right {
+		float: right !important;
+	}
+	.big-float-left {
+		float: left !important;
+	}
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* md- [ only medium screens - tablets ] */
+  	.md-order-2 {
+		order: 2 !important;
+	}
+	.md-order-3 {
+		order: 3 !important;
+	}
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  	/* lg- [ only large screens - above tablet version desktops ] */
+    	.lg-sticky {
+		position: sticky;
+	}
+
+	.lg-top-42vh {
+		top: 42vh;
+	}
+    	.lg-order-2 {
+		order: 2 !important;
+	}
+
+	.lg-order-3 {
+		order: 3 !important;
+	}
+}

@@ -1,0 +1,50 @@
+---
+// src/pages/blog/index.astro
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import BlogCard from "@/components/BlogCard.astro";
+import Pagination from "@/components/Pagination.astro";
+import { getVisibleCollection } from "@/utils/collections.mjs";
+import { collections } from "@/config/pages.mjs";
+
+const cfg = collections.blog;
+const pageSize = cfg.pagination?.pageSize || 12;
+const entries = await getVisibleCollection("blog");
+const firstPageEntries = entries.slice(0, pageSize);
+const lastPage = Math.ceil(entries.length / pageSize);
+
+const page = {
+  data: firstPageEntries,
+  currentPage: 1,
+  lastPage,
+  total: entries.length,
+  size: pageSize,
+  url: {
+    current: "/blog/",
+    prev: undefined,
+    next: lastPage > 1 ? "/blog/page/2/" : undefined,
+    first: undefined,
+    last: lastPage > 1 ? `/blog/page/${lastPage}/` : undefined,
+  },
+};
+
+const headProps = {
+  title: cfg.title,
+  description: cfg.description,
+  canonicalUrl: "/blog/",
+  type: "website",
+  index: true,
+};
+---
+
+<ArticleLayout headProps={headProps}>
+  <section class="collection-page max-w-content mi-auto p-1">
+    <h1>{cfg.title}</h1>
+    <p>{cfg.description}</p>
+
+    <div class="grid gap my-2" data-card-collections>
+      {page.data.map((entry) => <BlogCard entry={entry} collectionKey="blog" />)}
+    </div>
+
+    <Pagination page={page} />
+  </section>
+</ArticleLayout>

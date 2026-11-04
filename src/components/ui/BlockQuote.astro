@@ -1,0 +1,153 @@
+---
+// src/components/ui/BlockQuote.astro
+
+interface Props {
+  citeUrl?: string;
+  citeName?: string;
+  prefixTitle?: string;
+  prefixDate?: string;
+
+  compact?: boolean;
+  addQuotes?: boolean;
+
+  lead?: string;
+  leadTag?: "p" | "span" | "div" | "h6";
+  leadAlign?: "start" | "end" | "center";
+
+  /** Legacy aliases */
+  href?: string;
+  label?: string;
+  workTitle?: string;
+  date?: string;
+  cite?: string;
+  sourceName?: string;
+  sourceTitle?: string;
+}
+
+const {
+  citeUrl,
+  citeName,
+  prefixTitle,
+  prefixDate,
+
+  compact = false,
+  addQuotes = false,
+
+  lead,
+  leadTag = "p",
+  leadAlign = "start",
+
+  href,
+  label,
+  workTitle,
+  date,
+  cite,
+  sourceName,
+  sourceTitle,
+} = Astro.props as Props;
+
+const finalCiteUrl = citeUrl || href || cite || "";
+const finalCiteName = citeName || label || sourceName || "";
+const finalPrefixTitle = prefixTitle || workTitle || sourceTitle || "";
+const finalPrefixDate = prefixDate || date || "";
+
+const hasLead = Boolean(lead || Astro.slots.has("lead"));
+const hasCaption = Boolean(
+  finalPrefixTitle ||
+    finalPrefixDate ||
+    finalCiteName ||
+    finalCiteUrl
+);
+
+const LeadTag = leadTag;
+
+const figureClass = [
+  "blockquote-figure",
+  compact && "blockquote-figure-compact",
+  addQuotes && "blockquote-figure-add-quotes",
+]
+  .filter(Boolean)
+  .join(" ");
+
+const leadClass = [
+  "blockquote-lead",
+  `blockquote-lead-${leadAlign}`,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+{hasLead && (
+  <div class={leadClass}>
+    {Astro.slots.has("lead") ? (
+      <slot name="lead" />
+    ) : (
+      <LeadTag>{lead}</LeadTag>
+    )}
+  </div>
+)}
+
+<figure
+  class={figureClass}
+  itemscope
+  itemtype="https://schema.org/Quotation"
+>
+  <blockquote
+    cite={finalCiteUrl || undefined}
+    itemprop="text"
+  >
+    <slot />
+  </blockquote>
+
+  {hasCaption && (
+    <figcaption
+      class="blockquote-caption"
+      itemprop="citation"
+    >
+      <span class="blockquote-source-wrap">
+        {finalPrefixTitle && (
+          <span class="blockquote-prefix">
+            {finalPrefixTitle}
+          </span>
+        )}
+
+        {finalPrefixTitle && (finalCiteName || finalCiteUrl) && (
+          <span aria-hidden="true"> — </span>
+        )}
+
+        {finalCiteName ? (
+          finalCiteUrl ? (
+            <a
+              href={finalCiteUrl}
+              rel="nofollow noopener"
+              itemprop="url"
+            >
+              <span itemprop="name">{finalCiteName}</span>
+            </a>
+          ) : (
+            <span class="blockquote-source" itemprop="name">
+              {finalCiteName}
+            </span>
+          )
+        ) : finalCiteUrl ? (
+          <a
+            href={finalCiteUrl}
+            rel="nofollow noopener"
+            itemprop="url"
+          >
+            {finalCiteUrl}
+          </a>
+        ) : null}
+      </span>
+
+      {finalPrefixDate && (
+        <time
+          class="blockquote-date"
+          datetime={finalPrefixDate}
+        >
+          {finalPrefixDate}
+        </time>
+      )}
+    </figcaption>
+  )}
+</figure>

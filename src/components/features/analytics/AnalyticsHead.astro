@@ -1,0 +1,54 @@
+---
+// src/components/features/analytics/AnalyticsBody.astro
+import analyticsConfig from "@/config/analytics.mjs";
+
+const isProd = import.meta.env.PROD;
+
+const enabled =
+  analyticsConfig.enabled === true &&
+  (analyticsConfig.prodOnly !== true || isProd);
+
+const gtmId = String(analyticsConfig.googleTag?.id || "").trim();
+const gaId = String(analyticsConfig.googleAnalytics?.id || "").trim();
+const cfToken = String(analyticsConfig.cloudflareAnalytics?.token || "").trim();
+const ahrefsKey = String(analyticsConfig.ahrefs?.key || "").trim();
+
+const useGoogle =
+  enabled &&
+  (
+    (analyticsConfig.googleTag?.enabled === true && /^GTM-[A-Z0-9]+$/i.test(gtmId)) ||
+    (analyticsConfig.googleAnalytics?.enabled === true && /^G-[A-Z0-9]+$/i.test(gaId))
+  );
+
+const useCF =
+  enabled &&
+  analyticsConfig.cloudflareAnalytics?.enabled === true &&
+  analyticsConfig.cloudflareRum?.enabled !== true &&
+  /^[a-f0-9]{32}$/i.test(cfToken);
+
+const useAhrefs =
+  enabled &&
+  analyticsConfig.ahrefs?.enabled === true &&
+  ahrefsKey.length > 0;
+---
+
+{useGoogle && (
+  <>
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  </>
+)}
+
+{useCF && (
+  <>
+    <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
+    <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin />
+  </>
+)}
+
+{useAhrefs && (
+  <>
+    <link rel="dns-prefetch" href="https://analytics.ahrefs.com" />
+    <link rel="preconnect" href="https://analytics.ahrefs.com" crossorigin />
+  </>
+)}

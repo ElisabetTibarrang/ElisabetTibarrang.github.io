@@ -1,0 +1,109 @@
+---
+// src/pages/blog/[...slug].astro
+import { getCollection, render } from "astro:content";
+
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import Faq from "@/components/ui/Faq.astro";
+import { getEntryUrl } from "@/utils/collections.mjs";
+import type { HeadProps } from "@/types/HeadProps";
+
+import "@/styles/pages/article.css";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const entries = await getCollection("blog");
+
+  return entries
+    .filter((entry) => entry.data.draft !== true)
+    .map((entry) => {
+      const slug = String(entry.data.slug || entry.id || "")
+        .replace(/\.(md|mdx)$/i, "")
+        .replace(/^\/+|\/+$/g, "");
+
+      return {
+        params: { slug },
+        props: { entry },
+      };
+    });
+}
+
+const { entry } = Astro.props;
+
+if (!entry) {
+  throw new Error(`Blog entry not found for slug: ${Astro.params.slug}`);
+}
+
+const { Content } = await render(entry);
+
+const url = getEntryUrl("blog", entry);
+const tags = ((entry.data as any).tags || []) as string[];
+const categories = ((entry.data as any).categories || []) as string[];
+const image = entry.data.heroImage || "";
+
+const headProps: HeadProps = {
+  ...entry.data,
+  title: entry.data.title,
+  description: entry.data.description,
+  canonicalUrl: url,
+  url,
+  image,
+  heroImage: image,
+  preloadImage: Boolean(image),
+  imageAlt: entry.data.heroImageAlt,
+  imageTitle: entry.data.heroImageTitle,
+  publishedDate: entry.data.publishedDate,
+  lastModified: entry.data.lastModified,
+  keywords: entry.data.keywords,
+  authors: entry.data.authors,
+  index: entry.data.index ?? true,
+  type: "article",
+};
+---
+
+<ArticleLayout headProps={headProps}>
+  <div class="article-page max-w-content mi-auto p-1">
+    <Breadcrumb
+      items={[
+        { label: "Blog", href: "/blog/" },
+        { label: entry.data.title },
+      ]}
+    />
+
+    <header class="article-header my-2">
+      <h1>{entry.data.title}</h1>
+      <p>{entry.data.description}</p>
+
+      {(categories.length > 0 || tags.length > 0) && (
+        <ul class="article-taxonomy" aria-label="Categories and tags">
+          {categories.map((category: string) => (
+            <li class="is-category"><a href={`/categories/${encodeURIComponent(category)}/`}>{category}</a></li>
+          ))}
+          {tags.map((tag: string) => (
+            <li><a href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}</a></li>
+          ))}
+        </ul>
+      )}
+
+      {image && (
+        <img
+          src={image}
+          alt={entry.data.heroImageAlt || entry.data.title}
+          class="w-full ar-16-9 obj-cover br-r"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      )}
+    </header>
+
+    <div class="article-content">
+      <Content />
+    </div>
+
+    <Faq faq={entry.data.faq || []} />
+
+    <p class="article-back"><a href="/blog/">&larr; All articles</a></p>
+  </div>
+</ArticleLayout>

@@ -1,0 +1,51 @@
+---
+import "@/styles/components/footer.css";
+
+import brandConfig from "@/config/brand.mjs";
+import creditConfig from "@/config/credit.mjs";
+import Logo from "@/components/header/Logo.astro";
+import SocialLinks from "@/components/ui/SocialLinks.astro";
+
+const currentYear = new Date().getFullYear();
+const siteName = brandConfig.siteName || "AstroWebTheme";
+
+const themeCredit = creditConfig;
+
+const policyLinks = [
+  { label: "Privacy", href: "/privacy-policy/" },
+  { label: "Cookies", href: "/cookie-policy/" },
+  { label: "Terms", href: "/terms/" },
+];
+---
+
+<div class="footer-minimal">
+  <div class="max-w-site mi-auto flex wrap ai-center jc-space-between gap-1 p-1">
+    <Logo />
+
+    <nav class="flex wrap gap-05" aria-label="Footer links">
+      {policyLinks.map((link) => (
+        <a class="footer-policy-link text-sm" href={link.href}>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <SocialLinks
+      id="footer-minimal-social-links"
+      className="footer-minimal-social"
+      iconSize="w-1-25 h-1-25"
+    />
+  </div>
+
+  <div class="footer-row-credit br-top">
+    <div class="max-w-site mi-auto flex wrap gap-05 jc-space-between ai-center p-1 text-sm col-base-80">
+      <span>© {currentYear} {siteName}</span>
+      {themeCredit?.enabled !== false && (
+        <span>
+          Built with{" "}
+          <a href={themeCredit.url} target="_blank" rel="noopener noreferrer">{themeCredit.text}</a>
+        </span>
+      )}
+    </div>
+  </div>
+</div>

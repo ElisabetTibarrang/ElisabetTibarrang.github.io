@@ -1,0 +1,53 @@
+---
+// src/components/header/ThemeToggle.astro
+import SvgIcon from "@/components/svg/SvgIcon.astro";
+---
+
+<div class="theme-toggle">
+  <button
+    id="theme-button"
+    class="theme-toggle__button"
+    type="button"
+    data-header-theme-button
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-controls="theme-menu"
+    aria-label="Theme"
+  >
+    <span data-theme-icon="system">
+      <SvgIcon name="bw" kind="mono" source="local" filter="base" size="md" />
+    </span>
+
+    <span data-theme-icon="light" class="display-none">
+      <SvgIcon name="sun" kind="mono" source="local" filter="base" size="md" />
+    </span>
+
+    <span data-theme-icon="dark" class="display-none">
+      <SvgIcon name="moon" kind="mono" source="local" filter="base" size="md" />
+    </span>
+
+    <span class="sr-only">Theme</span>
+  </button>
+
+  <div
+    id="theme-menu"
+    class="theme-menu display-none"
+    role="menu"
+    aria-labelledby="theme-button"
+  >
+    <button class="theme-option" type="button" role="menuitemradio" aria-checked="false" data-theme="system" tabindex="-1">
+      <SvgIcon name="bw" kind="mono" source="local" filter="base" size="md" />
+      <span>OS Default</span>
+    </button>
+
+    <button class="theme-option" type="button" role="menuitemradio" aria-checked="false" data-theme="light" tabindex="-1">
+      <SvgIcon name="sun" kind="mono" source="local" filter="base" size="md" />
+      <span>Light</span>
+    </button>
+
+    <button class="theme-option" type="button" role="menuitemradio" aria-checked="false" data-theme="dark" tabindex="-1">
+      <SvgIcon name="moon" kind="mono" source="local" filter="base" size="md" />
+      <span>Dark</span>
+    </button>
+  </div>
+</div>

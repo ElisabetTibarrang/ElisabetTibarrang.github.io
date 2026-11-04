@@ -1,0 +1,52 @@
+---
+import brandConfig from "@/config/brand.mjs";
+import JsonLd from "./JsonLd.astro";
+
+interface Props {
+  type?: "WebPage" | "AboutPage" | "ContactPage" | "CollectionPage" | "SearchResultsPage" | "ProfilePage";
+  title: string;
+  description?: string;
+  url: string;
+  image?: string;
+  datePublished?: string;
+  dateModified?: string;
+  mainEntityId?: string;
+}
+
+const {
+  type = "WebPage",
+  title,
+  description,
+  url,
+  image,
+  datePublished,
+  dateModified,
+  mainEntityId,
+} = Astro.props as Props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": type,
+  "@id": `${url}#webpage`,
+  url,
+  name: title,
+  description,
+  image,
+  inLanguage: brandConfig.lang || "en",
+  isPartOf: {
+    "@id": `${brandConfig.siteUrl}#website`,
+  },
+  publisher: {
+    "@id": `${brandConfig.siteUrl}#organization`,
+  },
+  datePublished,
+  dateModified,
+  mainEntity: mainEntityId
+    ? {
+        "@id": mainEntityId,
+      }
+    : undefined,
+};
+---
+
+<JsonLd id="webpage-schema" data={schema} />

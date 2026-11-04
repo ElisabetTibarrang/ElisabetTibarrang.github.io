@@ -1,0 +1,103 @@
+/* ==========================================
+   LEGAL PAGES: privacy, cookies, terms
+   Long-form text that is easy to read and scan.
+========================================== */
+
+.legal-page {
+  padding-bottom: 3rem;
+}
+
+.legal-content {
+  line-height: 1.75;
+}
+
+.legal-content h2 {
+  margin: 2.25rem 0 0.5rem;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.legal-content h3 {
+  margin: 1.5rem 0 0.35rem;
+  font-size: 1.1rem;
+}
+
+.legal-content p {
+  margin: 0 0 1rem;
+}
+
+.legal-content ul {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.legal-content li {
+  margin-bottom: 0.4rem;
+}
+
+.legal-content a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal-note {
+  margin: 0 0 1.5rem;
+  padding: 0.85rem 1.1rem;
+  border-left: 4px solid var(--primary-base);
+  border-radius: 0.5rem;
+  background: var(--base-05);
+  font-size: 0.95rem;
+}
+
+.legal-note p {
+  margin: 0;
+}
+
+.legal-toc {
+  margin: 0 0 1.5rem;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid var(--base-10);
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.legal-toc strong {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.legal-toc ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  columns: 2;
+  column-gap: 2rem;
+}
+
+.legal-table-wrap {
+  margin: 0 0 1.25rem;
+  overflow-x: auto;
+}
+
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.legal-table th,
+.legal-table td {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--base-10);
+  text-align: left;
+  vertical-align: top;
+}
+
+.legal-table th {
+  background: var(--base-05);
+}
+
+@media (max-width: 560px) {
+  .legal-toc ol {
+    columns: 1;
+  }
+}

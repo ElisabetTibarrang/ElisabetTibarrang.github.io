@@ -1,0 +1,26 @@
+version: 2
+updates:
+  # npm packages (Astro, integrations, build tools). One grouped pull request a
+  # week for the Astro family, one for everything else, so the inbox stays quiet.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+      tooling:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "astro"
+          - "@astrojs/*"
+
+  # Versions of the actions used in .github/workflows.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

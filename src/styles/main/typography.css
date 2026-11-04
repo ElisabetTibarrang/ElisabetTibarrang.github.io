@@ -1,0 +1,276 @@
+/* ==========================================
+   Font Faces
+========================================== */
+
+@font-face {
+  font-family: "Inter";
+  src:
+    local("Inter Regular"),
+    local("Inter-Regular"),
+    url("/fonts/Inter-Regular-Subset.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src:
+    local("Inter Bold"),
+    local("Inter-Bold"),
+    url("/fonts/Inter-Bold-Subset.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* ==========================================
+   Typography Variables
+========================================== */
+:root {
+  --font-inter: "Inter";
+  --font-mono: "Roboto Mono";
+
+  /* Font families */
+  --font-family-base: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-family-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono:
+    var(--font-mono),
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+
+  /* Font weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 400;
+  --font-weight-bold: 700;
+
+  /* Font sizes */
+  --font-size-5xl: clamp(2.25rem, calc(2.148rem + 0.511vw), 2.53rem);
+  --font-size-4xl: clamp(2rem, calc(1.909rem + 0.455vw), 2.25rem);
+  --font-size-3xl: clamp(1.75rem, calc(1.67rem + 0.398vw), 1.97rem);
+  --font-size-2xl: clamp(1.5rem, calc(1.432rem + 0.341vw), 1.69rem);
+  --font-size-xl: clamp(1.35rem, calc(1.289rem + 0.307vw), 1.52rem);
+  --font-size-lg: clamp(1.2rem, calc(1.145rem + 0.273vw), 1.35rem);
+
+  --font-size-base: clamp(1rem, calc(0.955rem + 0.227vw), 1.13rem);
+
+  --font-size-sm: clamp(0.9rem, calc(0.859rem + 0.205vw), 1.01rem);
+  --font-size-xs: clamp(0.8rem, calc(0.764rem + 0.182vw), 0.9rem);
+  --font-size-2xs: clamp(0.75rem, calc(0.736rem + 0.068vw), 0.79rem);
+
+  --font-size-code: clamp(0.88rem, calc(0.795rem + 0.398vw), 1.09rem);
+
+  /* Heading spacing */
+  --heading-line-height: 1.3;
+
+  --h1-margin-top: clamp(0.75rem, calc(0.477rem + 1.364vw), 1.875rem);   /* 12px → 30px */
+  --h1-margin-bottom: clamp(0.75rem, calc(0.568rem + 0.909vw), 1.5rem);   /* 12px → 24px */
+
+  --h2-margin-top: clamp(0.75rem, calc(0.568rem + 0.909vw), 1.5rem);       /* 12px → 24px */
+  --h2-margin-bottom: clamp(0.75rem, calc(0.689rem + 0.303vw), 1rem);      /* 12px → 16px */
+
+  --h3-margin-top: 0.75rem;
+  --h3-margin-bottom: 0.75rem;
+
+  --h4-margin-top: 0.75rem;
+  --h4-margin-bottom: 0.75rem;
+
+  --h5-margin-top: 0.75rem;
+  --h5-margin-bottom: 0.75rem;
+
+  --h6-margin-top: 0.75rem;
+  --h6-margin-bottom: 0.75rem;
+}
+
+/* ==========================================
+   Headings
+========================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--heading-line-height);
+}
+
+h1 {
+  font-size: var(--font-size-5xl);
+  margin-block: var(--h1-margin-top) var(--h1-margin-bottom);
+}
+
+h2 {
+  font-size: var(--font-size-4xl);
+  margin-block: var(--h2-margin-top) var(--h2-margin-bottom);
+}
+
+h3 {
+  font-size: var(--font-size-3xl);
+  margin-block: var(--h3-margin-top) var(--h3-margin-bottom);
+}
+
+h4 {
+  font-size: var(--font-size-2xl);
+  margin-block: var(--h4-margin-top) var(--h4-margin-bottom);
+}
+
+h5 {
+  font-size: var(--font-size-xl);
+  margin-block: var(--h5-margin-top) var(--h5-margin-bottom);
+}
+
+h6 {
+  font-size: var(--font-size-lg);
+  margin-block: var(--h6-margin-top) var(--h6-margin-bottom);
+}
+
+/* ==========================================
+   Font Size Utilities
+========================================== */
+
+.text-5xl,
+.fs-5xl {
+  font-size: var(--font-size-5xl);
+}
+
+.text-4xl,
+.fs-4xl {
+  font-size: var(--font-size-4xl);
+}
+
+.text-3xl,
+.fs-3xl {
+  font-size: var(--font-size-3xl);
+}
+
+.text-2xl,
+.fs-2xl {
+  font-size: var(--font-size-2xl);
+}
+
+.text-xl,
+.fs-xl {
+  font-size: var(--font-size-xl);
+}
+
+.text-lg,
+.fs-lg,
+.text-l,
+.fs-l {
+  font-size: var(--font-size-lg);
+}
+/* ==========================================
+   Body Text
+========================================== */
+
+body,
+p,
+.text-base,
+.fs-base {
+  font-size: var(--font-size-base);
+}
+
+p {
+  margin-block: 0.75rem;
+}
+
+small,
+.text-sm,
+.text-small,
+.text-s,
+.fs-sm,
+.fs-s {
+  font-size: var(--font-size-sm);
+}
+
+.text-xs,
+.text-smaller,
+.fs-xs {
+  font-size: var(--font-size-xs);
+  line-height: 1.3;
+}
+
+.text-2xs,
+.fs-2xs {
+  font-size: var(--font-size-2xs);
+}
+
+/* ==========================================
+   Inline Text
+========================================== */
+
+strong,
+b {
+  font-weight: var(--font-weight-bold);
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+mark,
+.highlight {
+  background-color: var(--alert-light, #fef3c7);
+  color: var(--base-100);
+  padding: 0.1em 0.35em;
+  border-radius: var(--border-radius);
+}
+
+/* ==========================================
+   Code
+========================================== */
+
+code {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-code);
+  background-color: var(--base-90);
+  color: var(--base-00);
+  padding: 0.1em 0.3em;
+  border-radius: var(--border-radius);
+}
+
+pre {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-code);
+  background-color: var(--base-90);
+  color: var(--base-00);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
+}
+
+pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ==========================================
+   Content Defaults
+========================================== */
+
+.post-content p {
+  margin-block: 0.5rem;
+  padding-block: 0.5rem;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   Large Display Text
+========================================== */
+
+.text-5rem {
+  font-size: clamp(2.5rem, calc(1.591rem + 4.545vw), 5rem);
+}

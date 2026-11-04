@@ -1,0 +1,49 @@
+---
+// src/pages/tags/[tag]/index.astro
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import BlogCard from "@/components/BlogCard.astro";
+import { getFieldValueCounts, getEntriesByFieldValue } from "@/utils/collections.mjs";
+import { fieldCollections } from "@/config/pages.mjs";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const tags = await getFieldValueCounts("blog", "tags");
+
+  return tags.map((tag) => ({
+    params: { tag: tag.value },
+  }));
+}
+
+const { tag } = Astro.params;
+const cfg = fieldCollections.tags;
+const entries = await getEntriesByFieldValue("blog", cfg.fieldName, tag as string);
+
+const headProps = {
+  title: `${tag} - ${cfg.title}`,
+  description: `Posts tagged "${tag}".`,
+  canonicalUrl: `/tags/${tag}/`,
+  type: "collection",
+  index: entries.length > 0,
+};
+---
+
+<ArticleLayout headProps={headProps}>
+  <section class="tag-page max-w-content mi-auto p-1">
+    <Breadcrumb
+      items={[
+        { label: cfg.title, href: "/tags/" },
+        { label: tag as string },
+      ]}
+    />
+
+    <header class="my-1">
+      <h1>Tag: {tag}</h1>
+    </header>
+
+    <div class="grid gap my-2" data-card-collections>
+      {entries.map((entry) => <BlogCard entry={entry} collectionKey="blog" />)}
+    </div>
+  </section>
+</ArticleLayout>

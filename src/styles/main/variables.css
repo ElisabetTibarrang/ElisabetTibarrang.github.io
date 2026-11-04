@@ -1,0 +1,70 @@
+/* ==========================================
+   Variables
+========================================== */
+
+:root {
+  /* Layout width */
+  --max-width: 1280px;
+  --site-width: 1280px;
+  --content-width: 720px;
+  --sidebar-width: 360px;
+  --toc-width: 320px;
+  --featured-image-width: 960px;
+
+  /* Radius */
+  --border-radius: 5px;
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 10px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* Border */
+  --border-width-thin: 0.5px;
+  --border-width: 1px;
+  --border-width-thick: 2px;
+  --border-width-thicker: 4px;
+  --border-width-thickest: 8px;
+
+  --border-style: solid;
+  --border-style-solid: solid;
+  --border-style-dashed: dashed;
+  --border-style-dotted: dotted;
+
+  /* Shadows */
+  --shadow-light: 0 1px 3px rgb(0 0 0 / 0.1);
+  --shadow-base: 0 8px 24px rgb(0 0 0 / 0.2);
+  --shadow-strong: 0 0 10px 2px rgb(0 0 0 / 0.5);
+  --shadow-glow: 0 0 20px 4px rgb(0 0 0 / 0.1);
+  --shadow-bottom: 0 1px 10px rgb(0 0 0 / 0.1);
+
+  /* Transitions */
+  --transition-common:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    fill 0.2s ease,
+    stroke 0.2s ease;
+
+  --transition-box-shadow: box-shadow 0.2s ease;
+  --transition-transform: transform 0.3s ease;
+  --transition-fade-slide: opacity 0.3s ease, transform 0.3s ease;
+  --transition-border: border-color 0.2s ease;
+
+  /* Z-index */
+  --z-header: 100;
+  --z-sticky: 200;
+  --z-dropdown: 1000;
+  --z-overlay: 1500;
+  --z-modal: 2000;
+  --z-toast: 3000;
+  --z-tooltip: 4000;
+}
+
+[data-theme="dark"],
+.dark {
+  --shadow-light: 0 1px 3px rgb(255 255 255 / 0.05);
+  --shadow-base: 0 8px 24px rgb(255 255 255 / 0.08);
+  --shadow-strong: 0 0 10px 2px rgb(255 255 255 / 0.2);
+  --shadow-glow: 0 0 20px 4px rgb(255 255 255 / 0.5);
+  --shadow-bottom: 0 1px 10px rgb(0 0 0 / 0.1);
+}

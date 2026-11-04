@@ -1,0 +1,235 @@
+/* file: core/styles/main/utilities-space.css
+ * Generic space utilities used across the theme
+ */
+
+/* ───────── margin ───────── */
+
+.m-0 {
+	margin: 0;
+}
+.m-02 {
+	margin: 0.2rem;
+}
+.m-03 {
+	margin: 0.3rem;
+}
+
+.m-05 {
+	margin: 0.5rem;
+}
+
+.m-1 {
+	margin: 1rem;
+}
+.m-2 {
+	margin: 2rem;
+}
+.mb-e-0 {
+	margin-block-end: 0;
+}
+
+.mb-e-05 {
+	margin-block-end: 0.5rem;
+}
+
+.mb-e-1 {
+	margin-block-end: 1rem;
+}
+
+.mb-e-2  {
+	margin-block-end: 2rem;
+}
+
+.mi-s-1 {
+	margin-inline-start: 1rem;
+}
+
+.mi-e-02  {
+	margin-inline-end: 0.2rem;
+}
+
+.mb-s-05 {
+	margin-block-start: 0.5rem;
+}
+
+.mb-s-1 {
+	margin-block-start: 1rem;
+}
+
+.mi-0  {
+	margin-inline: 0;
+}
+
+.mi-02 {
+	margin-inline: 0.2rem;
+}
+
+.mi-05 {
+	margin-inline: 0.5rem;
+}
+
+.mi-1 {
+	margin-inline: 1rem;
+}
+
+.mi-auto {
+	margin-inline: auto;
+}
+
+.mb-0 {
+	margin-block: 0;
+}
+
+.mb-0-2 {
+	margin-block: -2rem;
+}
+
+.mb-02 {
+	margin-block: 0.2rem;
+}
+
+.mb-05 {
+	margin-block: 0.5rem;
+}
+
+.mb-05--0 {
+	margin-block: 0.5rem 0;
+}
+
+.mb-1 {
+	margin-block: 1rem;
+}
+
+.mb-2 {
+	margin-block: 2rem;
+}
+
+.mb-3 {
+	margin-block: 3rem;
+}
+
+.no-margin {
+	margin: unset;
+}
+
+.pb-e-unset {
+	padding-block-end: unset !important;
+}
+
+.p-0 {
+	padding: 0;
+}
+
+.p-02 {
+	padding: 0.2rem;
+}
+
+.p-03 {
+	padding: 0.3rem;
+}
+
+.p-05 {
+	padding: 0.5rem;
+}
+
+.p-1 {
+	padding: 1rem;
+}
+
+.p-2 {
+	padding: 2rem;
+}
+
+.p-unset {
+	padding: unset;
+}
+
+.pb-e-1 {
+	padding-block-end: 1rem;
+}
+
+.pb-e-2 {
+	padding-block-end: 2rem;
+}
+
+.pi-e-1{
+	padding-inline-end: 1rem;
+}
+
+.pb-s-0 {
+	padding-block-start: 0;
+}
+
+.pi-05 {
+	padding-inline: 0.5rem;
+}
+
+.pi-1 {
+	padding-inline: 1rem;
+}
+
+.pi-2 {
+	padding-inline: 2rem;
+}
+
+.pb-02 {
+	padding-block: 0.2rem;
+}
+
+.pb-05 {
+	padding-block: 0.5rem;
+}
+
+.pb-1 {
+	padding-block: 1rem;
+}
+
+.pb-2 {
+	padding-block: 2rem;
+}
+
+
+@media (max-width: 768px) {
+  /* sm- [ only small screens]*/	
+
+}
+
+@media (min-width: 1280px) {
+  /* full- [ only above 1280px wide screen] */
+	.full-mi-s-auto {
+		margin-inline-start: auto !important;
+	}
+
+	.full-mi-s-unset {
+		margin-inline-start: unset !important;
+	}
+
+	.full-mi-e-auto {
+		margin-inline-end: auto;
+	}
+
+	.full-mi-e-unset {
+		margin-inline-end: unset !important;
+	}
+
+	.full-p-05 {
+		padding: 0.5rem;
+	}
+}
+
+
+
+@media (min-width: 768px) {
+  /* 
+   * above small screens
+   * prefix: big- 
+   */	
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* md- [ only medium screens - tablets ] */	
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  	/* lg- [ only large screens - above tablet version desktops ] */	
+	
+}

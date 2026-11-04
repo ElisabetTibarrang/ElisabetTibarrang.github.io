@@ -1,0 +1,68 @@
+---
+// src/pages/refund-policy.astro
+import PageLayout from "@/layouts/PageLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import brandConfig from "@/config/brand.mjs";
+import { allPagesNormalized } from "@/config/pages.mjs";
+
+const cfg = allPagesNormalized.refund;
+
+const headProps = {
+  title: cfg.title,
+  description: cfg.description,
+  canonicalUrl: cfg.path,
+  type: "other",
+  index: cfg.index,
+};
+
+const lastUpdated = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+---
+
+<PageLayout headProps={headProps} pageType="WebPage" mainVariant="default">
+  <section class="legal-page max-w-content mi-auto p-1">
+    <Breadcrumb items={[{ label: cfg.title, href: cfg.path }]} />
+
+    <header class="my-1">
+      <h1>{cfg.title}</h1>
+      <p class="text-sm opacity-80">Last updated: {lastUpdated}</p>
+    </header>
+
+    <div class="legal-content">
+      <p>
+        This Refund Policy is a starting template shipped with {brandConfig.siteName}.
+        If this site does not sell products or services, you can remove this
+        page and its footer link entirely. Otherwise, replace this
+        placeholder text in <code>src/pages/refund-policy.astro</code> with
+        your actual refund and cancellation terms.
+      </p>
+
+      <h2>Eligibility</h2>
+      <p>
+        Describe which purchases are eligible for a refund, and within what
+        time window from the date of purchase.
+      </p>
+
+      <h2>How to request a refund</h2>
+      <p>
+        Explain how customers should request a refund — for example, by
+        emailing{" "}
+        {brandConfig.contact?.email ? (
+          <a href={`mailto:${brandConfig.contact.email}`}>{brandConfig.contact.email}</a>
+        ) : "our support address"}{" "}
+        with their order details.
+      </p>
+
+      <h2>Processing time</h2>
+      <p>
+        State how long refunds typically take to process once approved, and
+        which payment method will be credited.
+      </p>
+
+      <h2>Non-refundable items</h2>
+      <p>
+        List anything excluded from this policy, such as custom work already
+        delivered or services already rendered.
+      </p>
+    </div>
+  </section>
+</PageLayout>

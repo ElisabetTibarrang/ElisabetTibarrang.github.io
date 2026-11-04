@@ -1,0 +1,18 @@
+---
+// src/components/header/Header.astro
+import HeaderDefault from "./HeaderDefault.astro";
+import HeaderMinimal from "./HeaderMinimal.astro";
+
+interface Props {
+  variant?: "default" | "minimal";
+}
+
+const {
+  variant = "default",
+} = Astro.props as Props;
+---
+
+{variant === "minimal"
+  ? <HeaderMinimal />
+  : <HeaderDefault />
+}

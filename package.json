@@ -1,0 +1,62 @@
+{
+  "name": "astrowebtheme-free",
+  "description": "Free Astro 7 website theme with MDX content and Cloudflare Workers support.",
+  "type": "module",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "nviewsweb",
+  "homepage": "https://free.astrowebtheme.com",
+  "keywords": [
+    "astro-theme",
+    "astro",
+    "withastro",
+    "cloudflare",
+    "blog",
+    "mdx"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nviewsweb/astrowebtheme-free.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nviewsweb/astrowebtheme-free/issues"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@11.9.0+sha512.bd682d5d03fe525ef7c9fd6780c6884d1e756ac4c9c9fe00c538782824310dcf90e3ddc4f53835f06dfaebd5085e41855e0bcbb3b60de2ac5bbab89e5036f03b",
+  "scripts": {
+    "dev": "astro dev",
+    "check": "astro check",
+    "build": "node scripts/generate-security-headers.mjs && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "brand": "node scripts/generate-brand.mjs",
+    "icons": "node scripts/generate-icons.mjs",
+    "sw": "node scripts/generate-sw.mjs",
+    "wrangler_json": "node scripts/generate-wrangler.mjs",
+    "security_headers": "node scripts/generate-security-headers.mjs",
+    "content_config": "node scripts/generate-content-config.mjs",
+    "colors": "node scripts/generate-colors.mjs",
+    "docs_check": "node scripts/check-docs.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/cloudflare": "^14.1.7",
+    "@astrojs/mdx": "^7.0.5",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.1.6",
+    "sharp": "^0.35.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260621.1",
+    "@types/node": "^26.0.0",
+    "fast-glob": "^3.3.3",
+    "lightningcss": "^1.32.0",
+    "sharp": "^0.35.2",
+    "sharp-ico": "^0.1.5",
+    "svgo": "^4.0.1",
+    "typescript": "^6.0.3"
+  }
+}

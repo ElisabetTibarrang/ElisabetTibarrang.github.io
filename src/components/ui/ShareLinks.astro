@@ -1,0 +1,171 @@
+---
+import brandConfig from "@/config/brand.mjs";
+import IconSprite from "@/components/svg/IconSprite.astro";
+import SvgIcon from "@/components/svg/SvgIcon.astro";
+
+interface Props {
+  id?: string;
+  title?: string;
+  url?: string;
+  description?: string;
+  location?: string;
+  class?: string;
+  className?: string;
+  iconSize?: string;
+}
+
+const {
+  id = "share-links",
+  title: titleProp,
+  url: urlProp,
+  description: descProp,
+  location = "page",
+  class: classAttr = "",
+  className = "",
+  iconSize = "w-1-5 h-1-5",
+} = Astro.props as Props;
+
+const pageTitle = titleProp || "";
+const pageDescription = descProp || "";
+
+let resolvedUrl = urlProp || Astro.url?.pathname || "/";
+
+if (!/^https?:\/\//i.test(resolvedUrl)) {
+  const base = brandConfig.siteUrl || Astro.site?.href || "http://localhost:4321";
+  resolvedUrl = new URL(resolvedUrl, base).href;
+}
+
+const encodedUrl = encodeURIComponent(resolvedUrl);
+const encodedTitle = encodeURIComponent(pageTitle);
+const encodedDescription = encodeURIComponent(pageDescription);
+
+const enabledShareLinks =
+  Array.isArray(brandConfig.shareLinks) && brandConfig.shareLinks.length > 0
+    ? brandConfig.shareLinks
+    : ["WhatsApp", "X", "Facebook", "LinkedIn", "Reddit", "Copy Link", "Email"];
+
+const platforms = [
+  { name: "WhatsApp", href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}` },
+  { name: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}` },
+  { name: "X", href: `https://x.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}` },
+  { name: "LinkedIn", href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}&summary=${encodedDescription}` },
+  { name: "Reddit", href: `https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}` },
+  { name: "Email", href: `mailto:?subject=${encodedTitle}&body=${encodedTitle}%0A${encodedUrl}` },
+  { name: "Copy Link", href: null },
+];
+
+function toId(name: string): string {
+  return `${location}-share-${name.toLowerCase().replace(/\s+/g, "-")}`;
+}
+
+function toIconName(name: string): string {
+  if (name === "Copy Link") return "clipboard";
+  if (name.toLowerCase() === "email") return "email";
+  if (name === "X") return "x";
+  if (name === "WhatsApp") return "whatsapp";
+
+  return name.toLowerCase().replace(/\s+/g, "-");
+}
+
+function getIconKind(icon: string): "mono" | "brand" {
+  return icon === "email" || icon === "clipboard" ? "mono" : "brand";
+}
+
+const monoIcons = enabledShareLinks
+  .map((name) => toIconName(String(name)))
+  .filter((icon) => getIconKind(icon) === "mono");
+
+const navClass =
+  `share-toolbar pb-1 pi-05 mb-1 bg br-r ${classAttr} ${className}`.trim();
+---
+
+<IconSprite names={monoIcons} kind="mono" />
+
+<nav
+  id={id}
+  aria-label="Share this page"
+  class={navClass}
+  data-share-root
+  data-title={pageTitle}
+  data-url={resolvedUrl}
+>
+  {pageTitle && (
+    <span class="share-title text-xs bold block mb-e-05 uppercase">
+      {pageTitle}
+    </span>
+  )}
+
+  <div role="toolbar" aria-orientation="horizontal" class="w-100">
+    <ul class="flex flex-row wrap gap ai-center no-bullets m-0 p-0" role="list">
+      {enabledShareLinks.map((name) => {
+        const platform = platforms.find(
+          (item) => item.name.toLowerCase() === String(name).toLowerCase()
+        );
+
+        if (!platform) return null;
+
+        const label =
+          name === "Copy Link" ? "Copy link to clipboard" : `Share on ${name}`;
+
+        const icon = toIconName(String(name));
+        const kind = getIconKind(icon);
+        const dataId = toId(String(name));
+
+        return (
+          <li
+            class="icon-wrapper flex ai-center jc-center p-02 br-r fill-primary col-primary"
+            role="none"
+          >
+            {platform.href ? (
+              <a
+                href={platform.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={label}
+                aria-label={label}
+                data-id={dataId}
+                data-action="share_click"
+                data-label={String(name)}
+                class="icon-link inline-flex ai-center jc-center br-r lh-0 focus-visible br-transparent hover-br hover-box-shadow p-02"
+              >
+                <SvgIcon
+                  name={icon}
+                  kind={kind}
+                  mode={kind === "mono" ? "sprite" : "url"}
+                  size="md"
+                  className={iconSize}
+                  decorative={true}
+                />
+                <span class="sr-only">{label}</span>
+              </a>
+            ) : (
+              <button
+                type="button"
+                title="Copy Link"
+                aria-label="Copy Link"
+                data-share-copy
+                data-id={dataId}
+                data-action="share_copy"
+                data-label="Copy Link"
+                data-url={resolvedUrl}
+                class="icon-link col-primary inline-flex ai-center jc-center br-r lh-0 focus-visible br-transparent bg-transparent hover-br hover-box-shadow p-02"
+              >
+                <SvgIcon
+                  name="clipboard"
+                  kind="mono"
+                  mode="sprite"
+                  size="md"
+                  className={iconSize}
+                  decorative={true}
+                />
+                <span class="sr-only">Copy Link</span>
+              </button>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</nav>
+
+<script src="../../scripts/features/share/index.js"></script>

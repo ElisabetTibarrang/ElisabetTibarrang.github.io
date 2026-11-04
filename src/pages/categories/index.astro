@@ -1,0 +1,46 @@
+---
+// src/pages/categories/index.astro
+import PageLayout from "@/layouts/PageLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import { getFieldValueCounts } from "@/utils/collections.mjs";
+import { fieldCollections } from "@/config/pages.mjs";
+
+const cfg = fieldCollections.categories;
+const categories = await getFieldValueCounts("blog", cfg.fieldName);
+
+const headProps = {
+  title: cfg.title,
+  description: cfg.description,
+  canonicalUrl: "/categories/",
+  type: "collection",
+  index: categories.length > 0,
+};
+---
+
+<PageLayout headProps={headProps} pageType="CollectionPage" mainVariant="default">
+  <section class="categories-index max-w-content mi-auto p-1">
+    <Breadcrumb items={[{ label: cfg.title, href: "/categories/" }]} />
+
+    <header class="my-1">
+      <h1>{cfg.title}</h1>
+      <p class="opacity-90">{cfg.description}</p>
+    </header>
+
+    {categories.length > 0 ? (
+      <ul class="tag-list no-bullets p-0 flex wrap gap-05">
+        {categories.map((category) => (
+          <li>
+            <a
+              href={`/categories/${category.value}/`}
+              class="tag-chip inline-flex ai-center gap-03 pi-05 pb-02 br-r bg-base-00 no-bb"
+            >
+              {category.value} <span class="opacity-60 text-sm">({category.count})</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="opacity-80">No categorized posts yet.</p>
+    )}
+  </section>
+</PageLayout>

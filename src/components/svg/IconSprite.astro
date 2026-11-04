@@ -1,0 +1,54 @@
+---
+// src/components/svg/IconSprite.astro
+import { getIcon } from "@/data/icons/manifest.mjs";
+
+interface Props {
+  names: string[];
+  kind?: "mono";
+  class?: string;
+}
+
+const {
+  names = [],
+  kind = "mono",
+  class: className = "",
+} = Astro.props as Props;
+
+const locals = Astro.locals as any;
+locals.__awRenderedIconSprites ??= new Set<string>();
+
+const uniqueNames = Array.from(
+  new Set(names.map((name) => String(name || "").trim()).filter(Boolean))
+);
+
+const icons = uniqueNames
+  .map((name) => getIcon(name, kind))
+  .filter(Boolean)
+  .filter((icon) => icon.kind === "mono" && icon.body)
+  .filter((icon) => {
+    const key = `${icon.kind}:${icon.id}`;
+
+    if (locals.__awRenderedIconSprites.has(key)) return false;
+
+    locals.__awRenderedIconSprites.add(key);
+    return true;
+  });
+---
+
+{icons.length > 0 && (
+  <svg
+    class={`icon-sprite display-none ${className}`.trim()}
+    aria-hidden="true"
+    focusable="false"
+    width="0"
+    height="0"
+  >
+    <defs>
+      {icons.map((icon) => (
+        <symbol id={icon.id} viewBox={icon.viewBox} fill="currentColor">
+          <Fragment set:html={icon.body} />
+        </symbol>
+      ))}
+    </defs>
+  </svg>
+)}

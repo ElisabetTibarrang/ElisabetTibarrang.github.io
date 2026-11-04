@@ -1,0 +1,1 @@
+.cv-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:1.5rem}.cv-section{margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--base-20)}.cv-actions{display:flex;gap:.75rem;flex-wrap:wrap}.cv-sidebar{position:sticky;top:1rem;align-self:start}@media (max-width: 900px){.cv-grid{grid-template-columns:1fr}.cv-sidebar{order:-1;position:static}}

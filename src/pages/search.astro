@@ -1,0 +1,155 @@
+---
+// src/pages/search.astro
+import type { CollectionEntry } from "astro:content";
+
+import PageLayout from "@/layouts/PageLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import { getVisibleCollection, getEntryUrl } from "@/utils/collections.mjs";
+import { allPagesNormalized } from "@/config/pages.mjs";
+
+import "@/styles/components/search.css";
+import "@/styles/components/search-icon.css";
+
+type BlogEntry = CollectionEntry<"blog">;
+
+const cfg = allPagesNormalized.search;
+
+const headProps = {
+  title: cfg.title,
+  description: cfg.description,
+  canonicalUrl: cfg.path,
+  type: "search",
+  index: false,
+};
+
+const blogEntries = (await getVisibleCollection("blog")) as BlogEntry[];
+
+const searchIndex = blogEntries.map((entry) => ({
+  title: entry.data.title || "Untitled",
+  description: entry.data.description || "",
+  url: getEntryUrl("blog", entry),
+}));
+---
+
+<PageLayout headProps={headProps} pageType="SearchResultsPage" mainVariant="default">
+  <section class="search-page max-w-content mi-auto p-1">
+    <Breadcrumb items={[{ label: "Search", href: cfg.path }]} />
+
+    <header class="my-1">
+      <h1>{cfg.title}</h1>
+      <p class="opacity-90">{cfg.description}</p>
+    </header>
+
+    <form id="search-form" role="search" class="flex gap" action="/search/" method="get">
+      <label for="search-input" class="sr-only">Search</label>
+      <input
+        id="search-input"
+        class="form-control"
+        type="search"
+        name="q"
+        placeholder="Search articles..."
+        autocomplete="off"
+        autofocus
+      />
+      <button type="submit" class="button primary-button">Search</button>
+    </form>
+
+    <p id="search-status" class="text-sm opacity-80 mt-05" aria-live="polite">
+      {searchIndex.length} article{searchIndex.length === 1 ? "" : "s"} indexed.
+    </p>
+
+    <ul id="search-results" class="search-results no-bullets p-0 mt-1"></ul>
+  </section>
+
+  <script is:inline type="application/json" id="search-index" set:html={JSON.stringify(searchIndex)} />
+
+  <script>
+    function initSearch() {
+      const form = document.getElementById("search-form") as HTMLFormElement | null;
+      const input = document.getElementById("search-input") as HTMLInputElement | null;
+      const status = document.getElementById("search-status") as HTMLElement | null;
+      const results = document.getElementById("search-results") as HTMLElement | null;
+      const indexEl = document.getElementById("search-index");
+
+      if (!form || !input || !status || !results || !indexEl) return;
+
+      let items: Array<{ title: string; description: string; url: string }> = [];
+
+      try {
+        items = JSON.parse(indexEl.textContent || "[]");
+      } catch {
+        items = [];
+      }
+
+      function render(
+        statusEl: HTMLElement,
+        resultsEl: HTMLElement,
+        list: typeof items,
+        query: string
+      ) {
+        resultsEl.innerHTML = "";
+
+        if (query && list.length === 0) {
+          statusEl.textContent = `No results for "${query}".`;
+          return;
+        }
+
+        statusEl.textContent = query
+          ? `${list.length} result${list.length === 1 ? "" : "s"} for "${query}".`
+          : `${items.length} article${items.length === 1 ? "" : "s"} indexed.`;
+
+        const toShow = query ? list : [];
+
+        for (const item of toShow) {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = item.url;
+          a.textContent = item.title;
+
+          const p = document.createElement("p");
+          p.className = "text-sm opacity-80 m-0";
+          p.textContent = item.description;
+
+          li.appendChild(a);
+          if (item.description) li.appendChild(p);
+          resultsEl.appendChild(li);
+        }
+      }
+
+      // The form has no inline handler (the CSP blocks them). Enter and the Search
+      // button run the same search as typing does.
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        input.dispatchEvent(new Event("input"));
+        const url = new URL(window.location.href);
+        if (input.value.trim()) url.searchParams.set("q", input.value.trim());
+        else url.searchParams.delete("q");
+        window.history.replaceState(null, "", url);
+      });
+
+      input.addEventListener("input", () => {
+        const query = input.value.trim().toLowerCase();
+
+        const matches = query
+          ? items.filter(
+              (item) =>
+                item.title.toLowerCase().includes(query) ||
+                item.description.toLowerCase().includes(query)
+            )
+          : [];
+
+        render(status, results, matches, query);
+      });
+
+      const params = new URLSearchParams(window.location.search);
+      const initialQuery = params.get("q");
+
+      if (initialQuery) {
+        input.value = initialQuery;
+        input.dispatchEvent(new Event("input"));
+      }
+    }
+
+    initSearch();
+  </script>
+</PageLayout>

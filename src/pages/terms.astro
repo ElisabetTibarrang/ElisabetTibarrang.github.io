@@ -1,0 +1,124 @@
+---
+// src/pages/terms.astro
+// Example terms and conditions. Names and contact details come from
+// src/config/brand.mjs. Have a lawyer review it before you publish.
+import PageLayout from "@/layouts/PageLayout.astro";
+import Breadcrumb from "@/components/ui/Breadcrumb.astro";
+import brandConfig from "@/config/brand.mjs";
+import { allPagesNormalized } from "@/config/pages.mjs";
+
+import "@/styles/pages/legal.css";
+
+const cfg = allPagesNormalized.terms;
+
+const headProps = {
+  title: cfg.title,
+  description: cfg.description,
+  canonicalUrl: cfg.path,
+  type: "terms",
+  index: cfg.index,
+};
+
+const org = brandConfig.organization || {};
+const company = org.legalName || org.name || brandConfig.siteName;
+const email = org.email || brandConfig.contact?.email || "";
+const governingLaw = brandConfig.legal?.governingLaw || "the laws that apply where we are based";
+const lastUpdated = brandConfig.legal?.updated || "";
+---
+
+<PageLayout headProps={headProps} pageType="WebPage" mainVariant="default">
+  <section class="legal-page max-w-content mi-auto p-1">
+    <Breadcrumb items={[{ label: cfg.title, href: cfg.path }]} />
+
+    <header class="my-1">
+      <h1>{cfg.title}</h1>
+      {lastUpdated && <p class="text-sm opacity-80">Last updated: {lastUpdated}</p>}
+    </header>
+
+    <div class="legal-note">
+      <p>
+        This is example text and not legal advice. Edit it in <code>src/pages/terms.astro</code>
+        to match how your site and business work.
+      </p>
+    </div>
+
+    <div class="legal-content">
+      <h2>1. Agreement</h2>
+      <p>
+        These terms apply when you use {brandConfig.siteName}, run by {company} ("we", "us"). By
+        using the website you agree to them. If you do not agree, please do not use it.
+      </p>
+
+      <h2>2. Using the website</h2>
+      <p>You agree to use the website lawfully and not to:</p>
+      <ul>
+        <li>break the law or the rights of others;</li>
+        <li>attempt to disrupt, overload or gain unauthorised access to the site or its systems;</li>
+        <li>send spam or harmful code through the contact form;</li>
+        <li>copy or scrape large parts of the site without our permission.</li>
+      </ul>
+
+      <h2>3. Our content</h2>
+      <p>
+        The text, images, design and code on this website belong to {company} or its licensors and
+        are protected by copyright. You may read, share links to and quote short extracts of our
+        pages with credit. For any other use, please ask us first.
+      </p>
+
+      <h2>4. Messages you send us</h2>
+      <p>
+        When you contact us, you confirm that the details you give are accurate and that you are
+        allowed to share them. We use your message as described in our
+        <a href="/privacy-policy/"> Privacy Policy</a>.
+      </p>
+
+      <h2>5. Links to other websites</h2>
+      <p>
+        This site may link to websites we do not control. We are not responsible for their content,
+        privacy practices or availability.
+      </p>
+
+      <h2>6. Information only</h2>
+      <p>
+        The content on this website is general information. It is not professional, legal or
+        financial advice. We try to keep it accurate and up to date, but we give no promise that it
+        is complete or error free.
+      </p>
+
+      <h2>7. Availability</h2>
+      <p>
+        We aim to keep the website available, but we may change, pause or remove it at any time
+        without notice.
+      </p>
+
+      <h2>8. Disclaimer</h2>
+      <p>
+        The website is provided "as is" and "as available". To the fullest extent the law allows, we
+        do not give any warranties, express or implied, about it.
+      </p>
+
+      <h2>9. Limit of liability</h2>
+      <p>
+        To the fullest extent the law allows, {company} is not liable for any indirect or
+        consequential loss, or for loss of profit, data or business, arising from your use of the
+        website. Nothing in these terms limits liability that cannot be limited by law, such as for
+        death or personal injury caused by negligence, or for fraud.
+      </p>
+
+      <h2>10. Governing law</h2>
+      <p>These terms are governed by {governingLaw}. Courts in that place can decide any dispute about them.</p>
+
+      <h2>11. Changes to these terms</h2>
+      <p>
+        We may update these terms from time to time. The date at the top shows the latest version.
+        Using the website after a change means you accept the new terms.
+      </p>
+
+      <h2>12. Contact</h2>
+      <p>
+        Questions about these terms? Write to
+        {email ? <a href={`mailto:${email}`}> {email}</a> : <a href="/contact-us/"> our contact page</a>}.
+      </p>
+    </div>
+  </section>
+</PageLayout>

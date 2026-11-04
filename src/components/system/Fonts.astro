@@ -1,0 +1,33 @@
+---
+// src/components/system/Fonts.astro
+
+interface Props {
+  footer?: boolean;
+}
+
+const { footer = false } = Astro.props;
+---
+
+{!footer && (
+  <>
+    <link
+      rel="preload"
+      href="/fonts/Inter-Regular-Subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link
+      rel="preload"
+      href="/fonts/Inter-Bold-Subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </>
+)}
+
+{footer && (
+  <script src="@/scripts/load-noncritical-fonts.js"></script>
+)}

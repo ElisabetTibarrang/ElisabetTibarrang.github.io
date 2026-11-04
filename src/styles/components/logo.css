@@ -1,0 +1,36 @@
+/* ==========================================
+   TEXT LOGO
+   The site name in bold type. Colours follow the theme, so it stays
+   readable in light and dark mode.
+========================================== */
+
+.text-logo {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  text-decoration: none;
+  border-bottom: 0;
+}
+
+.text-logo__name {
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: min(18rem, 60vw);
+}
+
+.text-logo:hover .text-logo__name,
+.text-logo:focus-visible .text-logo__name {
+  color: var(--primary-base);
+}
+
+@media (max-width: 480px) {
+  .text-logo__name {
+    font-size: 1.25rem;
+  }
+}

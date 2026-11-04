@@ -1,0 +1,58 @@
+---
+// src/components/captcha/Turnstile.astro
+import { env } from "cloudflare:workers";
+
+interface Props {
+  sitekey?: string;
+  action?: string;
+  theme?: "auto" | "light" | "dark";
+  size?: "normal" | "compact" | "flexible";
+  appearance?: "always" | "execute" | "interaction-only";
+  responseFieldName?: string;
+  class?: string;
+  fallback?: "silent" | "hint";
+}
+
+const {
+  sitekey,
+  action,
+  theme = "auto",
+  size = "normal",
+  appearance = "always",
+  responseFieldName = "cf-turnstile-response",
+  class: className = "",
+  fallback = "hint",
+} = Astro.props as Props;
+
+const workerEnv = env as Record<string, string | undefined>;
+
+const resolvedSitekey =
+  sitekey ||
+  workerEnv.TURNSTILE_SITEKEY ||
+  "";
+
+const canRender = resolvedSitekey.trim().length > 0;
+
+const TURNSTILE_API =
+  "https://challenges.cloudflare.com/turnstile/v0/api.js";
+---
+
+{canRender ? (
+  <>
+    <script is:inline src={TURNSTILE_API} async defer></script>
+
+    <div
+      class={`cf-turnstile ${className}`.trim()}
+      data-sitekey={resolvedSitekey}
+      data-theme={theme}
+      data-size={size}
+      data-action={action}
+      data-appearance={appearance}
+      data-response-field-name={responseFieldName}
+    ></div>
+  </>
+) : fallback === "hint" ? (
+  <p class="form-hint captcha-hint">
+    Turnstile site key is missing. Add TURNSTILE_SITEKEY in Cloudflare environment or .dev.vars.
+  </p>
+) : null}

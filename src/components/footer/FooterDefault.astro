@@ -1,0 +1,204 @@
+---
+import "@/styles/components/footer.css";
+
+import brandConfig from "@/config/brand.mjs";
+import { allPagesNormalized } from "@/config/pages.mjs";
+import creditConfig from "@/config/credit.mjs";
+import Logo from "@/components/header/Logo.astro";
+import SocialLinks from "@/components/ui/SocialLinks.astro";
+
+const currentYear = new Date().getFullYear();
+
+const siteName = brandConfig.siteName || "AstroWebTheme";
+const description =
+  brandConfig.description || "Performance-first Astro theme for modern websites.";
+
+// Pages opted into the footer via src/config/pages.mjs (showInFooterNav: true).
+const footerNavPages = Object.values(allPagesNormalized).filter(
+  (page: any) => page.enabled && page.showInFooterNav
+);
+
+const legalPageKeys = ["privacyPolicy", "cookiePolicy", "terms", "refund"];
+
+const companyNavPages = footerNavPages.filter(
+  (page: any) => !legalPageKeys.includes(page.key)
+);
+
+const footerColumns = [
+  {
+    heading: "Explore",
+    links: [
+      { label: "Home", href: "/" },
+      { label: "Blog", href: "/blog/" },
+      { label: "Tags", href: "/tags/" },
+      { label: "Categories", href: "/categories/" },
+    ],
+  },
+  {
+    heading: "Company",
+    links: companyNavPages.map((page: any) => ({
+      label: page.label,
+      href: page.path,
+    })),
+  },
+  {
+    heading: "Resources",
+    links: [
+      { label: "Articles", href: "/blog/" },
+      { label: "Sitemap", href: "/sitemap.xml" },
+      { label: "RSS", href: "/rss.xml" },
+      { label: "llms.txt", href: "/llms.txt" },
+    ],
+  },
+  {
+    heading: "Contact",
+    links: [
+      brandConfig.contact?.email && {
+        label: "Email",
+        href: `mailto:${brandConfig.contact.email}`,
+      },
+      brandConfig.contact?.phone && {
+        label: "Phone",
+        href: `tel:${String(brandConfig.contact.phone).replace(/\s+/g, "")}`,
+      },
+      brandConfig.contact?.whatsapp && {
+        label: "WhatsApp",
+        href: `https://wa.me/${String(brandConfig.contact.whatsapp).replace(/[^\d]/g, "")}`,
+        external: true,
+      },
+      brandConfig.organization?.address?.googleMap && {
+        label: "Location",
+        href: brandConfig.organization.address.googleMap,
+        external: true,
+      },
+    ].filter(Boolean),
+  },
+];
+
+// Legal/policy links in the bottom bar, driven by the same config flag.
+const policyLinks = [
+  ...footerNavPages
+    .filter((page: any) => legalPageKeys.includes(page.key))
+    .map((page: any) => ({ label: page.label, href: page.path })),
+  { label: "Sitemap", href: "/sitemap.xml" },
+  { label: "RSS", href: "/rss.xml" },
+];
+
+const copyright = `© ${currentYear} ${siteName}. All rights reserved.`;
+const themeCredit = creditConfig;
+---
+
+<div
+  class="footer-default"
+  itemscope
+  itemtype="https://schema.org/Organization"
+>
+  <meta itemprop="name" content={siteName} />
+  <meta itemprop="url" content={brandConfig.siteUrl || "/"} />
+
+  <div class="footer-row footer-row-main max-w-site mi-auto grid gap-1 p-1">
+    <section class="footer-brand flex flex-col gap-05">
+      <Logo />
+
+      <p class="footer-description max-w-420px m-0" itemprop="description">
+        {description}
+      </p>
+
+      {brandConfig.organization?.address && (
+        <address
+          class="footer-address text-sm col-base-80"
+          itemprop="address"
+          itemscope
+          itemtype="https://schema.org/PostalAddress"
+        >
+          {brandConfig.organization.address.streetAddress && (
+            <span itemprop="streetAddress">{brandConfig.organization.address.streetAddress}</span>
+          )}
+          {brandConfig.organization.address.addressLocality && (
+            <>
+              <br />
+              <span itemprop="addressLocality">
+                {brandConfig.organization.address.addressLocality}
+              </span>
+            </>
+          )}
+          {brandConfig.organization.address.addressRegion && (
+            <>
+              {", "}
+              <span itemprop="addressRegion">
+                {brandConfig.organization.address.addressRegion}
+              </span>
+            </>
+          )}
+          {brandConfig.organization.address.postalCode && (
+            <>
+              {" "}
+              <span itemprop="postalCode">
+                {brandConfig.organization.address.postalCode}
+              </span>
+            </>
+          )}
+          {brandConfig.organization.address.addressCountry && (
+            <>
+              <br />
+              <span itemprop="addressCountry">
+                {brandConfig.organization.address.addressCountry}
+              </span>
+            </>
+          )}
+        </address>
+      )}
+
+      <SocialLinks id="footer-social-links" className="mt-05" />
+    </section>
+
+    <nav class="footer-columns grid gap-1" aria-label="Footer navigation">
+      {footerColumns.map((column) => (
+        <section class="footer-column">
+          <h2 class="footer-heading text-base mb-05">{column.heading}</h2>
+
+          <ul class="footer-link-list no-bullets m-0 p-0 flex flex-col gap-03">
+            {column.links.map((link: any) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="footer-link"
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </nav>
+  </div>
+
+  <div class="footer-row footer-row-policy br-top">
+    <nav
+      class="max-w-site mi-auto flex wrap gap-05 jc-center p-1"
+      aria-label="Footer legal links"
+    >
+      {policyLinks.map((link) => (
+        <a class="footer-policy-link text-sm" href={link.href}>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+
+  <div class="footer-row footer-row-credit br-top">
+    <div class="max-w-site mi-auto flex wrap gap-05 jc-space-between ai-center p-1 text-sm col-base-80">
+      <span>{copyright}</span>
+
+      {themeCredit?.enabled !== false && (
+        <span>
+          Built with{" "}
+          <a href={themeCredit.url} target="_blank" rel="noopener noreferrer">{themeCredit.text}</a>
+        </span>
+      )}
+    </div>
+  </div>
+</div>

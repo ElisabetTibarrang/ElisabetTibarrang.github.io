@@ -1,0 +1,42 @@
+/* ==========================================
+   ARTICLE EXTRAS: tag and category links, back link
+========================================== */
+
+.article-taxonomy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.article-taxonomy a {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--base-20);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.article-taxonomy a:hover,
+.article-taxonomy a:focus-visible {
+  border-color: var(--primary-base);
+  color: var(--primary-base);
+}
+
+.article-taxonomy .is-category a {
+  background: var(--base-05);
+  font-weight: 600;
+}
+
+.article-back {
+  margin: 2rem 0 0;
+  font-weight: 700;
+}
+
+.article-back a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
