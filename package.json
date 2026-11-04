@@ -57,6 +57,7 @@
     "sharp": "^0.35.2",
     "sharp-ico": "^0.1.5",
     "svgo": "^4.0.1",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.156.2"
   }
 }

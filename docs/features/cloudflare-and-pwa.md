@@ -50,6 +50,7 @@ pnpm exec wrangler deploy --dry-run
 - `dist/server/.prerender/.dev.vars` receives a copy of your local secrets during `pnpm build`; never publish `dist/`.
 - The service worker's cache name and cleanup prefix are hard-coded to `astrowebtheme-free`.
 - Never commit `.dev.vars` or `.env`.
+- `wrangler` is a direct devDependency in `package.json`. `@astrojs/cloudflare` only lists it as a peer, and an old locked wrangler fails `astro check` with a peer-version error after an adapter bump. `.github/dependabot.yml` keeps it in the `astro` group so both update in one pull request.
 
 ## Related
 

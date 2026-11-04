@@ -2,22 +2,31 @@ version: 2
 updates:
   # npm packages (Astro, integrations, build tools). One grouped pull request a
   # week for the Astro family, one for everything else, so the inbox stays quiet.
+  # wrangler rides with the Astro group: @astrojs/cloudflare names the wrangler
+  # version it needs, so the two have to be bumped in the same pull request.
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      # TypeScript 7 makes `astro check` crash inside @astrojs/language-server.
+      # Remove this rule once `astro check` supports it (docs/known-gaps.md, G22).
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
     groups:
       astro:
         patterns:
           - "astro"
           - "@astrojs/*"
+          - "wrangler"
       tooling:
         patterns:
           - "*"
         exclude-patterns:
           - "astro"
           - "@astrojs/*"
+          - "wrangler"
 
   # Versions of the actions used in .github/workflows.
   - package-ecosystem: github-actions
