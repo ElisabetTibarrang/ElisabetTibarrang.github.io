@@ -117,4 +117,4 @@ Pull requests are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md) and the
 
 ## License
 
-AstroWebTheme Free is available under the [MIT License](LICENSE). The bundled fonts have their own license, and the icon sources are described in [CREDITS.md](CREDITS.md). A separate paid edition exists; it is not part of this repository.
+AstroWebTheme Free is available under the [MIT License](LICENSE). The bundled fonts (Inter and Roboto Mono) have their own license, the [SIL Open Font License 1.1](public/fonts/LICENSE.txt), and the icon sources are described in [CREDITS.md](CREDITS.md). A separate paid edition exists; it is not part of this repository.
